@@ -51,6 +51,7 @@
 # the hw3 directory in the file WR1500MeterMen.rda.
 
 # load the data
+load("WR1500MeterMen.rda")
 
 # The name of the object loaded is wr1500m
 # The time (in the column "times") in these data are recorded in seconds, 
@@ -59,18 +60,19 @@
 
 # Q1a. How many world records does this data frame contain?
 
-# n.wr <- your code here
+n.wr <- dim(wr1500m)[1]
 
 # Q1b. Use R commands to find out who currently holds the world
 # record in the men's 1500 meter.
  
-# wr.name <- your code here
+wr.name <- wr1500m$athlete[n.wr]
 
 
 # Let's look at the relationship between date and time.
 # Q1c. What type of variable (numeric (continuous or discrete), nominal ordinal)
 # are year and times? (no need to save the output, just look at it)
-
+### year : numeric, discrete, ordinal
+### times: numeric, continuous, ordinal
 
 # When we are examining a variable to see how it changes in time,
 # we typically make a line plot, with time on the x-axes and 
@@ -82,9 +84,9 @@
 # But do add 180 to the times so that they are accurate measurements in seconds,
 # store that in a new variable and add to the data frame.
 
-# times_sec <- your code here
-# wr1500m <- your code here
-# plot( your code here )
+times_sec <- wr1500m$times + 180
+wr1500m["total_time"] = times_sec
+plot(wr1500m$year, wr1500m$total_time, type="s", xlab="Year", ylab="Time (seconds)")
 
 
 
@@ -96,10 +98,15 @@
 # first find and set all missing months to 0.5
 # Add new_year to the dataframe.
 
-# your code here
-# new_year <- your code here
-# wr1500m <- your code here
-# plot( your code here )
+temp = wr1500m$month/12
+size = length(temp)
+for (i in c(1:size)) {
+  if (is.na(temp[i])) {
+    temp[i]=0.5
+  }
+}
+wr1500m["new_year"] = wr1500m$year + temp
+plot(wr1500m$new_year, wr1500m$total_time, type="s", xlab="Year", ylab="Time (seconds)")
 
 
 # Q3. The current world record was set in 1998. If we want to
@@ -110,9 +117,12 @@
 # so that 2014 is included in the x-axis scale;
 # then use the lines() function to add the additional segment.
 
-# wr_1998 <- your code here
-# plot( your code here )
-# lines( your code here )
+wr_1998 <- wr1500m$total_time[n.wr]
+plot(wr1500m$new_year, wr1500m$total_time, type="s", xlim=c(1892,2014), xlab="Year", ylab="Time (seconds)")
+extend = c(1998:2014)
+extend[1]=subset(wr1500m, year==1998)$new_year
+lines(extend, rep(wr_1998,17), type="s")
+
 
 
 # Q4. There are two times where the record stood for several
@@ -127,18 +137,25 @@
 # Also, do not type in the athlete's name. Instead, use subsetting
 # of wr1500m$athlete to access it.
 
-# wr_1944 <- your code here
-# abline( your code here )
-# abline( your code here )
-# text( your code here )
-# text( your code here )
-
+wr_1944 <- subset(wr1500m, year==1944)$total_time
+abline(v = subset(wr1500m, year==1944)$new_year,col="grey")
+abline(v = subset(wr1500m, year==1998)$new_year,col="grey")
+text(subset(wr1500m, year==1944)$new_year, y=wr_1944+5, labels=subset(wr1500m, year==1944)$athlete, cex=0.6,pos=4)
+text(subset(wr1500m, year==1998)$new_year, y=wr_1998+5, labels=subset(wr1500m, year==1998)$athlete, cex=0.6,pos=3)
 
 # Q5. Now we are ready to add other contextual information.
 # Remake the plot as before but now adding axis labels and a title.
 # This is the FINAL version of the plot of world record times.
 
 # put your final version of the plotting commands below.
+plot(wr1500m$new_year, wr1500m$total_time, type="s", xlim=c(1892,2014), xlab="Year", ylab="Time (seconds)", main="World Record of Men 1500m")
+lines(extend, rep(wr_1998,17), type="s")
+wr_1944 <- subset(wr1500m, year==1944)$total_time
+abline(v = subset(wr1500m, year==1944)$new_year,col="grey")
+abline(v = subset(wr1500m, year==1998)$new_year,col="grey")
+text(subset(wr1500m, year==1944)$new_year, y=wr_1944+5, labels=subset(wr1500m, year==1944)$athlete, cex=0.6,pos=4)
+text(subset(wr1500m, year==1998)$new_year, y=wr_1998+5, labels=subset(wr1500m, year==1998)$athlete, cex=0.6,pos=3)
+
 
 ## You have finised the first plot!!
 
@@ -155,7 +172,7 @@
 # It can be loaded into R with
 
 # load( your code here )
-
+load("SummerOlympics2012Ctry.rda")
 
 #Q6 Take a look at the variables in this data frame.
 # What kind of variable is GDP and population?
@@ -177,6 +194,11 @@
 # plot violates and why.
 
 # plot( your code here )
+s.GDP = SO2012Ctry$GDP
+s.pop = SO2012Ctry$pop
+s.medal = SO2012Ctry$Total
+reference = max(s.medal)/2+0.001
+plot(s.pop/1E9, s.GDP/1E12, xlab = "Population (10^9 people)", ylab = "GDP (10^12 dollars)", cex=s.medal/reference, main = "GDP vs. Population and Olympic Medals" )
 
 
 ### Data stand out, Values are plotted on the top of each other  
@@ -190,9 +212,9 @@
 # symbols() where the area of the circle is proportional to the 
 # total number of medals.
 
-# GDP_per_person <- your code here
-# SO2012Ctry <- your code here
-# symbols( your code here )
+GDP_per_person <- s.GDP/s.pop
+SO2012Ctry["GDPPerPerson"] = GDP_per_person
+symbols(log10(SO2012Ctry$pop),log10(SO2012Ctry$GDPPerPerson), circles=SO2012Ctry$Total, main = "GDP per Person vs. Population and Olympic Medals", xlab = "Population (log scale)", ylab = "GDP per person (log scale)",xlim = c(4,10),ylim=c(2,6))
 
 
 # Q8. It appears that the countries with no medals are circles too.
@@ -200,6 +222,10 @@
 # If necessary adjust the size of the circles.
 # Then add the non-medal countries to the plot using the "." 
 # plotting character.
+nonzeros = subset(SO2012Ctry, Total>0)
+zeros = subset(SO2012Ctry, Total==0)
+symbols(log10(nonzeros$pop), log10(nonzeros$GDPPerPerson), circles = nonzeros$Total,main = "GDP per Person vs. Population and Olympic Medals", xlab = "Population (log scale)", ylab = "GDP per person (log scale)", xlim = c(4,10),ylim=c(2,6))
+text(log10(zeros$pop), log10(zeros$GDPPerPerson), labels=".")
 
 # your plotting code here
 
@@ -207,8 +233,12 @@
 # title, and label 5 of the more interesting points
 # with the country name. Use text() to do this.
 
-# top5 <- order( your code here )
-# your plotting code here, including a new call to text() 
+
+top5 <- order(SO2012Ctry$Total, decreasing =TRUE)[1:5]
+name = SO2012Ctry[top5,"ISO"]
+pop = SO2012Ctry[top5, "pop"]
+gdppp = SO2012Ctry[top5, "GDPPerPerson"]
+text(log10(pop), log10(gdppp), labels=name, cex=0.5)
 
 
 ######################################
@@ -220,10 +250,10 @@
 # where the countries are filled with a light grey color.
 
 ## you only need to run these two lines once:
-install.packages("maps")
-library("maps")
+# install.packages("maps")
+# library("maps")
 
-# world <- map( your code here )
+world <- map(col)
 
 #Q11. Use the symbols() function to add circles to the map where
 # the circles are proportional in area to the number of medals
