@@ -105,7 +105,8 @@ for (i in c(1:size)) {
     temp[i]=0.5
   }
 }
-wr1500m["new_year"] = wr1500m$year + temp
+new_year = wr1500m$year + temp
+wr1500m["new_year"] = new_year
 plot(wr1500m$new_year, wr1500m$total_time, type="s", xlab="Year", ylab="Time (seconds)")
 
 
@@ -251,9 +252,9 @@ text(log10(pop), log10(gdppp), labels=name, cex=0.5)
 
 ## you only need to run these two lines once:
 # install.packages("maps")
-# library("maps")
+library("maps")
 
-world <- map(col)
+world <- map(fill=TRUE, col="light grey")
 
 #Q11. Use the symbols() function to add circles to the map where
 # the circles are proportional in area to the number of medals
@@ -266,9 +267,9 @@ world <- map(col)
 # pull out the contries that won at least one medal (you will need at least
 # the contries longitude, latitude and Total.)
 
-# wonMedal <- your code here
-# world <- your code here
-# symbols( your code here )
+wonMedal <- nonzeros
+world <- map(fill=TRUE, col="light grey")
+symbols(wonMedal$longitude, y=wonMedal$latitude, circles = wonMedal$Total/15, inches=F, add=TRUE)
 
 
 #Q12. Remake the plot and fill in the circles with a partially
@@ -283,16 +284,16 @@ world <- map(col)
 # e.g. myColor = "#FEB24CAA" or   "#FEB24C88"
 
 # You only need to call these two lines once:
-install.packages("RColorBrewer")
+# install.packages("RColorBrewer")
 library("RColorBrewer")
 
-# display.brewer.all( your code here )
-# brewer.pal( your code here )
+display.brewer.all(type="qual")
+brewer.pal(6, "Set2")
 
-# myGold <- your selected color
+myGold = "#FFD92FAA"
 
-#world <- your code here
-#symbols( your code here )
+world <- map(col="light grey", fill = TRUE)
+symbols(wonMedal$longitude, y=wonMedal$latitude, circles = wonMedal$Total/15, inches=F, add=TRUE, bg=myGold)
 
 
 ## That was the FINAL version of this plot
@@ -307,7 +308,7 @@ library("RColorBrewer")
 # and contains information about every athlete who competed 
 # in the Olympics.
 
-# load( )
+load("London2012ALL_ATHLETES.rda")
 
 # There is one observation for each athlete. 
 # (Actually, about 20 athletes have two records if they
@@ -325,16 +326,17 @@ names(athletes)
 # The table() and sum() functions might be helpful for answering 
 # some of the questions below. 
 
-# How many athletes competed in the 2012 Olympics?
-# n.athletes <- your code here
+# How many athletes competed in the 2012 Olympics? 10903
+n.athletes <- dim(athletes)[1]
 
-# How many women competed?
+# How many women competed? 4835
+n.women = dim(subset(athletes, Sex=="F"))[1]
 
 # What proportion of the participants were women?
-# frac.women <- your code here
+frac.women <- n.women/n.athletes
 
 # How many sports were there?
-# n.sports <- your code here
+n.sports <- dim(table(athletes$Sport))
 
 
 #Q14. Make a barplot of Sport and Sex that emphasizes the 
@@ -344,12 +346,13 @@ names(athletes)
 # and again with beside = FALSE. Determine which of these 
 # barplots provides the easiest comparison. 
 
-# athTab <- your code here
+athTab <- table(athletes$Sport, athletes$Sex)
 # make two barplots
-
+barplot(athTab, beside = TRUE)
+barplot(athTab, beside = FALSE)
 
 # what should beside be set to, T/F?
-# set.beside <- your answer
+set.beside <- TRUE
 
 ### Barplot with beside = TRUE provides the easiest comparison. 
 
@@ -358,15 +361,15 @@ names(athletes)
 # the beside parameter that you decided was best for the 
 # plot in Q 14. 
 
-# athTab2 <- table()
+athTab2 <- table(athletes$Sex, athletes$Sport)
 # make barplot
-
+barplot(athTab2, beside = set.beside)
 
 # Compare the barplot with (Sex, Sport) vs (Sport, Sex). 
 # Which makes a more interesting visual comparison, plot 1 or 2?
 # store your answer (1 or 2) in best.plot.
 
-# best.plot <- your answer
+best.plot <- 2
 
 
 # Q16. Notice that the bars are in alphabetical order by sport.
@@ -379,8 +382,8 @@ names(athletes)
 # the rows/cols. The resulting barplot should show bars in 
 # increasing height.
 
-# orderSport <- your code here
-# barplot( your code here )
+orderSport <- order(table(athletes$Sport))
+barplot(athTab2[,orderSport], beside = set.beside)
 
 
 # Q17. Finally to make the plot more informaation rich, try turning
@@ -390,6 +393,10 @@ names(athletes)
 # parameter can be added in the call to barplot().
 # Also find and use a parameter to shrink the text for these labels. 
 # Lastly, add a title to the plot.
+
+final_tab = athTab2[,orderSport]
+barplot(final_tab, col=c("darkblue","red"),beside = set.beside,las = 2, cex.names = 0.6, cex.axis=0.8, main = "Participation 2012 Olympics by Sports and Gender")
+legend = legend("topleft", rownames(final_tab), fill=c("darkblue","red"))
 
 
 # This was the final version of the 4th plot.
