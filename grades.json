@@ -1,0 +1,23 @@
+{
+    "email": "joranson.wu@berkeley.edu", 
+    "github_name": "Joranson", 
+    "grades": {
+        "hw1": {
+            "note": "", 
+            "hash": "568e3f85e7de75a374034b4aaf713fc2e2ea4159", 
+            "earned": 18, 
+            "possible": 20, 
+            "penalty": 0, 
+            "parts": {
+                "hw1": {
+                    "possible": 20, 
+                    "earned": 18
+                }
+            }
+        }
+    }, 
+    "login": "Joranson", 
+    "name": "Qiyin Wu", 
+    "status": "enrolled", 
+    "url": "git@github.com:Joranson/stat133.git"
+}
