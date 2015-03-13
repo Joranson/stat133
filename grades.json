@@ -19,5 +19,6 @@
     "login": "Joranson", 
     "name": "Qiyin Wu", 
     "status": "enrolled", 
-    "url": "git@github.com:Joranson/stat133.git"
+    "url": "git@github.com:Joranson/stat133.git", 
+    "section": "lab3"
 }
