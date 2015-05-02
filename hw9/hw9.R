@@ -36,6 +36,7 @@ head(mtcars)
 # (i.e. the current row names).
 
 # < your code here>
+mtcars$model <- rownames(mtcars)
 
 # Now make a bubble chart using the following instructions:
 # Use 'model', i.e. car model names as labels of bubbles;
@@ -44,13 +45,13 @@ head(mtcars)
 # Use levels of 'gear' to represent color of bubbles;
 # Finally use the 'options' argument to add axis labels and main title.
 
-# optionlist <- < your code here>
-# bub <- gvisBubbleChart( < your code here >)
+optionlist <- list(hAxis="{title: 'displacement'}", vAxis="{title: 'miles per gallon'}", title="Miles per Gallon v.s. Displacement", height = "1000px")
+bub <- gvisBubbleChart(mtcars, idvar = "model", xvar = "disp", yvar = "mpg", sizevar = "hp", colorvar="gear", options = optionlist)
 
 # Now plot your bubble chart output, 'bub', 
 # the chart will show up in a new tab in your web browser.
 
-# < your code here>
+plot(bub)
 
 ##### Motion Chart
 # For examples of motion chart, see: 
@@ -68,12 +69,12 @@ load("WorldBank.RData")
 # containing only the following columns from WordBank:
 # country, year, fertility rate, life expectancy, population and region.
 
-# WorldDat <- < your code here>
+WorldDat <- subset(WorldBank, select=c(country, year, fertility.rate, life.expectancy, population, region))
 
 # As you can see, there are missing values in this data frame.
 # Get rid of all rows with one or more NAs.
 
-# < your code here >
+WorldDat <- na.omit(WorldDat)
 
 # Now make the motion chart using <WorldDat>:
 # (at this point is should have 6 columns and should be free of missing values)
@@ -83,7 +84,9 @@ load("WorldBank.RData")
 # Notice that you can change theses vectors on the generated motion chart, 
 # for now just use the above instructions as default.
 
-# Motion <- gvisMotionChart( < your code here > )
+Motion <- gvisMotionChart(WorldDat, idvar = "country", yvar = "life.expectancy", 
+                          xvar = "fertility.rate", timevar = "year",
+                          colorvar = "region", sizevar = "population")
 
 # Plot your motion chart. It should appear in your web browser. Play around with it!
 plot(Motion)
