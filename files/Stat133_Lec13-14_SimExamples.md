@@ -883,64 +883,499 @@ Web Caching
 - Data: a collection of web sites were visited regularly over a period of time to see whether or not they had changed.
 - Question: Given a new website, how often would you recommend as the length of time between visiting the site?
 
+```r
+load("Cache500.rda")
+```
 
+Web Caching
+===
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```r
+class(Cache500)
+```
 
 ```
-Error in readChar(con, 5L, useBytes = TRUE) : cannot open the connection
+[1] "list"
 ```
+
+```r
+length(Cache500)
+```
+
+```
+[1] 500
+```
+
+```r
+names(Cache500)
+```
+
+```
+NULL
+```
+
+```r
+class(Cache500[[1]])
+```
+
+```
+[1] "integer"
+```
+
+```r
+length(Cache500[[1]])
+```
+
+```
+[1] 206
+```
+
+Web Caching
+===
+More generally, we are interested in 
+- the number of changes over the observed time period
+- the "typical"" length of time between changes
+- the times at which a changes were observed
+
+Web Caching
+===
+Look e.g. at website 8:
+
+```r
+Cache500[[8]]
+```
+
+```
+ [1]   3  23  30  32  39  42  45  62  78  82 147 151 155 175
+```
+
+```r
+length(Cache500[[8]])
+```
+
+```
+[1] 14
+```
+
+```r
+diff(Cache500[[8]])
+```
+
+```
+ [1] 20  7  2  7  3  3 17 16  4 65  4  4 20
+```
+
+Web Caching
+===
+- How would you create a vector which stores the number of times each of the websites has changed?
+- Using that variable how do you get a subset of vectors that only had few visits, or many visits?
+- Did all the websites change?
+
+Web Caching - Time between changes
+===
+The time between changes might be 
+- Uniform
+- Behave like a waiting time, i.e. Exponential
+- Something else?
+
+Web Caching
+===
+You will be asked to answer some of these questions in the next homework, and write a couple of functions to assess what distribution the time between changes follows.
+
+Comparing Two Distributions
+===
+In many situations we want to either
+- compare the distribution of some data to a particular probability distribution
+- or compare the distributions of two samples
+
+What is the best way to visually compare two distributions?  
+
+Can we do a formal
+statistical test to ask whether a dataset could come from a particular distribution?
+
+Comparing Two Distributions - Histograms
+===
+To compare the distribution on two datasets we can overlay the two histograms,
+
+```r
+x <- rnorm(1000)
+y <- rt(n=1000, df=20)
+hist(x, prob=TRUE, xlim=c(-5, 5), ylim=c(0,1), breaks=20, col="grey")
+par(new=TRUE)
+hist(y, prob=TRUE, xlim=c(-5, 5), ylim=c(0,1), breaks=20)
+```
+
+![plot of chunk unnamed-chunk-38](Stat133_Lec13-14_SimExamples-figure/unnamed-chunk-38-1.png) 
+
+Comparing Two Distributions - Histograms
+===
+Try different distributions
+
+```r
+x <- rnorm(1000, mean=0, sd=1)
+y <- rnorm(1000, mean=0, sd=3)
+hist(x, prob=TRUE, xlim=c(-5, 5), ylim=c(0,0.6), breaks=20, col="grey")
+par(new=TRUE)
+hist(y, prob=TRUE, xlim=c(-5, 5), ylim=c(0,0.6), breaks=20)
+```
+
+![plot of chunk unnamed-chunk-39](Stat133_Lec13-14_SimExamples-figure/unnamed-chunk-39-1.png) 
+
+Comparing Two Distributions - Densities
+===
+Or we could plot the estimated densities.
+
+```r
+x <- rnorm(1000)
+y <- rt(n=1000, df=20)
+plot(density(x), xlim=c(-5, 5), ylim=c(0,0.6), col="red")
+lines(density(y), xlim=c(-5, 5), ylim=c(0,0.6), col="blue")
+```
+
+![plot of chunk unnamed-chunk-40](Stat133_Lec13-14_SimExamples-figure/unnamed-chunk-40-1.png) 
+
+
+Comparing Two Distributions - QQ-plots
+===
+It is often hard to judge from histograms or density plots whether differences are due to 
+random variation or whether the distrubtions are actually different.  A better visual tool is 
+a quantile-quantile plot.
+- Definition: the $k^{th}$ q-quantile of a distribution is the value such that the probability 
+that x is less than $q_k$ is at most $k/q$
+- Example: Quartiles are special cases of quantiles, the first quartile is the number such that
+25% of the distrubtion falls below it, etc.
+For a dataset of size $n$ we define the $i$-the quantile to be:$P(X \leq x) \leq \frac{i}{n+1}$
+
+QQ-plots - Examples
+===
+
+```r
+x <- rnorm(1000)
+y <- rt(n=1000, df=20)
+qqplot(x, y)
+```
+
+![plot of chunk unnamed-chunk-41](Stat133_Lec13-14_SimExamples-figure/unnamed-chunk-41-1.png) 
+
+QQ-plots - Examples
+===
+
+```r
+x <- rnorm(1000, mean=0, sd=1)
+y <- rnorm(1000, mean=0, sd=3)
+qqplot(x, y)
+```
+
+![plot of chunk unnamed-chunk-42](Stat133_Lec13-14_SimExamples-figure/unnamed-chunk-42-1.png) 
+
+QQ-plots - Examples
+===
+
+```r
+x <- rnorm(1000)
+y <- rt(n=1000, df=20)
+qqplot(x, y)
+```
+
+![plot of chunk unnamed-chunk-43](Stat133_Lec13-14_SimExamples-figure/unnamed-chunk-43-1.png) 
+
+Kolmogorov-Smirnoff Test
+===
+- A nonparameteric test of the equality of two continuous probability distributions.
+- Can be used to compare a sample to a reference distribution
+- or to comapre two samples
+
+Kolmogorov-Smirnoff Test
+===
+The empirical distribution function $F_n$ for n iid observations $X_1, \dots, X_n$ is
+$$ F_n(x) = \frac{1}{n} \sum_{i=1}^n I_{X_i \leq x}$$
+
+The KS test statistic is:
+$$D_n = sup_x | F_n(x) - F(x) | $$
+
+
+Switch Gears
+===
+- You will use the KS test on your next homework.
+- Now we switch gears again and look at a final simulation example 
+
+Dependence
+===
+Most interesting examples in probability have a little dependence added in: "If it rained yesterday, what is the probability it rains today?"
+
+Use this to generate weather patterns and probabilities for some time in the future. Almost always occurs with time series; can occur with other dependence (spatial -- if it's sunny in Dallas today, will it also be sunny in Fort Worth?)
+
+Markov Dependence
+===
+Suppose we have a sequence of observations that are dependent. In a time series, what happens next depends on what happened before:
+
+\[ p(X_1, X_2, ..., X_n) = p(X_1)p(X_2|X_1)...p(X_n|X_{n-1},...,X_1) \]
+
+(Note: you could, of course, condition on the future to predict the past, if you had a time machine.)
+
+Markov dependence: each outcome only depends on the one that came before.
+
+\[ p(X_1, X_2, ..., X_n) = p(X_1)\prod_{i=2}^np(X_i|X_{i-1})  \]
+
+Generating a Markov Chain
+===
+1. Set up the conditional distribution.
+
+2. Draw the initial state of the chain.
+
+3. For every additional draw, use the previous draw to inform the new one.
+
+
+
+Simple weather model
+===
+- if it was sunny yesterday, today's chance of sun is 80%.
+- if it wasn't sunny yesterday, today's chance of sun is 20%.
+
+Simulate for one year (at the equator?)
+===
+
+```r
+sunny.year <- rep(NA, 365)
+sunny.year[1] <- 1
+for (day in 2:365) sunny.year[day] <- rbinom(1,1,0.2 + 0.6*sunny.year[day-1])
+```
+
+===
+
+```r
+plot(sunny.year, main="Sunny Days in An Equatorial City", xlab="Day", ylab="Sunshine?", ty="l")
+```
+
+![plot of chunk unnamed-chunk-45](Stat133_Lec13-14_SimExamples-figure/unnamed-chunk-45-1.png) 
+
+Different From Independence
+===
+
+```r
+boring.year <- rbinom(365, 1, 0.5)
+plot(boring.year, main="Sunny Days in A Coin Flip City", xlab="Day", ylab="Sunshine?", ty="l")
+```
+
+![plot of chunk unnamed-chunk-46](Stat133_Lec13-14_SimExamples-figure/unnamed-chunk-46-1.png) 
+
+The above chain
+===
+Transitions are represented as a matrix: $Q_{ij}$ is $P(X_t = j|X_{t-1} = i)$.
+
+```
+     [,1] [,2]
+[1,]  0.8  0.2
+[2,]  0.2  0.8
+```
+
+Flippy chain
+===
+
+```r
+weird.year <- rep(NA, 365)
+weird.year[1] <- 1
+transition.matrix <- matrix (c(0.2, 0.8, 0.8, 0.2), nrow=2)
+for (day in 2:365) weird.year[day] <- sample(1:2, 1, prob=transition.matrix[weird.year[day-1],])
+```
+
+Flippy chain
+===
+
+```r
+plot(weird.year, main="Sunny Days in Al Gore's Nightmare", xlab="Day", ylab="Sunshine?", ty="l")
+```
+
+![plot of chunk unnamed-chunk-49](Stat133_Lec13-14_SimExamples-figure/unnamed-chunk-49-1.png) 
+
+General Markov Chain
+===
+
+```r
+rmarkovchain <- function (nn, 
+                          transition.matrix, 
+                          start=sample(1:nrow(transition.matrix), 1)) {
+  output <- rep (NA, nn)
+  output[1] <- start
+  for (day in 2:nn) output[day] <- 
+    sample(ncol(transition.matrix), 1, 
+           prob=transition.matrix[output[day-1],])
+}
+```
+
+Simple Unbounded Markov Chain
+===
+"Unbiased Random Walk": Independent events atop a dependent structure.
+
+
+```r
+randomwalk <- function (nn, upprob=0.5, start=50) {
+  output <- rep (NA, nn)
+  output[1] <- start
+  for (iteration in 2:nn) 
+    output[iteration] <- 
+      output[iteration-1] + 2*rbinom(1, 1, upprob) - 1
+  output  
+}
+```
+
+Simple Unbounded Markov Chain
+===
+
+```r
+plot (randomwalk(10000, start=200), main="Simple Random Walk")
+```
+
+![plot of chunk unnamed-chunk-52](Stat133_Lec13-14_SimExamples-figure/unnamed-chunk-52-1.png) 
+
+Simple Unbounded Markov Chain
+===
+
+```r
+plot (randomwalk(10000, start=200), main="Simple Random Walk")
+```
+
+![plot of chunk unnamed-chunk-53](Stat133_Lec13-14_SimExamples-figure/unnamed-chunk-53-1.png) 
+
+Simple Unbounded Markov Chain
+===
+
+```r
+plot (randomwalk(10000, start=200), main="Simple Random Walk")
+```
+
+![plot of chunk unnamed-chunk-54](Stat133_Lec13-14_SimExamples-figure/unnamed-chunk-54-1.png) 
+
+Simple Unbounded Markov Chain
+===
+
+```r
+plot (randomwalk(10000, start=200), main="Simple Random Walk")
+```
+
+![plot of chunk unnamed-chunk-55](Stat133_Lec13-14_SimExamples-figure/unnamed-chunk-55-1.png) 
+
+
+
+Linear Regression Example
+===
+Set up a small artificial dataset:
+
+```r
+set.seed(54321)
+x = rep(seq(1, 4, length = 10), 3)
+y = 5 + x + 4*x^2 + rnorm(30, 0, 3)
+myData = data.frame(x,y)
+```
+
+Linear Regression Example
+===
+Let's look at what we made:
+
+```r
+plot(y ~ x)
+```
+
+![plot of chunk unnamed-chunk-57](Stat133_Lec13-14_SimExamples-figure/unnamed-chunk-57-1.png) 
+
+Linear Regression Example
+===
+The command for fitting a linear model in R is lm():
+
+```r
+my.lm = lm(y ~ x)
+class(my.lm)
+```
+
+```
+[1] "lm"
+```
+
+```r
+names(my.lm)
+```
+
+```
+ [1] "coefficients"  "residuals"     "effects"       "rank"         
+ [5] "fitted.values" "assign"        "qr"            "df.residual"  
+ [9] "xlevels"       "call"          "terms"         "model"        
+```
+
+Linear Regression Example
+===
+
+```r
+summary(my.lm)
+```
+
+```
+
+Call:
+lm(formula = y ~ x)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-10.6116  -3.3102  -0.1931   4.6614   9.4080 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  -16.866      2.739  -6.156  1.2e-06 ***
+x             21.362      1.023  20.875  < 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 5.366 on 28 degrees of freedom
+Multiple R-squared:  0.9396,	Adjusted R-squared:  0.9375 
+F-statistic: 435.8 on 1 and 28 DF,  p-value: < 2.2e-16
+```
+
+Linear Regression Example
+===
+There are several inbuilt prediction functions in R, e.g.
+
+```r
+predict(my.lm)
+```
+
+```
+        1         2         3         4         5         6         7 
+ 4.496434 11.617116 18.737799 25.858481 32.979164 40.099846 47.220529 
+        8         9        10        11        12        13        14 
+54.341211 61.461894 68.582576  4.496434 11.617116 18.737799 25.858481 
+       15        16        17        18        19        20        21 
+32.979164 40.099846 47.220529 54.341211 61.461894 68.582576  4.496434 
+       22        23        24        25        26        27        28 
+11.617116 18.737799 25.858481 32.979164 40.099846 47.220529 54.341211 
+       29        30 
+61.461894 68.582576 
+```
+
+Linear Regression Example
+===
+
+```r
+plot(y ~ x)
+points(my.lm$fitted.values ~ myData$x, pch = 19, col="red")
+```
+
+![plot of chunk unnamed-chunk-61](Stat133_Lec13-14_SimExamples-figure/unnamed-chunk-61-1.png) 
+
+Linear Regression Example
+===
+Let's look at some diagnostic plots:
+
+```r
+plot(my.lm, which = 1)
+```
+
+![plot of chunk unnamed-chunk-62](Stat133_Lec13-14_SimExamples-figure/unnamed-chunk-62-1.png) 
+Linear Regression Example
+===
+And another one (you can go upto which=6)
+
+```r
+plot(my.lm, which = 2)
+```
+
+![plot of chunk unnamed-chunk-63](Stat133_Lec13-14_SimExamples-figure/unnamed-chunk-63-1.png) 
+
