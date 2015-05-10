@@ -1,0 +1,459 @@
+<style>
+  .reveal pre {font-size: 12px;}
+</style>
+
+Graphics
+========================================================
+author: Stat133
+date: 3rd and 5th Feb 2015
+transition: none
+#font-family: 'Garamond'
+
+Statistics
+===
+The data used in this lecture is all on GitHub in the repository "lectures-spring2015", if you have cloned it to your computer do:
+
+```{r}
+setwd("~/src/lectures-spring2015")
+```
+If not, download the data then set the correct path (you will need to edit this line:)
+```{r}
+path <- "/Users/ingileif/src/lectures-spring2015/"
+```
+
+Graphics
+===
+Why do we cover graphics in this course?  Good graphics today requires the computer and visualization enters every step of the data analysis cycle:
+- Data cleaning – are there anomalies?
+- Exploration  
+- Model checking
+- Reporting results
+- Plots can uncover structure in data that can’t be detected with numerical summaries
+- Important communication skill
+
+R’s graphics model
+===
+There are two graphics models in R
+- painter and 
+- object-oriented.  
+
+We will use the painter’s model where you start with a blank canvas and can add (i.e. paint on it) in multiple passes using numerous plotting arguments to modify the plot.  
+
+See help(par) for a list of plotting parameters.  
+
+In the object-oriented model it is easy to get started but hard to tweak.
+
+Know your data types
+===
+The appropriate graphical techniques depend on the kind of data that you are working with
+- Quantitative 
+   - continuous: e.g. height, weight
+   - discrete: numeric data with few values, e.g. number of children in family
+- Qualitative 
+   - ordered: categories with an order but no meaningful distance between, e.g. number of stars for a movie rating
+   - nominal: categories have no meaningful order, e.g. gender
+
+Case: Infant Health
+===
+The Kaiser Study on [Child Health and Development]{http://www.chdstudies.org/about_us/history.php} collected data on pregnancy and childhood in the 1960s.  Some of the information collected on mothers and their infants were 
+- Birth weight (ounces)
+- Gestation (weeks)
+- Parity - total number of previous pregnancies
+- Mother’s height and weight
+- Mother’s smoking status
+- Mother’s age, race, education level, income
+- and more…
+
+Case: Infant Health cont'd
+===
+The infants in this dataset are 
+- Male
+- Single births (no twins, etc.)
+- Survived 28 days
+
+Why?  Some factors that influence birthweight are gender, whether it was a single birth, the health of the infant.  By fixing these we get a more homogenous sample.
+
+Kaiser Data
+===
+Load the datafile and look at the data stored in infants, in particular print out the data for bwt, can you tell anything about the data from looking at the 1236 numbers?
+
+```{r}
+load(paste(path, "KaiserBabies.rda", sep=''))
+dim(infants)
+names(infants)
+```
+
+===
+All of the Kaiser Birthweights, what do you see?
+```{r}
+infants$bwt
+```
+
+Rug plot
+===
+- Each infants' weight is represented as a tickmark. 
+- The thicker lines are from multiple babies with similar weights. 
+- I added a little random noise to the weights to keep them from falling on top of each other.   
+- What can you see now?  
+- How are birth weights distributed?
+
+===
+```{r, out.width=500, out.height=500, fig.align='center'}
+#opts_chunk$set(out.width='750px', dpi=200)
+#out.width='1500px'
+plot(jitter(infants$bwt), rep(1, length(infants$bwt)), type="h", xlab="Birth Weight", yaxt="n", ylab="")
+```
+
+===
+```{r, out.width=500, out.height=500, fig.align='center'}
+plot(infants$bwt, rep(1, length(infants$bwt)), type="n", xlab="Birth Weight", yaxt="n", ylab="")
+rug(jitter(infants$bwt), ticksize=.6)
+```
+
+Rug plot cont'd
+===
+Before we move on let's decipher the plotting commands.  
+- jitter() : adds some noise to the data so that identical values do not get plotted on top of each other.  
+- type="h" : makes a histogram like plot, i.e. with vertical bars
+- yaxt="n" :(=y axis type is no) removes the tick marks on the y-axis
+- ylab="" : puts an empty string as the y-axis label
+
+In the second way of doing this we first create an empty plot and then use the function rug() to add the rugplot (note, this is just included to show the function rug(), the first option is more compact).
+
+Distribution of Birth Weight
+===
+- The *distribution* is the pattern of variation in the birth weights. 
+- It provides the numerical values for birth weight and how often each value occurs. 
+- A *histogram/density plot* shows the shape of the distribution
+
+Histograms
+===
+Are a special case of density plots.  The area of a bar:
+Height * Width = Area
+(Proportion/oz) * oz = Proportion
+
+Note: Histograms are not the same as bar charts, with bar charts, it is only the height that matters and they are for qualitative data.
+
+We will build the plot piece by piece.
+
+===
+```{r, eval=TRUE, out.width=500, out.height=500, fig.align='center'}
+hist(infants$bwt)
+```
+
+===
+```{r, eval=TRUE, out.width=500, out.height=500, fig.align='center'}
+hist(infants$bwt, freq=FALSE)
+```
+
+===
+```{r, eval=TRUE, out.width=500, out.height=500, fig.align='center'}
+hist(infants$bwt , freq = FALSE, xlab = "Birth Weight (oz)", main = "Male Babies, Oakland Kaiser 1960s")
+```
+
+Density plot (smoothed histogram)
+===
+- The function density() computes kernel density estimates.  
+- The output of the function is stored in a list (here we assign it to the variable den).  
+- When we plot the output from density the plot() function uses the x and y variables returned by the density function.  
+- The density function takes various arguments, e.g. the bandwidth (bw) for the kernel density estimates.  If not set by by user it will be selected based on the sd of the data.  
+- The last plot here shows the effect of choosing bw=1, compared to the default bw=3.598.
+- The goal is to see the overall shape of the distribution, not the individual points.
+In a way, the density is a smooth abstraction of the distribution.
+
+===
+```{r, out.width=500, out.height=500, fig.align='center'}
+den <- density(infants$bwt)
+names(den)
+den$x
+den$y
+```
+
+===
+```{r, out.width=500, out.height=500, fig.align='center'}
+plot(density(infants$bwt))
+```
+
+===
+```{r, out.width=500, out.height=500, fig.align='center'}
+plot(density(infants$bwt), xlab = "Birth Weight (oz)", main = "Male Babies, Oakland Kaiser 1960s")
+```
+
+===
+```{r, out.width=500, out.height=500, fig.align='center'}
+plot(density(infants$bwt, bw=1), xlab = "Birth Weight (oz)", main = "Male Babies, Oakland Kaiser 1960s")
+```
+
+Boxplot
+===
+- Thick black par in the middle is the median, 
+- the box goes from the lower to the upper quartile (i.e. the middle half of the data lies within the box), 
+- the plot whiskers extend 1.5 times the interquartile range from the box and 
+- every datapoint outside of that is plotted with a circle.
+
+Boxplot
+===
+```{r, out.width=500, out.height=500, fig.align='center'}
+boxplot(infants$bwt)
+```
+
+Boxplot, horizontal
+===
+```{r, out.width=500, out.height=500, fig.align='center'}
+boxplot(infants$bwt, horizontal=TRUE)
+```
+
+Looking for Structure : Quantitative Distribution
+===
+- *Distribution*: pattern of values for a variable
+- *Mode*: high density region
+- *Long Tail*: many observations far from center 
+- *Symmetry/Skewness*: distribution of values the left and right of the center. 
+- *Gaps*: places where there are no observations. 
+- *Outliers*: unusually large or small values that falls well beyond the overall pattern of data
+
+
+Parity: Number of siblings
+===
+This quantitative variable is different from birth weight, there are only a few possible values, i.e. it’s not possible to have 2.3 siblings, and it’s highly unlikely to have 17.
+```{r, out.width=500, out.height=500, fig.align='center'}
+table(infants$parity)
+```
+
+Infant Data - Barplot
+===
+```{r, out.width=500, out.height=500, fig.align='center'}
+barplot(table(infants$parity))
+```
+
+Infant Data - Alternative to Barplot
+===
+```{r, out.width=500, out.height=500, fig.align='center'}
+plot(table(infants$parity), type ="h", lwd = 4, ylab ="Proportion", col="darkgrey")
+```
+
+Case: College Students
+===
+STAT 2 Survey: Random Sample of 91 of 314 Cal students enrolled in Stat 2
+Survey collected information on 15 variables, among them
+- sex : Male/Female
+- grade : grade expected in the course (“A”, “B”, “C”, “D”, “F”) 
+
+What type of data are these? sex is qualitative (nominal) and grade is qualitative with an ordering
+
+Survey Data
+===
+```{r}
+load(paste(path, "videogame.rda", sep=''))
+names(video)
+dim(video)
+```
+
+Survey Data - Tables
+===
+```{r}
+table(video$grade)
+table(video$grade, video$sex)
+```
+
+Survey Data - Barplot
+===
+```{r}
+barplot(table(video$grade))
+```
+
+Survey Data - Pie Chart 
+===
+Don't use pie charts :)
+```{r}
+pie(table(video$grade))
+```
+
+Survey Data - Dot Chart
+===
+```{r}
+dotchart(table(video$grade), pch = 19)
+```
+
+Method of Comparison
+===
+Often, we not only want to better understand a distribution, but we want to compare the distribution for subgroups or to compare against another population or standard.  
+
+How do you think the expected grade distribution might vary with gender?  
+
+We have two qualitative variables which we can visualize with a mosaicplot.  The area of each rectangle is proportional to the fraction of people who are in that group.
+
+Survey Data - Mosaicplot
+===
+```{r, out.width=500, out.height=500, fig.align='center'}
+mosaicplot(table(video$sex, video$grade), main = "Stat 2 Survey")
+```
+
+Case: East Bay Housing Market
+===
+Load the data:
+```{r}
+load(paste(path, "SFHousing.rda", sep=''))
+```
+
+San Francisco Chronicle listings
+===
+Data for over 200,000 houses sold in a particular time period, variables include:
+- City
+- County
+- Price
+- number of bedrooms
+- lot square footage
+- and 10 more
+
+Subset to a dozen cities in the East Bay or about 25,000 houses.
+
+City vs. sale price
+===
+Data types:
+- City : factor.
+- Sale price : numeric
+
+Let's examine a subset of the cities and sale price under 2 mill.
+
+*Note* Since housing$city is a factor variable it will still have all the levels (cities) defined as possible values so we call the function droplevels on the reduced data frame to drop cities that we are no longer including.
+
+Rescrict dataset to certain cities
+===
+```{r}
+someCities = c("Albany", "Berkeley", "El Cerrito", "Emeryville", "Piedmont", "Richmond", "Lafayette", "Walnut Creek", "Kensington","Alameda","Orinda","Moraga")
+shousing = housing[housing$city %in% someCities & housing$price < 2000000,]
+```
+
+```{r}
+dim(housing)
+dim(shousing)
+```
+
+Look at the city variable
+===
+The new dataset shousing is smaller than housing, but look at the city variable and see that the factor levels for city is unchanged even if we only retained data on 12 East Bay cities.
+```{r}
+summary(shousing$city)
+```
+
+Factor Levels
+===
+To only include as factors the cities that we now have data on use the droplevels() function:
+```{r}
+shousing$city = droplevels(shousing$city)
+summary(shousing$city)
+```
+
+Housing : Boxplots
+===
+To compare prices between cities we can use boxplots.  To get one boxplot of price for each city use:
+```{r}
+boxplot(shousing$price ~ shousing$city, las = 2)
+```
+
+Housing : Boxplots ordered by price
+===
+We use the function reorder() to order the levels of city, by the values in price, as returned by median.
+
+with(shousing, ...) evaluates "..." within the dataframe shousing.
+```{r}
+bymedian <- with(shousing, reorder(city, price, median))
+boxplot(shousing$price ~ bymedian, las = 2)
+```
+
+Housing
+===
+- Plot: price per square foot  vs.  total square foot
+- Is the plot useful?
+```{r}
+ppsf = shousing$price/shousing$bsqft
+plot(ppsf ~ shousing$bsqft)
+```
+
+Housing
+===
+ppsf vs. bsqft, just for Berkeley, and with some changes:
+```{r}
+plot(ppsf ~ shousing$bsqft,              #plot y against x
+pch=19,                                  #set plotting char. to solid circle
+cex = 0.2,                               #shrink plotting character to 20%
+subset = shousing$city =="Berkeley",     #Plot a subset of records 
+main="Berkeley",                         #title of plot
+xlab="Area (ft^2)",                      #label for x axis
+ylab = "Price/ft^2")                     #label for y axis
+```
+
+Plotting with more than 2 variables
+===
+Qualitative information can be conveyed in plots through 
+- color
+- plotting symbol
+- juxtaposed panels
+
+The following plot uses information from 4 variables: city, number of bedrooms, lot size (sq ft), and price per square ft
+
+Housing
+===
+```{r, eval=FALSE}
+par(mfrow=c(1,2)) # split the plotting panel
+plot(ppsf ~ shousing$bsqft,              #plot y against x
+pch=19,                                  #set plotting char. to solid circle
+cex = 0.2,                               #shrink plotting character to 20%
+col = as.numeric(shousing$br),                      #for each observation, pick color based on br
+subset = shousing$city =="Berkeley",     #Plot a subset of records
+main="Berkeley",                         #title of plot
+xlab="Area (ft^2)",                      #label for x axis
+ylab = "Price/ft^2")                     #label for y axis
+
+plot(ppsf ~ shousing$bsqft,              #plot y against x
+pch=19,                                  #set plotting char. to solid circle
+cex = 0.2,                               #shrink plotting character to 20%
+col = as.numeric(shousing$br),                      #for each observation, pick color based on br
+subset = shousing$city =="Piedmont",     #Plot a subset of records 
+main="Piedmont",                         #title of plot
+xlab="Area (ft^2)",                      #label for x axis
+ylab = "Price/ft^2")                     #label for y axis
+```
+
+
+Housing
+===
+```{r, echo=FALSE, fig.align='center', out.width=750, out.height=500}
+par(mfrow=c(1,2)) # split the plotting panel
+
+plot(ppsf ~ shousing$bsqft,              #plot y against x
+pch=19,                                  #set plotting char. to solid circle
+cex = 0.2,                               #shrink plotting character to 20%
+col = as.numeric(shousing$br),                      #for each observation, pick color based on br
+subset = shousing$city =="Berkeley",     #Plot a subset of records
+main="Berkeley",                         #title of plot
+xlab="Area (ft^2)",                      #label for x axis
+ylab = "Price/ft^2")                     #label for y axis
+
+plot(ppsf ~ shousing$bsqft,              #plot y against x
+pch=19,                                  #set plotting char. to solid circle
+cex = 0.2,                               #shrink plotting character to 20%
+col = as.numeric(shousing$br),                      #for each observation, pick color based on br
+subset = shousing$city =="Piedmont",     #Plot a subset of records 
+main="Piedmont",                         #title of plot
+xlab="Area (ft^2)",                      #label for x axis
+ylab = "Price/ft^2")                     #label for y axis
+```
+
+
+Summary of graph relationships
+===
+Two Qualitative variables:
+- mosaicplot 
+- side-by-side barplots
+
+One Quantitative and one Qualitative:
+- boxplots
+- dotcharts
+- multiple density plots
+
+Two Quantitative variables:
+- scatter plot
+- line plot
+
