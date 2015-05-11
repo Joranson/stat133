@@ -140,7 +140,7 @@ t <- table(infants$ed[ infants$married=="Married" & infants$parity==1])
 # Calculate [mw], the average birthweight ($bwt) of all babies whose were full term, i.e. gestation equal or more than 259 days.
 #mw <- <your code here>
   
- mw <- mean(infants$bwt[infants$gestation>=259])
+ mw <- mean(infants$bwt[infants$gestation>=259], na.rm=T)
   
 #################################################################
 #### PART II : Plotting [20 pts]
@@ -167,7 +167,7 @@ t <- table(infants$ed[ infants$married=="Married" & infants$parity==1])
 # Make a scatterplot of ( sepal length / petal length) as a function of index (order)
 # Color the plotting symbol by Species (any 3 colors)
 
- plot(iris$"Sepal.Length"/iris$"Petal.Length", col=as.numeric(iris$Species))
+ plot(iris$Sepal.Length/iris$Petal.Length, col=as.numeric(iris$Species))
 
 ##### We will now use the infant birth data again (data frame infants)
 
@@ -184,7 +184,7 @@ abline(v=259)
 # Make a histogram of mother's age (age) and superimpose on it a _blue_ density plot (same variable)
 # Note that the y-axis of the histogram and the density have to be the same...
 # Add x-axis labels
-hist(infants$age, prob=T, xlab="Mother's age")
+hist(infants$age, probability=T,xlab="Mother's age")
 lines(density(infants$age, na.rm=T), col="blue")
 
 #################################################################
@@ -257,10 +257,13 @@ max.petal.width <- as.vector(by(iris$Petal.Width, iris$Species, max))
 # 1    5    3    8
 # 2    5    7    9
 
-## firstColToNames <- function(  ){
-##   <your code here>
-  
-## }
+firstColToNames <- function(m){
+    row = dim(m)[1]
+    col = dim(m)[2]
+    new_m = m[1:row, 2:col]
+    row.names(new_m) = m[1:row, 1]
+    return (new_m)
+}
 
 firstColToNames <- function(m){
   # students do not need to include this test
@@ -281,9 +284,6 @@ firstColToNames <- function(m){
 # The range is the distance between the maximum and minimum values
 # The function should ignore NA values (i.e. if a matrix has an entry that is NA)
 
-## longerRange <- function(m1, m2){
-##   <your code here>  
-## }
 
 longerRange <- function(m1, m2){
   tmp1 <- max(m1, na.rm=T)-min(m1, na.rm=T)
@@ -306,10 +306,13 @@ longerRange <- function(m1, m2){
 # C = (F - 32) * 5/9
 # so e.g. 30 F=-1.11 C and 30 C = 86 F
 
-## TempConv <- function(t, scale){
-##   <your code here>
-  
-## }
+TempConv <- function(t, scale){
+  if (scale=="F") {
+    return ((t-32)*5/9)
+  } else if (scale=="C") {
+    return (t * 9/5 + 32)
+  }
+}
 
 TempConv <- function(t, scale){
   if(scale=="F") return((t - 32) * 5/9)
@@ -333,9 +336,15 @@ set.seed(123456)
 # if k=2 then in each roll you pick twice a number between 1 and 6 at random,
 # calculate their sum, do this B times and return
 # and so on.
+dice_sum <- function(k=2, B=100){
+  return (replicate(n=B, sum(sample(1:6, replace = T, size=k))))
+}
+
+
+
 
 dice_sum <- function(k=2, B=100){
-   replicate(B, sum(sample(1:6, size=k, replace=T)) )
+   return (replicate(B, sum(sample(1:6, size=k, replace=T)) ))
 }
 
 # [5 pts]
@@ -390,7 +399,6 @@ phrases <- c("coat", "cat", "ct", "mat", "Sat!", "Now?", "match", "How much? $10
 # [2 pts]
 # Create a vector [text1] that lists the elements in phrases that have 
 # a match to "at", anywhere 
-#text1 <- <your code here>
 text1 <- grep("at", phrases)
 
 # [2 pts]
@@ -430,7 +438,7 @@ tests.all <- paste(tests, collapse=" ")
 # You can leave punctuation marks in.
 
 minchin <- "And try as hard as I like, A small crack appears In my diplomacy-dike. By definition, I begin, Alternative Medicine, I continue Has either not been proved to work, Or been proved not to work. You know what they call alternative medicine That's been proved to work? Medicine."
-
+# minchin.split = strsplit(minchin, split="[[:space:]]"))
 #minchin.split <- <your code here>
   
 minchin.split <- tolower(unlist(strsplit(minchin, " ")))

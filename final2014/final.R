@@ -54,13 +54,13 @@ email.address <- ""
 # [1 pt]
 # Create [x], a numeric vector of length 1000 with 
 # entries: 5, 10, 15, etc.
-x <- <your code here>
+x <- 1:1000*5
   
 # [1 pt]
 # Create [y], a logical vector of length 1000 
 # with y[i]=T if x[i] is divisible by 10, otherwise F
 
-  y <- <your code here>
+  y <- x%%10==0
   
   
 # [1 pt]
@@ -68,21 +68,21 @@ x <- <your code here>
 # that are drawn from a standard normal distribution (hint: rnorm)
 # *and* stored in increasing order
 set.seed(42)
-z <- <your code here>
+z <- sort(rnorm(111))
   
   
 # [1 pt]
 # Create [v], a numeric vector with :
 # a random permutation of the even numbers from 2 to 222
   set.seed(31415)
-v <- <your code here>
+v <- sample(1:111*2, 111, F)
 
   
 # [1 pt]
 # Create [w], a random permutation of the numeric values of a deck of cards
 # (i.e. just the numbers 1 through 13 each repeated 4 times)
 set.seed(2718)
-w <- <your code here>
+w <- sample(rep(1:13,each=4), 52, F)
 
   
 # [1 pt]
@@ -90,14 +90,17 @@ w <- <your code here>
 # Exponential random variables (hint: rexp) with rate 3
 # (arrange the values by column, as per default)
 set.seed(344)
-m <- <your code here>
+m <- matrix(data=rexp(100, rate=3), nrow=10)
 
   
 # [1 pt]
 # Create [l], a list with 12 elements, each a vector of length 100.
 # Each vector of length 100 of Poisson (hint:rpois) random variables with mean 5
   set.seed(71)
-<your code here>
+l <- list()
+for (i in 1:12) {
+  l[[i]] = rpois(100, lambda=5)
+}
 
 
 # For the next few tasks you will use the data frame family (size 14x5)
@@ -106,22 +109,22 @@ load("family.rda")
 
 # [1 pt]
 # Create [f1] a subset of family with only women age 50 or over
-f1 <- <your code here>
+f1 <- subset(family, (family$age>=50) & (family$gender=="f"))
 
   
 # [1 pt]
 # Create [f2] a subset of family with only men 6 foot tall or more
-f2 <- <your code here>
+f2 <- family[(family$height>=72) & (family$gender=="m"),]
 
   
 # [1 pt]
 # Create [f3] a subset of family of people whose name starts with T
-f3 <- <your code here>
+f3 <- family[grep("T.", family$name),]
   
 
 # [1 pt]
 # Create [f4] a subset of family with just the youngest individual (so just one row)
-f4 <- <your code here>
+f4 <- family[family$age==min(family$age), ]
 
 
 # for the next two tasks you will use the data frame infants (size 1236x15)
@@ -130,12 +133,12 @@ load("KaiserBabies.rda")
 
 # [2 pt]
 # Create a table [t] of the education level ($ed) of all married ($marital) first time ($parity=1) mothers:
-t <- <your code here>
+t <- table(infants[infants$marital=="Married" & infants$parity==1,]$ed)
 
 
 # [2 pt]
 # Calculate [mw], the average birthweight ($bwt) of all babies whose were full term, i.e. gestation equal or more than 259 days.
-mw <- <your code here>
+mw <- mean(infants[infants$gestation>=259,]$bwt, na.rm=T)
   
   
 #################################################################
@@ -149,7 +152,7 @@ mw <- <your code here>
 
 # [2 pts]
 # Make a box plot of Sepal Length by Species (so 3 boxplots in one plot)
-
+boxplot(iris$Sepal.Length ~ iris$Species)
 
 
 # [3 pts]
