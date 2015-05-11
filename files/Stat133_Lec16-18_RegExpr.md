@@ -651,42 +651,701 @@ datePieces
 Web log - the whole file
 =============================
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```r
+fileLoc = "weblog.txt"
+wl = readLines(fileLoc)
+length(wl)
+```
 
 ```
-Error in file(con, "r") : cannot open the connection
+[1] 2
 ```
+
+```r
+class(wl)
+```
+
+```
+[1] "character"
+```
+
+```r
+wl
+```
+
+```
+[1] "169.237.46.168 -- [26/Jan/2004:10:47:58 -0800] \"GET /stat141/Winter04 HTTP/1.1\" 301 328 \"http://anson.ucdavis.edu/courses/\" \"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; .NET CLR 1.1.4322)\""  
+[2] "169.237.46.168 -- [26/Jan/2004:10:47:58 -0800] \"GET /stat141/Winter04/ HTTP/1.1\" 200 2585 \"http://anson.ucdavis.edu/courses/\" \"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; .NET CLR 1.1.4322)\""
+```
+Web log - make a dataframe
+=============================
+Suppose we want to make a data frame with the variables:
+- ip address
+- day of month
+- month
+- year
+- operation (GET, PUt, etc)
+- URL
+
+Notice that the strucutre is such that we can pull out
+pieces of information using regular expressions.
+To begin we split on quotes and brackets.
+
+============================
+
+```r
+wlist = strsplit(wl, " \"| -- \\[|\" ")
+wlist[[1]]
+```
+
+```
+[1] "169.237.46.168"                                                           
+[2] "26/Jan/2004:10:47:58 -0800]"                                              
+[3] "GET /stat141/Winter04 HTTP/1.1"                                           
+[4] "301 328"                                                                  
+[5] "http://anson.ucdavis.edu/courses/"                                        
+[6] "\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; .NET CLR 1.1.4322)\""
+```
+We have done a good job of splitting up the pieces of the data.
+Now let's use these pieces to create our variables
+
+=============================== 
+Some are easy, just pick off the particular elements in the list.
+
+```r
+ipAddr = sapply(wlist, function(x) x[1])
+url = sapply(wlist, function(x) x[5])
+ipAddr
+```
+
+```
+[1] "169.237.46.168" "169.237.46.168"
+```
+
+```r
+url
+```
+
+```
+[1] "http://anson.ucdavis.edu/courses/" "http://anson.ucdavis.edu/courses/"
+```
+
+===============================
+To get the operation, we can use gsub to eliminate
+the unwanted stuff from the thrid element
+
+```r
+op = sapply(wlist, function(x) gsub(" .*$", "", x[3]))
+op
+```
+
+```
+[1] "GET" "GET"
+```
+
+===============================
+To get the pieces of the date, we can use strsplit on the second element
+
+```r
+dates = sapply(wlist, function(x) strsplit(x[2], "/|:"))
+dates
+```
+
+```
+[[1]]
+[1] "26"        "Jan"       "2004"      "10"        "47"        "58 -0800]"
+
+[[2]]
+[1] "26"        "Jan"       "2004"      "10"        "47"        "58 -0800]"
+```
+
+===============================
+Here's another way to pick them out
+
+```r
+day = sapply(dates, "[", 1)
+month = sapply(dates, "[", 2)
+year = sapply(dates, "[", 3)
+day
+```
+
+```
+[1] "26" "26"
+```
+
+```r
+month
+```
+
+```
+[1] "Jan" "Jan"
+```
+
+```r
+year
+```
+
+```
+[1] "2004" "2004"
+```
+
+===============================
+We can now put them all in a data frame
+
+```r
+wlDF = data.frame(ipAddr = ipAddr, day =day, month = month,
+                  year = year, op = op, url = url)
+wlDF
+```
+
+```
+          ipAddr day month year  op                               url
+1 169.237.46.168  26   Jan 2004 GET http://anson.ucdavis.edu/courses/
+2 169.237.46.168  26   Jan 2004 GET http://anson.ucdavis.edu/courses/
+```
+
+Fixed Width Data
+===============================
+An alternative to regular expressions.
+
+Note that the information appears in the same positionin the line for each log entry.
+We can specify where to pull the variables from
+
+
+```r
+wl2 = read.fwf(fileLoc, widths = c(14,5,2,1,3,1,4,18,3))
+wl2
+```
+
+```
+              V1    V2 V3 V4  V5 V6   V7                 V8  V9
+1 169.237.46.168  -- [ 26  / Jan  / 2004 :10:47:58 -0800] " GET
+2 169.237.46.168  -- [ 26  / Jan  / 2004 :10:47:58 -0800] " GET
+```
+
+==============================
+Now extract the entries we want
+
+```r
+wlDF2 = wl2[ , c(1, 3, 5, 7, 9)]
+names(wlDF2) = c("ipAddr", "day", "month", "year", "op")
+wlDF2
+```
+
+```
+          ipAddr day month year  op
+1 169.237.46.168  26   Jan 2004 GET
+2 169.237.46.168  26   Jan 2004 GET
+```
+Notice that this isn't going to work for hte URL 
+because they could be of different lengths
+
+Regular Expressions
+=======================
+Regular expressions give us a powerful way of matching patterns in text data.
+
+Most importantly, we do this all programatically rather than by hand, so that 
+we can easily reproduce our work if needed.
+
+Many programming languages support the use of regular expressions.
+
+Reference : [Wiki page](http://en.wikipedia.org/wiki/Regular_expression)
+
+Regular Expressions
+=============================
+A regular expression (aka regex or regexp) is 
+_a sequence of characters that forms a search pattern_.
+
+Or : _A pattern that describes a set of strings._
+
+This set of patterns may be finite or infinite, depending on the particular regexp. 
+
+Regular Expressions - matching
+============================
+We say the regexp “matches” each element of that set. 
+
+For example, the regexp 
+```text
+grey|gray 
+```
+matches both grey and gray, whereas 
+
+```text 
+^A.* 
+```
+matches any string starting with capital A.
+
+Regular Expressions
+=============================
+With regular expressions, we can
+- extract pieces of text 
+– e.g., find all links in an HTML document
+- create variables from information found in text
+- clean and transform text into a uniform format, 
+- resolve inconsistencies in format between files
+- mine text by treating documents directly as data
+- “scrape” the web for data
+
+Syntax
+==================================
+Literal characters are matched only by the character itself.
+
+A character class is matched by any single member of the specified class.  For example,
+```text
+[A-Z] 
+```
+is matched by any capital letter.
+
+Modifiers operate on literal characters, character classes, or combinations of the two. 
+For example ^ is an anchor that indicates the literal must appear at the beginning of the string
+
+Warning
+=============================
+The syntax for regexps is extremely concise
+
+It can be overwhelming if you try to read it like you would regular text.  
+
+Always break it down into these three components: 
+- literals
+- character classes
+- modifiers
+
+Example 
+=======================
+- How to find fake words like rep1!c@ted?
+
+- What makes this different from a regular word?
+
+- Numbers and punctuation surrounded by letters
+
+- Concepts of “numbers”, “punctuation”, and “regular letters” get at the idea 
+of equivalent characters or character classes.
+
+Equivalent Characters
+=============================
+We can enumerate any collection of characters within [ ].  
+Example: [Tt]his
+
+The character “-” when used within the character class pattern identifies a range.  
+Examples: 
+```text
+[0-9], [A-Za-z]
+```
+
+Compliment of Equivalent Characters
+=============================
+If we put a caret 
+```text
+^
+```
+as the first character , this indicates that the equivalent 
+characters are the complement of the enumerated characters. 
+Example: 
+```text
+[^0-9]
+```
+
+Equivalent Characters
+=============================
+If we want to include the character “-” in the set of characters to match, 
+put it at the beginning of the character set to avoid confusion.  Example: [-+][0-9]
+
+Note that here we have created a pattern from a sequence of two sub-patterns.
+
+Named Equivalence Classes
+=============================
+These can be used in conjunction with other characters, for example [[:digit:]_]
+
+
+Return to rep1!c@ted  
+====================
+What will this match?
+```text
+[[:alpha:]][[:digit:][:punct:]][[:alpha:]]
+```
+Note that digit and punct are together within an outer []
+
+Can you foresee any problems with it?
+=============================
+
+Functions that use Regular Expressions
+=============================
+Look for the regular expression in pattern in the character string(s) in x, returns the indices of the elements for which there was a match:
+```text
+grep(pattern, x)  
+```
+Look the regular expression in pattern in x and replace the  matching characters with replacement (all occurrences) sub() works the same way but only replaces the first occurrence.
+```text
+gsub(pattern, replacement, x) 
+```
+
+Functions that use Regular Expressions
+=============================
+```text
+regexpr(pattern, text) 
+```
+returns an integer vector giving the starting position of the first match or -1 if there is none. 
+
+The return value has an attribute "match.length", that gives the length of the matched text (or -1 for no match). 
+
+```text
+gregexpr(pattern,text)
+```
+Returns the locations of all occurrences of the pattern in each element of text.  The return is a list.
+
+R Example
+=====================
+
+```r
+subjectLines = c("Re: 90 days", "Fancy rep1!c@ted watches", "It's me")
+subjectLines
+```
+
+```
+[1] "Re: 90 days"              "Fancy rep1!c@ted watches"
+[3] "It's me"                 
+```
+
+```r
+grep("[[:alpha:]][[:digit:][:punct:]][[:alpha:]]", subjectLines)
+```
+
+```
+[1] 2 3
+```
+
+R Example
+====================
+We can either remove the apostrophe first:
+
+```r
+newString = gsub("'", "", subjectLines)
+grep("[[:alpha:]][[:digit:][:punct:]][[:alpha:]]",   newString)
+```
+
+```
+[1] 2
+```
+
+Or we can specify the particular punctuation marks we’re looking for:
+
+```r
+grep("[[:alpha:]][[:digit:]!@#$%^&*():;?,.][[:alpha:]]", subjectLines)
+```
+
+```
+[1] 2
+```
+
+R Example
+====================
+gregexpr() shows exactly where the pattern was found:
+
+```r
+newString = c("Re: 90 days", "Fancy rep1!c@ted watches", "Its me")                 
+gregexpr("[[:alpha:]][[:digit:][:punct:]][[:alpha:]]", newString)
+```
+
+```
+[[1]]
+[1] -1
+attr(,"match.length")
+[1] -1
+attr(,"useBytes")
+[1] TRUE
+
+[[2]]
+[1] 12
+attr(,"match.length")
+[1] 3
+attr(,"useBytes")
+[1] TRUE
+
+[[3]]
+[1] -1
+attr(,"match.length")
+[1] -1
+attr(,"useBytes")
+[1] TRUE
+```
+
+R Example
+============================
+We didn’t find p1!c because it consists of four characters: a letter, a digit, a punctuation mark, and another letter.
+
+To search for the more general pattern of any number of digits or punctuation marks between letters, we use
+
+[[:alpha:]][[:digit:][:punct:]]+[[:alpha:]]
+
+The plus sign indicates that members from the second character class (digits and punctuation) may appear one or more times.
+
+The plus sign is an example of a meta character.
+
+Meta characters
+=============================
+Meta characters that control how many times something is repeated
+
+The position of a character in a pattern determines whether it is treated as a meta character.
+
+Examples: [-+*/], [1-9]*
+
+R quirk
+======================
+When you want to refer to one of these symbols literally, you need to precede it with a backslash (\).  However, this  already has a special meaning in R’s character strings -- it’s used to indicate control characters like newline (\n).
+
+So, to refer to these symbols in R’s regular expressions, you need to precede them with two backslashes.
+
+Meta Characters
+=============================
+The characters for which you need to do this are:
+. ^ $ + ? ( ) [ ] { } | \
+
+Practice: Indicate which strings contain a match to the pattern
+More Practice: Write a regular expression that matches
+
+1. only the words “cat”, “at”, and “t”
+
+2. The words “cat”, “caat”, “caaat”, and so on
+
+3. “dog”, “Dog”, “dOg”, “doG”, “DOg”, etc. (i.e., the word dog in any combination of upper and lower case) anywhere in the string
+
+4. Any number, with or without a decimal point
+
+Greedy Matching
+=============================
+Be careful with patterns matching too much. 
+The matching is greedy in that it matches as much as possible
+For example: when trying to remove HTML tags from a document, the regular expression
+```text
+  <.*> 
+```
+will match too much but the regular expression  
+```text
+<[^>]*>
+```
+will be just right.  Why?
+
+Spam filtering: Anatomy of email message
+=============================
+Three parts of an email:
+- header 
+- body 
+- attachments (optional)
+
+Like regular mail, the header is the envelope and the body is the letter.  
+
+The data is stored as plain text.
+
+Email Anatomy
+===================
+Header
+- date, sender, and subject 
+- message id
+- who are the carbon-copy recipients
+- return path
+
+SYNTAX –  KEY:VALUE
+
+Example header
+===================
+
+```r
+Date: Mon, 2 Feb 2004 22:16:19 -0800 (PST) 
+From: nolan@stat.Berkeley.EDU 
+X-X-Sender: nolan@kestrel.Berkeley.EDU 
+To: Txxxx Uxxx <txxxx@uclink.berkeley.edu> 
+Subject: Re: prof: did you receive my hw? 
+In-Reply-To: <web-569552@calmail-st.berkeley.edu> 
+Message-ID: <Pine.SOL.4.50.0402022216120.2296-100000@kestrel.Berkeley.EDU> 
+References: <web-569552@calmail-st.berkeley.edu> 
+MIME-Version: 1.0 
+Content-Type: TEXT/PLAIN; charset=US-ASCII 
+Status: O 
+X-Status: 
+X-Keywords: 
+X-UID: 9079
+```
+
+Email
+==================
+Body is separated from the header by a single blank line. 
+Attachment is included in the body of the message. 
+To figure out what part of the body is the message and what part is an attachment mail 
+programs use an Internet standard called MIME, Multipurpose Internet Mail Extensions. 
+
+```text
+Content-Type: has value multipart when attachments are present
+Content-Type: MULTIPART/Mixed;
+ BOUNDARY="_===669732====calmail-me.berkeley.edu===_” 
+
+Boundary key provides a special character string to mark the beginning and end of the message parts. 
+The last component of the message is followed by a line containing the boundary string with two hyphens at the front and end of the string:
+--_===669732====calmail-me.berkeley.edu===_-- 
+```
+
+What characteristics can you derive from the email?
+=============================
+- Sent in the early morning:
+- Numeric 00 – 24 hour received
+- Has an Re: in the subject line
+- Logical: TRUE if Re: in subject line
+- Funny words like v!@gra
+- Logical: TRUE if punctuation in the middle of word
+- Lots of YELLING IN THE EMAIL
+- Numeric: proportion of characters that are capitals
+
+
+
+
+In R - New example
+===========================
+
+```r
+funny = "rep1!c@ted"
+subjectLines = c("Re: 90 days", "Fancy rep1!c@ted watches", "It's me")
+
+strings = c("hi mabc", "abc", "abcd", "abccd",
+            "abcabcdx", "cab", "abd", "cad")
+
+htmlStr = "<html><head></head><body> <h1>This is a title</h1><para>And this is a short paragraph. It has two sentences.</para></body></html>"
+```
+
+===========
+
+```r
+grep("[[:alpha:]][[:digit:][:punct:]][[:alpha:]]", 
+     subjectLines)
+```
+
+```
+[1] 2 3
+```
+
+```r
+newStrings = gsub("'", "", subjectLines)
+newStrings
+```
+
+```
+[1] "Re: 90 days"              "Fancy rep1!c@ted watches"
+[3] "Its me"                  
+```
+
+===========
+
+```r
+grep("[[:alpha:]][[:digit:][:punct:]][[:alpha:]]", 
+     newStrings)
+```
+
+```
+[1] 2
+```
+
+```r
+gregexpr("[[:alpha:]][[:digit:][:punct:]][[:alpha:]]", 
+     newStrings)
+```
+
+```
+[[1]]
+[1] -1
+attr(,"match.length")
+[1] -1
+attr(,"useBytes")
+[1] TRUE
+
+[[2]]
+[1] 12
+attr(,"match.length")
+[1] 3
+attr(,"useBytes")
+[1] TRUE
+
+[[3]]
+[1] -1
+attr(,"match.length")
+[1] -1
+attr(,"useBytes")
+[1] TRUE
+```
+
+```r
+#[1] -1 12 -1
+#attr(,"match.length")
+#[1] -1  3 -1
+#attr(,"useBytes")
+#[1] TRUE
+```
+
+==========
+
+```r
+gregexpr("[[:alpha:]][[:digit:][:punct:]]+[[:alpha:]]",
+         newStrings)
+```
+
+```
+[[1]]
+[1] -1
+attr(,"match.length")
+[1] -1
+attr(,"useBytes")
+[1] TRUE
+
+[[2]]
+[1] 9
+attr(,"match.length")
+[1] 4
+attr(,"useBytes")
+[1] TRUE
+
+[[3]]
+[1] -1
+attr(,"match.length")
+[1] -1
+attr(,"useBytes")
+[1] TRUE
+```
+
+```r
+#[1] -1 9 -1
+#attr(,"match.length")
+#[1] -1  4 -1
+#attr(,"useBytes")
+#[1] TRUE
+```
+
+
+
+Text mining (State of Union Addresses)
+=============================
+- How long are the speeches?  
+- How do the distributions of certain words change over time?  
+- Which presidents have given “similar” speeches?
+
+File with Speeches : stateoftheunion1790-2012.txt
+
+State of Union Addresses - Start of file
+=============================
+\*** 
+
+State of the Union Address 
+George Washington 
+December 8, 1790 
+
+Fellow-Citizens of the Senate and House of Representatives: 
+In meeting you again I feel much satisfaction in being able to repeat my 
+congratulations on the favorable prospects which continue to distinguish 
+our public affairs. The abundant fruits of another year have blessed our 
+country with plenty and with the means of a flourishing commerce.
+
+
+Text mining State of Union Addresses
+=============================
+- All speeches in one large plain text file
+- Each speech starts with “***” on a line followed by 3 lines of information about who gave the speech and when
+- To mine the speeches, we want to create a word vector for each speech, which tracks the counts of how many times a particular word was said in each speech.
+- Words such as nation, national, nations should collapse to the same “word”
+
+

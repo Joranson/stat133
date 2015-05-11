@@ -1545,8 +1545,849 @@ datePieces
 <section data-transition="linear" data-transition-speed="default">
 <h3>Web log - the whole file</h3>
 <div class="slideContent" >
-<pre><code>Error in file(con, &quot;r&quot;) : cannot open the connection
+<pre><code class="r">fileLoc = &quot;weblog.txt&quot;
+wl = readLines(fileLoc)
+length(wl)
 </code></pre>
+
+<pre><code>[1] 2
+</code></pre>
+
+<pre><code class="r">class(wl)
+</code></pre>
+
+<pre><code>[1] &quot;character&quot;
+</code></pre>
+
+<pre><code class="r">wl
+</code></pre>
+
+<pre><code>[1] &quot;169.237.46.168 -- [26/Jan/2004:10:47:58 -0800] \&quot;GET /stat141/Winter04 HTTP/1.1\&quot; 301 328 \&quot;http://anson.ucdavis.edu/courses/\&quot; \&quot;Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; .NET CLR 1.1.4322)\&quot;&quot;  
+[2] &quot;169.237.46.168 -- [26/Jan/2004:10:47:58 -0800] \&quot;GET /stat141/Winter04/ HTTP/1.1\&quot; 200 2585 \&quot;http://anson.ucdavis.edu/courses/\&quot; \&quot;Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; .NET CLR 1.1.4322)\&quot;&quot;
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Web log - make a dataframe</h3>
+<div class="slideContent" >
+<p>Suppose we want to make a data frame with the variables:</p>
+
+<ul>
+<li>ip address</li>
+<li>day of month</li>
+<li>month</li>
+<li>year</li>
+<li>operation (GET, PUt, etc)</li>
+<li>URL</li>
+</ul>
+
+<p>Notice that the strucutre is such that we can pull out
+pieces of information using regular expressions.
+To begin we split on quotes and brackets.</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+
+<div class="slideContent noTitle" >
+<pre><code class="r">wlist = strsplit(wl, &quot; \&quot;| -- \\[|\&quot; &quot;)
+wlist[[1]]
+</code></pre>
+
+<pre><code>[1] &quot;169.237.46.168&quot;                                                           
+[2] &quot;26/Jan/2004:10:47:58 -0800]&quot;                                              
+[3] &quot;GET /stat141/Winter04 HTTP/1.1&quot;                                           
+[4] &quot;301 328&quot;                                                                  
+[5] &quot;http://anson.ucdavis.edu/courses/&quot;                                        
+[6] &quot;\&quot;Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0; .NET CLR 1.1.4322)\&quot;&quot;
+</code></pre>
+
+<p>We have done a good job of splitting up the pieces of the data.
+Now let&#39;s use these pieces to create our variables</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+
+<div class="slideContent noTitle" >
+<p>Some are easy, just pick off the particular elements in the list.</p>
+
+<pre><code class="r">ipAddr = sapply(wlist, function(x) x[1])
+url = sapply(wlist, function(x) x[5])
+ipAddr
+</code></pre>
+
+<pre><code>[1] &quot;169.237.46.168&quot; &quot;169.237.46.168&quot;
+</code></pre>
+
+<pre><code class="r">url
+</code></pre>
+
+<pre><code>[1] &quot;http://anson.ucdavis.edu/courses/&quot; &quot;http://anson.ucdavis.edu/courses/&quot;
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+
+<div class="slideContent noTitle" >
+<p>To get the operation, we can use gsub to eliminate
+the unwanted stuff from the thrid element</p>
+
+<pre><code class="r">op = sapply(wlist, function(x) gsub(&quot; .*$&quot;, &quot;&quot;, x[3]))
+op
+</code></pre>
+
+<pre><code>[1] &quot;GET&quot; &quot;GET&quot;
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+
+<div class="slideContent noTitle" >
+<p>To get the pieces of the date, we can use strsplit on the second element</p>
+
+<pre><code class="r">dates = sapply(wlist, function(x) strsplit(x[2], &quot;/|:&quot;))
+dates
+</code></pre>
+
+<pre><code>[[1]]
+[1] &quot;26&quot;        &quot;Jan&quot;       &quot;2004&quot;      &quot;10&quot;        &quot;47&quot;        &quot;58 -0800]&quot;
+
+[[2]]
+[1] &quot;26&quot;        &quot;Jan&quot;       &quot;2004&quot;      &quot;10&quot;        &quot;47&quot;        &quot;58 -0800]&quot;
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+
+<div class="slideContent noTitle" >
+<p>Here&#39;s another way to pick them out</p>
+
+<pre><code class="r">day = sapply(dates, &quot;[&quot;, 1)
+month = sapply(dates, &quot;[&quot;, 2)
+year = sapply(dates, &quot;[&quot;, 3)
+day
+</code></pre>
+
+<pre><code>[1] &quot;26&quot; &quot;26&quot;
+</code></pre>
+
+<pre><code class="r">month
+</code></pre>
+
+<pre><code>[1] &quot;Jan&quot; &quot;Jan&quot;
+</code></pre>
+
+<pre><code class="r">year
+</code></pre>
+
+<pre><code>[1] &quot;2004&quot; &quot;2004&quot;
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+
+<div class="slideContent noTitle" >
+<p>We can now put them all in a data frame</p>
+
+<pre><code class="r">wlDF = data.frame(ipAddr = ipAddr, day =day, month = month,
+                  year = year, op = op, url = url)
+wlDF
+</code></pre>
+
+<pre><code>          ipAddr day month year  op                               url
+1 169.237.46.168  26   Jan 2004 GET http://anson.ucdavis.edu/courses/
+2 169.237.46.168  26   Jan 2004 GET http://anson.ucdavis.edu/courses/
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Fixed Width Data</h3>
+<div class="slideContent" >
+<p>An alternative to regular expressions.</p>
+
+<p>Note that the information appears in the same positionin the line for each log entry.
+We can specify where to pull the variables from</p>
+
+<pre><code class="r">wl2 = read.fwf(fileLoc, widths = c(14,5,2,1,3,1,4,18,3))
+wl2
+</code></pre>
+
+<pre><code>              V1    V2 V3 V4  V5 V6   V7                 V8  V9
+1 169.237.46.168  -- [ 26  / Jan  / 2004 :10:47:58 -0800] &quot; GET
+2 169.237.46.168  -- [ 26  / Jan  / 2004 :10:47:58 -0800] &quot; GET
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+
+<div class="slideContent noTitle" >
+<p>Now extract the entries we want</p>
+
+<pre><code class="r">wlDF2 = wl2[ , c(1, 3, 5, 7, 9)]
+names(wlDF2) = c(&quot;ipAddr&quot;, &quot;day&quot;, &quot;month&quot;, &quot;year&quot;, &quot;op&quot;)
+wlDF2
+</code></pre>
+
+<pre><code>          ipAddr day month year  op
+1 169.237.46.168  26   Jan 2004 GET
+2 169.237.46.168  26   Jan 2004 GET
+</code></pre>
+
+<p>Notice that this isn&#39;t going to work for hte URL 
+because they could be of different lengths</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Regular Expressions</h3>
+<div class="slideContent" >
+<p>Regular expressions give us a powerful way of matching patterns in text data.</p>
+
+<p>Most importantly, we do this all programatically rather than by hand, so that 
+we can easily reproduce our work if needed.</p>
+
+<p>Many programming languages support the use of regular expressions.</p>
+
+<p>Reference : <a href="http://en.wikipedia.org/wiki/Regular_expression">Wiki page</a></p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Regular Expressions</h3>
+<div class="slideContent" >
+<p>A regular expression (aka regex or regexp) is 
+<em>a sequence of characters that forms a search pattern</em>.</p>
+
+<p>Or : <em>A pattern that describes a set of strings.</em></p>
+
+<p>This set of patterns may be finite or infinite, depending on the particular regexp. </p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Regular Expressions - matching</h3>
+<div class="slideContent" >
+<p>We say the regexp “matches” each element of that set. </p>
+
+<p>For example, the regexp </p>
+
+<pre><code class="text">grey|gray 
+</code></pre>
+
+<p>matches both grey and gray, whereas </p>
+
+<pre><code class="text">^A.* 
+</code></pre>
+
+<p>matches any string starting with capital A.</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Regular Expressions</h3>
+<div class="slideContent" >
+<p>With regular expressions, we can</p>
+
+<ul>
+<li>extract pieces of text 
+– e.g., find all links in an HTML document</li>
+<li>create variables from information found in text</li>
+<li>clean and transform text into a uniform format, </li>
+<li>resolve inconsistencies in format between files</li>
+<li>mine text by treating documents directly as data</li>
+<li>“scrape” the web for data</li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Syntax</h3>
+<div class="slideContent" >
+<p>Literal characters are matched only by the character itself.</p>
+
+<p>A character class is matched by any single member of the specified class.  For example,</p>
+
+<pre><code class="text">[A-Z] 
+</code></pre>
+
+<p>is matched by any capital letter.</p>
+
+<p>Modifiers operate on literal characters, character classes, or combinations of the two. 
+For example ^ is an anchor that indicates the literal must appear at the beginning of the string</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Warning</h3>
+<div class="slideContent" >
+<p>The syntax for regexps is extremely concise</p>
+
+<p>It can be overwhelming if you try to read it like you would regular text.  </p>
+
+<p>Always break it down into these three components: </p>
+
+<ul>
+<li>literals</li>
+<li>character classes</li>
+<li>modifiers</li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Example </h3>
+<div class="slideContent" >
+<ul>
+<li><p>How to find fake words like rep1!c@ted?</p></li>
+<li><p>What makes this different from a regular word?</p></li>
+<li><p>Numbers and punctuation surrounded by letters</p></li>
+<li><p>Concepts of “numbers”, “punctuation”, and “regular letters” get at the idea 
+of equivalent characters or character classes.</p></li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Equivalent Characters</h3>
+<div class="slideContent" >
+<p>We can enumerate any collection of characters within [ ].<br/>
+Example: [Tt]his</p>
+
+<p>The character “-” when used within the character class pattern identifies a range.<br/>
+Examples: </p>
+
+<pre><code class="text">[0-9], [A-Za-z]
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Compliment of Equivalent Characters</h3>
+<div class="slideContent" >
+<p>If we put a caret </p>
+
+<pre><code class="text">^
+</code></pre>
+
+<p>as the first character , this indicates that the equivalent 
+characters are the complement of the enumerated characters. 
+Example: </p>
+
+<pre><code class="text">[^0-9]
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Equivalent Characters</h3>
+<div class="slideContent" >
+<p>If we want to include the character “-” in the set of characters to match, 
+put it at the beginning of the character set to avoid confusion.  Example: [-+][0-9]</p>
+
+<p>Note that here we have created a pattern from a sequence of two sub-patterns.</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Named Equivalence Classes</h3>
+<div class="slideContent" >
+<p>These can be used in conjunction with other characters, for example [[:digit:]_]</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Return to rep1!c@ted  </h3>
+<div class="slideContent" >
+<p>What will this match?</p>
+
+<pre><code class="text">[[:alpha:]][[:digit:][:punct:]][[:alpha:]]
+</code></pre>
+
+<p>Note that digit and punct are together within an outer []</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Can you foresee any problems with it?</h3>
+<div class="slideContent" >
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Functions that use Regular Expressions</h3>
+<div class="slideContent" >
+<p>Look for the regular expression in pattern in the character string(s) in x, returns the indices of the elements for which there was a match:</p>
+
+<pre><code class="text">grep(pattern, x)  
+</code></pre>
+
+<p>Look the regular expression in pattern in x and replace the  matching characters with replacement (all occurrences) sub() works the same way but only replaces the first occurrence.</p>
+
+<pre><code class="text">gsub(pattern, replacement, x) 
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Functions that use Regular Expressions</h3>
+<div class="slideContent" >
+<pre><code class="text">regexpr(pattern, text) 
+</code></pre>
+
+<p>returns an integer vector giving the starting position of the first match or -1 if there is none. </p>
+
+<p>The return value has an attribute &ldquo;match.length&rdquo;, that gives the length of the matched text (or -1 for no match). </p>
+
+<pre><code class="text">gregexpr(pattern,text)
+</code></pre>
+
+<p>Returns the locations of all occurrences of the pattern in each element of text.  The return is a list.</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>R Example</h3>
+<div class="slideContent" >
+<pre><code class="r">subjectLines = c(&quot;Re: 90 days&quot;, &quot;Fancy rep1!c@ted watches&quot;, &quot;It&#39;s me&quot;)
+subjectLines
+</code></pre>
+
+<pre><code>[1] &quot;Re: 90 days&quot;              &quot;Fancy rep1!c@ted watches&quot;
+[3] &quot;It&#39;s me&quot;                 
+</code></pre>
+
+<pre><code class="r">grep(&quot;[[:alpha:]][[:digit:][:punct:]][[:alpha:]]&quot;, subjectLines)
+</code></pre>
+
+<pre><code>[1] 2 3
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>R Example</h3>
+<div class="slideContent" >
+<p>We can either remove the apostrophe first:</p>
+
+<pre><code class="r">newString = gsub(&quot;&#39;&quot;, &quot;&quot;, subjectLines)
+grep(&quot;[[:alpha:]][[:digit:][:punct:]][[:alpha:]]&quot;,   newString)
+</code></pre>
+
+<pre><code>[1] 2
+</code></pre>
+
+<p>Or we can specify the particular punctuation marks we’re looking for:</p>
+
+<pre><code class="r">grep(&quot;[[:alpha:]][[:digit:]!@#$%^&amp;*():;?,.][[:alpha:]]&quot;, subjectLines)
+</code></pre>
+
+<pre><code>[1] 2
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>R Example</h3>
+<div class="slideContent" >
+<p>gregexpr() shows exactly where the pattern was found:</p>
+
+<pre><code class="r">newString = c(&quot;Re: 90 days&quot;, &quot;Fancy rep1!c@ted watches&quot;, &quot;Its me&quot;)                 
+gregexpr(&quot;[[:alpha:]][[:digit:][:punct:]][[:alpha:]]&quot;, newString)
+</code></pre>
+
+<pre><code>[[1]]
+[1] -1
+attr(,&quot;match.length&quot;)
+[1] -1
+attr(,&quot;useBytes&quot;)
+[1] TRUE
+
+[[2]]
+[1] 12
+attr(,&quot;match.length&quot;)
+[1] 3
+attr(,&quot;useBytes&quot;)
+[1] TRUE
+
+[[3]]
+[1] -1
+attr(,&quot;match.length&quot;)
+[1] -1
+attr(,&quot;useBytes&quot;)
+[1] TRUE
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>R Example</h3>
+<div class="slideContent" >
+<p>We didn’t find p1!c because it consists of four characters: a letter, a digit, a punctuation mark, and another letter.</p>
+
+<p>To search for the more general pattern of any number of digits or punctuation marks between letters, we use</p>
+
+<p>[[:alpha:]][[:digit:][:punct:]]+[[:alpha:]]</p>
+
+<p>The plus sign indicates that members from the second character class (digits and punctuation) may appear one or more times.</p>
+
+<p>The plus sign is an example of a meta character.</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Meta characters</h3>
+<div class="slideContent" >
+<p>Meta characters that control how many times something is repeated</p>
+
+<p>The position of a character in a pattern determines whether it is treated as a meta character.</p>
+
+<p>Examples: [-+<em>/], [1-9]</em></p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>R quirk</h3>
+<div class="slideContent" >
+<p>When you want to refer to one of these symbols literally, you need to precede it with a backslash ().  However, this  already has a special meaning in R’s character strings &ndash; it’s used to indicate control characters like newline (\n).</p>
+
+<p>So, to refer to these symbols in R’s regular expressions, you need to precede them with two backslashes.</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Meta Characters</h3>
+<div class="slideContent" >
+<p>The characters for which you need to do this are:
+. ^ $ + ? ( ) [ ] { } | \</p>
+
+<p>Practice: Indicate which strings contain a match to the pattern
+More Practice: Write a regular expression that matches</p>
+
+<ol>
+<li><p>only the words “cat”, “at”, and “t”</p></li>
+<li><p>The words “cat”, “caat”, “caaat”, and so on</p></li>
+<li><p>“dog”, “Dog”, “dOg”, “doG”, “DOg”, etc. (i.e., the word dog in any combination of upper and lower case) anywhere in the string</p></li>
+<li><p>Any number, with or without a decimal point</p></li>
+</ol>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Greedy Matching</h3>
+<div class="slideContent" >
+<p>Be careful with patterns matching too much. 
+The matching is greedy in that it matches as much as possible
+For example: when trying to remove HTML tags from a document, the regular expression</p>
+
+<pre><code class="text">  &lt;.*&gt; 
+</code></pre>
+
+<p>will match too much but the regular expression  </p>
+
+<pre><code class="text">&lt;[^&gt;]*&gt;
+</code></pre>
+
+<p>will be just right.  Why?</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Spam filtering: Anatomy of email message</h3>
+<div class="slideContent" >
+<p>Three parts of an email:</p>
+
+<ul>
+<li>header </li>
+<li>body </li>
+<li>attachments (optional)</li>
+</ul>
+
+<p>Like regular mail, the header is the envelope and the body is the letter.  </p>
+
+<p>The data is stored as plain text.</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Email Anatomy</h3>
+<div class="slideContent" >
+<p>Header</p>
+
+<ul>
+<li>date, sender, and subject </li>
+<li>message id</li>
+<li>who are the carbon-copy recipients</li>
+<li>return path</li>
+</ul>
+
+<p>SYNTAX –  KEY:VALUE</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Example header</h3>
+<div class="slideContent" >
+<pre><code class="r">Date: Mon, 2 Feb 2004 22:16:19 -0800 (PST) 
+From: nolan@stat.Berkeley.EDU 
+X-X-Sender: nolan@kestrel.Berkeley.EDU 
+To: Txxxx Uxxx &lt;txxxx@uclink.berkeley.edu&gt; 
+Subject: Re: prof: did you receive my hw? 
+In-Reply-To: &lt;web-569552@calmail-st.berkeley.edu&gt; 
+Message-ID: &lt;Pine.SOL.4.50.0402022216120.2296-100000@kestrel.Berkeley.EDU&gt; 
+References: &lt;web-569552@calmail-st.berkeley.edu&gt; 
+MIME-Version: 1.0 
+Content-Type: TEXT/PLAIN; charset=US-ASCII 
+Status: O 
+X-Status: 
+X-Keywords: 
+X-UID: 9079
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Email</h3>
+<div class="slideContent" >
+<p>Body is separated from the header by a single blank line. 
+Attachment is included in the body of the message. 
+To figure out what part of the body is the message and what part is an attachment mail 
+programs use an Internet standard called MIME, Multipurpose Internet Mail Extensions. </p>
+
+<pre><code class="text">Content-Type: has value multipart when attachments are present
+Content-Type: MULTIPART/Mixed;
+ BOUNDARY=&quot;_===669732====calmail-me.berkeley.edu===_” 
+
+Boundary key provides a special character string to mark the beginning and end of the message parts. 
+The last component of the message is followed by a line containing the boundary string with two hyphens at the front and end of the string:
+--_===669732====calmail-me.berkeley.edu===_-- 
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>What characteristics can you derive from the email?</h3>
+<div class="slideContent" >
+<ul>
+<li>Sent in the early morning:</li>
+<li>Numeric 00 – 24 hour received</li>
+<li>Has an Re: in the subject line</li>
+<li>Logical: TRUE if Re: in subject line</li>
+<li>Funny words like v!@gra</li>
+<li>Logical: TRUE if punctuation in the middle of word</li>
+<li>Lots of YELLING IN THE EMAIL</li>
+<li>Numeric: proportion of characters that are capitals</li>
+</ul>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>In R - New example</h3>
+<div class="slideContent" >
+<pre><code class="r">funny = &quot;rep1!c@ted&quot;
+subjectLines = c(&quot;Re: 90 days&quot;, &quot;Fancy rep1!c@ted watches&quot;, &quot;It&#39;s me&quot;)
+
+strings = c(&quot;hi mabc&quot;, &quot;abc&quot;, &quot;abcd&quot;, &quot;abccd&quot;,
+            &quot;abcabcdx&quot;, &quot;cab&quot;, &quot;abd&quot;, &quot;cad&quot;)
+
+htmlStr = &quot;&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt; &lt;h1&gt;This is a title&lt;/h1&gt;&lt;para&gt;And this is a short paragraph. It has two sentences.&lt;/para&gt;&lt;/body&gt;&lt;/html&gt;&quot;
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+
+<div class="slideContent noTitle" >
+<pre><code class="r">grep(&quot;[[:alpha:]][[:digit:][:punct:]][[:alpha:]]&quot;, 
+     subjectLines)
+</code></pre>
+
+<pre><code>[1] 2 3
+</code></pre>
+
+<pre><code class="r">newStrings = gsub(&quot;&#39;&quot;, &quot;&quot;, subjectLines)
+newStrings
+</code></pre>
+
+<pre><code>[1] &quot;Re: 90 days&quot;              &quot;Fancy rep1!c@ted watches&quot;
+[3] &quot;Its me&quot;                  
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+
+<div class="slideContent noTitle" >
+<pre><code class="r">grep(&quot;[[:alpha:]][[:digit:][:punct:]][[:alpha:]]&quot;, 
+     newStrings)
+</code></pre>
+
+<pre><code>[1] 2
+</code></pre>
+
+<pre><code class="r">gregexpr(&quot;[[:alpha:]][[:digit:][:punct:]][[:alpha:]]&quot;, 
+     newStrings)
+</code></pre>
+
+<pre><code>[[1]]
+[1] -1
+attr(,&quot;match.length&quot;)
+[1] -1
+attr(,&quot;useBytes&quot;)
+[1] TRUE
+
+[[2]]
+[1] 12
+attr(,&quot;match.length&quot;)
+[1] 3
+attr(,&quot;useBytes&quot;)
+[1] TRUE
+
+[[3]]
+[1] -1
+attr(,&quot;match.length&quot;)
+[1] -1
+attr(,&quot;useBytes&quot;)
+[1] TRUE
+</code></pre>
+
+<pre><code class="r">#[1] -1 12 -1
+#attr(,&quot;match.length&quot;)
+#[1] -1  3 -1
+#attr(,&quot;useBytes&quot;)
+#[1] TRUE
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+
+<div class="slideContent noTitle" >
+<pre><code class="r">gregexpr(&quot;[[:alpha:]][[:digit:][:punct:]]+[[:alpha:]]&quot;,
+         newStrings)
+</code></pre>
+
+<pre><code>[[1]]
+[1] -1
+attr(,&quot;match.length&quot;)
+[1] -1
+attr(,&quot;useBytes&quot;)
+[1] TRUE
+
+[[2]]
+[1] 9
+attr(,&quot;match.length&quot;)
+[1] 4
+attr(,&quot;useBytes&quot;)
+[1] TRUE
+
+[[3]]
+[1] -1
+attr(,&quot;match.length&quot;)
+[1] -1
+attr(,&quot;useBytes&quot;)
+[1] TRUE
+</code></pre>
+
+<pre><code class="r">#[1] -1 9 -1
+#attr(,&quot;match.length&quot;)
+#[1] -1  4 -1
+#attr(,&quot;useBytes&quot;)
+#[1] TRUE
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Text mining (State of Union Addresses)</h3>
+<div class="slideContent" >
+<ul>
+<li>How long are the speeches?<br/></li>
+<li>How do the distributions of certain words change over time?<br/></li>
+<li>Which presidents have given “similar” speeches?</li>
+</ul>
+
+<p>File with Speeches : stateoftheunion1790-2012.txt</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>State of Union Addresses - Start of file</h3>
+<div class="slideContent" >
+<p>*** </p>
+
+<p>State of the Union Address 
+George Washington 
+December 8, 1790 </p>
+
+<p>Fellow-Citizens of the Senate and House of Representatives: 
+In meeting you again I feel much satisfaction in being able to repeat my 
+congratulations on the favorable prospects which continue to distinguish 
+our public affairs. The abundant fruits of another year have blessed our 
+country with plenty and with the means of a flourishing commerce.</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>Text mining State of Union Addresses</h3>
+<div class="slideContent" >
+<ul>
+<li>All speeches in one large plain text file</li>
+<li>Each speech starts with “***” on a line followed by 3 lines of information about who gave the speech and when</li>
+<li>To mine the speeches, we want to create a word vector for each speech, which tracks the counts of how many times a particular word was said in each speech.</li>
+<li>Words such as nation, national, nations should collapse to the same “word”</li>
+</ul>
 
 </div>
 

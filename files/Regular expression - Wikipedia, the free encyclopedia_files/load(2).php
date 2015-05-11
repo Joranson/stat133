@@ -1,0 +1,2 @@
+mw.loader.implement("mediawiki.language.data",function($,jQuery){mw.language.setData("en",{"digitTransformTable":null,"separatorTransformTable":null,"grammarForms":[],"pluralRules":["i = 1 and v = 0 @integer 1"],"digitGroupingPattern":null,"fallbackLanguages":[]});});
+/* cache key: enwiki:resourceloader:filter:minify-js:7:96639943c9ed02ba6afea73b21055ffb */
