@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)http://en.wikibooks.org/wiki/R_Programming/Text_Processing -->
+<html lang="en" dir="ltr" class="client-js ve-not-available"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<title>R Programming/Text Processing - Wikibooks, open books for an open world</title>
+<meta name="generator" content="MediaWiki 1.26wmf4">
+<link rel="alternate" type="application/x-wiki" title="Edit" href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit">
+<link rel="edit" title="Edit" href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit">
+<link rel="shortcut icon" href="http://en.wikibooks.org/static/favicon/wikibooks.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="http://en.wikibooks.org/w/opensearch_desc.php" title="Wikibooks (en)">
+<link rel="EditURI" type="application/rsd+xml" href="http://en.wikibooks.org/w/api.php?action=rsd">
+<link rel="alternate" hreflang="x-default" href="./R Programming_Text Processing - Wikibooks, open books for an open world_files/R Programming_Text Processing - Wikibooks, open books for an open world.html">
+<link rel="copyright" href="http://creativecommons.org/licenses/by-sa/3.0/">
+<link rel="alternate" type="application/atom+xml" title="Wikibooks Atom feed" href="http://en.wikibooks.org/w/index.php?title=Special:RecentChanges&feed=atom">
+<link rel="canonical" href="./R Programming_Text Processing - Wikibooks, open books for an open world_files/R Programming_Text Processing - Wikibooks, open books for an open world.html">
+<link rel="stylesheet" href="http://en.wikibooks.org/w/load.php?debug=false&lang=en&modules=ext.flaggedRevs.basic%7Cext.gadget.extlinks%7Cext.geshi.language.rsplus%7Cext.geshi.local%7Cext.rtlcite%2Cwikihiero%2CwikimediaBadges%7Cext.uls.nojs%7Cext.visualEditor.viewPageTarget.noscript%7Cmediawiki.legacy.commonPrint%2Cshared%7Cmediawiki.sectionAnchor%7Cmediawiki.skinning.interface%7Cmediawiki.ui.button%7Cskins.vector.styles%7Cwikibase.client.init&only=styles&skin=vector&*">
+<style>
+.tipsy{padding:5px;position:absolute;z-index:100000;cursor:default}.tipsy-inner{padding:5px 8px 4px 8px; background-color:#ffffff;border:solid 1px #a7d7f9;color:black;max-width:15em;border-radius:4px; }.tipsy-arrow{position:absolute;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALAgMAAADUwp+1AAAACVBMVEX5+fmn1/n///9s6BFKAAAAAXRSTlMAQObYZgAAACpJREFUCB1jZBD4wMiQMoeRcUU4I9uSaYxSE54xZjn8AtMgPkgcJA9UBwAeDw1Qrb3pVAAAAABJRU5ErkJggg==) no-repeat top left;background:url(//en.wikibooks.org/static/1.26wmf4/resources/src/jquery.tipsy/images/tipsy.png?2015-04-29T19:31:40Z) no-repeat top left!ie;width:11px;height:6px} .tipsy-n .tipsy-arrow{top:0px;left:50%;margin-left:-5px} .tipsy-nw .tipsy-arrow{top:1px;left:10px} .tipsy-ne .tipsy-arrow{top:1px;right:10px} .tipsy-s .tipsy-arrow{bottom:0px;left:50%;margin-left:-5px;background-position:bottom left} .tipsy-sw .tipsy-arrow{bottom:0px;left:10px;background-position:bottom left} .tipsy-se .tipsy-arrow{bottom:0px;right:10px;background-position:bottom left} .tipsy-e .tipsy-arrow{top:50%;margin-top:-5px;right:1px;width:5px;height:11px;background-position:top right} .tipsy-w .tipsy-arrow{top:50%;margin-top:-5px;left:0px;width:6px;height:11px} .tipsy{font-size:0.8em}
+/* cache key: enwikibooks:resourceloader:filter:minify-css:7:3bb5b3c8916836f7e3de1bb6829194df */
+@media print{#centralNotice{display:none}}
+/* cache key: enwikibooks:resourceloader:filter:minify-css:7:ddb0c98a055632ae8e349c9cf48ac703 */
+.uls-menu a{cursor:pointer}.uls-menu.callout .caret-before{border-top:20px solid transparent;border-right:20px solid #C9C9C9;border-bottom:20px solid transparent;display:inline-block;left:-21px;top:30px;position:absolute}.uls-menu.callout .caret-after{border-top:20px solid transparent;border-right:20px solid #FCFCFC;border-bottom:20px solid transparent;display:inline-block;left:-20px;top:30px;position:absolute}.uls-ui-languages button{width:23%;text-overflow:ellipsis;margin-right:4%}button.uls-more-languages{width:auto}.settings-title{font-size:11pt}.settings-text{color:#555555;font-size:9pt}div.display-settings-block:hover .settings-text{color:#252525}
+/* cache key: enwikibooks:resourceloader:filter:minify-css:7:22d1681fa868b4ff4fbcb1ec1e58a9ea */
+@-webkit-keyframes centralAuthPPersonalAnimation{0%{opacity:0;-webkit-transform:translateY(-20px)}100%{opacity:1;-webkit-transform:translateY(0)}}@-moz-keyframes centralAuthPPersonalAnimation{0%{opacity:0;-moz-transform:translateY(-20px)}100%{opacity:1;-moz-transform:translateY(0)}}@-o-keyframes centralAuthPPersonalAnimation{0%{opacity:0;-o-transform:translateY(-20px)}100%{opacity:1;-o-transform:translateY(0)}}@keyframes centralAuthPPersonalAnimation{0%{opacity:0;transform:translateY(-20px)}100%{opacity:1;transform:translateY(0)}}.centralAuthPPersonalAnimation{-webkit-animation-duration:1s;-moz-animation-duration:1s;-o-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:both;-moz-animation-fill-mode:both;-o-animation-fill-mode:both;animation-fill-mode:both;-webkit-animation-name:centralAuthPPersonalAnimation;-moz-animation-name:centralAuthPPersonalAnimation;-o-animation-name:centralAuthPPersonalAnimation;animation-name:centralAuthPPersonalAnimation}
+/* cache key: enwikibooks:resourceloader:filter:minify-css:7:0dcacc990dd02e7db9669ab3090b80f1 */
+.ve-activated #toc,.ve-activated #siteNotice,.ve-activated .mw-indicators, .ve-active #bodyContent > :not(#siteSub):not(#contentSub):not(.ve-ui-mwTocWidget),.ve-activated #t-print,.ve-activated #t-permalink,.ve-activated #p-coll-print_export,.ve-activated #t-cite,.ve-activating .ve-ui-surface,.ve-deactivating .ve-ui-surface{display:none}.ve-activated #bodyContent,.ve-activated #firstHeading,.ve-activated #siteSub,.ve-activated #contentSub{opacity:0.6;pointer-events:none}.ve-activated #firstHeading{cursor:default} .ve-activated #content{position:relative}.ve-init-mw-viewPageTarget-loading-overlay{position:absolute;left:0;right:0;z-index:1;margin-top:-0.5em}.ve-init-mw-viewPageTarget-progress{border:1px solid #347bff;background:#fff;height:0.75em;border-radius:2px;overflow:hidden;margin:0 25%}.ve-init-mw-viewPageTarget-progress-bar{width:0;height:0.75em;background:#347bff} .mw-editsection{white-space:nowrap; unicode-bidi:-moz-isolate;unicode-bidi:-webkit-isolate;unicode-bidi:isolate}.mw-editsection-divider{color:#555}.ve-tabmessage-appendix{font-size:0.7em;vertical-align:top;line-height:1.43em;padding-left:0.5em; background-image:none !important;display:inline !important}
+/* cache key: enwikibooks:resourceloader:filter:minify-css:7:98428ddb6d82ef9bb6dcf1d1c4437f25 */</style><style>
+.cite-accessibility-label{position:absolute !important; top:-99999px;clip:rect(1px 1px 1px 1px); clip:rect(1px,1px,1px,1px);padding:0 !important;border:0 !important;height:1px !important;width:1px !important;overflow:hidden}.mw-cite-backlink,.cite-accessibility-label{-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;user-select:none} ol.references li:target,sup.reference:target{background-color:#def; background-color:rgba(0,127,255,0.133)}@media print{.mw-cite-backlink{display:none}}
+/* cache key: enwikibooks:resourceloader:filter:minify-css:7:2970940d33044e6aa6a620ce3c93c662 */
+#p-lang .uls-settings-trigger{background:transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAgCAQAAACI54EcAAAAAnNCSVQICFXsRgQAAAAJcEhZcwAADdcAAA3XAUIom3gAAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb7jwaAAABWklEQVQoz42RwWrCQBBAc/PkyXiQfpEXobKzEsipCkKh5CBUhBBmaWrw6j/oIQr6VeaSXzDpZDbZ1CWVMhBm5zGT2X1O6fwdv1L0saTwLajmar0d4JHh6XuEofqooVpiQcU7ozbeGWJklXVEGrrcWWKOCUXOeYEuQeXhQaNdv/rPrl/jFH3HjEnM1klTa2FsYNzCBV45zfa9Cu17mPH5gm903A7rhW60d0Rf7opf9D03nVf50jCwyjxHrZvnCzCkR0sZndFVK/y0Hl7NGC46rTxV9hRKH0oope0T5nL9OhDHCsJpOhKhaHyKJRRUvDMyIbRPiB7LdWifnsudJeSQUOScF17lU3pw0GjCPid9jWUqfceMMT6pu6610PiE2ECxgCun2Zh9jnuQ8fkiK58wrBe60d4RfXWf9ik2XVeR2icEFuA5svEJgQinI5kyOnuuWAnbJ8z42f7r8wfhovZYX3llNQAAAABJRU5ErkJggg==) no-repeat right top;background:transparent url(//en.wikibooks.org/static/1.26wmf4/extensions/UniversalLanguageSelector/resources/css/../images/cog-sprite.png?2015-04-29T19:36:40Z) no-repeat right top!ie;background-image:-webkit-linear-gradient(transparent,transparent),url(data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%2214%22%20height%3D%2232%22%3E%3Cdefs%3E%3Cpath%20d%3D%22M14%209.3V6.73l-1.575-.264c-.117-.44-.292-.848-.496-1.2l.93-1.285-1.81-1.84-1.31.908c-.38-.205-.79-.38-1.196-.497L8.284%201H5.716l-.263%201.578c-.437.117-.816.293-1.196.497L2.975%202.17%201.137%203.98l.934%201.287c-.2.38-.376.79-.493%201.228L0%206.73V9.3l1.575.264c.117.438.292.818.496%201.198l-.93%201.315L2.95%2013.89l1.312-.938c.38.205.787.38%201.224.497L5.746%2015h2.566l.263-1.578c.408-.117.817-.293%201.196-.497l1.315.935%201.81-1.812-.935-1.315c.203-.38.38-.76.495-1.2L14%209.303zm-7%201.404c-1.488%200-2.683-1.2-2.683-2.69S5.542%205.327%207%205.327c1.458%200%202.683%201.198%202.683%202.69%200%201.49-1.195%202.688-2.683%202.688z%22%20id%3D%22a%22%2F%3E%3C%2Fdefs%3E%3Cuse%20xlink%3Ahref%3D%22%23a%22%20fill%3D%22%23808080%22%2F%3E%3Cuse%20transform%3D%22translate%280%2016%29%22%20xlink%3Ahref%3D%22%23a%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E%0A);background-image:-webkit-linear-gradient(transparent,transparent),url(//en.wikibooks.org/static/1.26wmf4/extensions/UniversalLanguageSelector/resources/css/../images/cog-sprite.svg?2015-04-29T19:36:40Z)!ie;background-image:linear-gradient(transparent,transparent),url(data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%2214%22%20height%3D%2232%22%3E%3Cdefs%3E%3Cpath%20d%3D%22M14%209.3V6.73l-1.575-.264c-.117-.44-.292-.848-.496-1.2l.93-1.285-1.81-1.84-1.31.908c-.38-.205-.79-.38-1.196-.497L8.284%201H5.716l-.263%201.578c-.437.117-.816.293-1.196.497L2.975%202.17%201.137%203.98l.934%201.287c-.2.38-.376.79-.493%201.228L0%206.73V9.3l1.575.264c.117.438.292.818.496%201.198l-.93%201.315L2.95%2013.89l1.312-.938c.38.205.787.38%201.224.497L5.746%2015h2.566l.263-1.578c.408-.117.817-.293%201.196-.497l1.315.935%201.81-1.812-.935-1.315c.203-.38.38-.76.495-1.2L14%209.303zm-7%201.404c-1.488%200-2.683-1.2-2.683-2.69S5.542%205.327%207%205.327c1.458%200%202.683%201.198%202.683%202.69%200%201.49-1.195%202.688-2.683%202.688z%22%20id%3D%22a%22%2F%3E%3C%2Fdefs%3E%3Cuse%20xlink%3Ahref%3D%22%23a%22%20fill%3D%22%23808080%22%2F%3E%3Cuse%20transform%3D%22translate%280%2016%29%22%20xlink%3Ahref%3D%22%23a%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E%0A);background-image:linear-gradient(transparent,transparent),url(//en.wikibooks.org/static/1.26wmf4/extensions/UniversalLanguageSelector/resources/css/../images/cog-sprite.svg?2015-04-29T19:36:40Z)!ie;height:16px;width:14px;float:right;cursor:pointer}.skin-vector #p-lang .uls-settings-trigger{ margin-top:3px}#p-lang .uls-settings-trigger:hover{background-position:right -16px}
+/* cache key: enwikibooks:resourceloader:filter:minify-css:7:59d4ae303f9cb05ffb7928f6f6268bc3 */
+.mw-collapsible-toggle{float:right;-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;user-select:none}  .mw-content-ltr .mw-collapsible-toggle,.mw-content-rtl .mw-content-ltr .mw-collapsible-toggle{float:right} .mw-content-rtl .mw-collapsible-toggle,.mw-content-ltr .mw-content-rtl .mw-collapsible-toggle{float:left}.mw-customtoggle,.mw-collapsible-toggle{cursor:pointer} caption .mw-collapsible-toggle,.mw-content-ltr caption .mw-collapsible-toggle,.mw-content-rtl caption .mw-collapsible-toggle,.mw-content-rtl .mw-content-ltr caption .mw-collapsible-toggle,.mw-content-ltr .mw-content-rtl caption .mw-collapsible-toggle{float:none} li .mw-collapsible-toggle,.mw-content-ltr li .mw-collapsible-toggle,.mw-content-rtl li .mw-collapsible-toggle,.mw-content-rtl .mw-content-ltr li .mw-collapsible-toggle,.mw-content-ltr .mw-content-rtl li .mw-collapsible-toggle{float:none} .mw-collapsible-toggle-li{list-style:none}
+/* cache key: enwikibooks:resourceloader:filter:minify-css:7:e1ffd603cbaaa5f1a36e0d13fe843535 */
+.suggestions{overflow:hidden;position:absolute;top:0;left:0;width:0;border:none;z-index:1099;padding:0;margin:-1px 0 0 0}.suggestions-special{position:relative;background-color:white;cursor:pointer;border:solid 1px #aaaaaa;padding:0;margin:0;margin-top:-2px;display:none;padding:0.25em 0.25em;line-height:1.25em}.suggestions-results{background-color:white;cursor:pointer;border:solid 1px #aaaaaa;padding:0;margin:0}.suggestions-result{color:black;margin:0;line-height:1.5em;padding:0.01em 0.25em;text-align:left; overflow:hidden;-o-text-overflow:ellipsis; text-overflow:ellipsis;white-space:nowrap}.suggestions-result-current{background-color:#4C59A6;color:white}.suggestions-special .special-label{color:gray;text-align:left}.suggestions-special .special-query{color:black;font-style:italic;text-align:left}.suggestions-special .special-hover{background-color:silver}.suggestions-result-current .special-label,.suggestions-result-current .special-query{color:white}.highlight{font-weight:bold}
+/* cache key: enwikibooks:resourceloader:filter:minify-css:7:f8d0c6895ce3ae14434c16b8fca59432 */
+.postedit-container{margin:0 auto;position:fixed;top:0;height:0;left:50%;z-index:1000;font-size:13px}.postedit-container:hover{cursor:pointer}.postedit{position:relative;top:0.6em;left:-50%;padding:.6em 3.6em .6em 1.1em;line-height:1.5625em;color:#626465;background-color:#f4f4f4;border:1px solid #dcd9d9;text-shadow:0 0.0625em 0 rgba(255,255,255,0.5);border-radius:5px;box-shadow:0 2px 5px 0 #ccc;-webkit-transition:all 0.25s ease-in-out;-moz-transition:all 0.25s ease-in-out;-ms-transition:all 0.25s ease-in-out;-o-transition:all 0.25s ease-in-out;transition:all 0.25s ease-in-out}.skin-monobook .postedit{top:6em !important}.postedit-faded{opacity:0}.postedit-icon{padding-left:41px;  line-height:25px;background-repeat:no-repeat;background-position:8px 50%}.postedit-icon-checkmark{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABblBMVEUAAAD///////9PfTf///80aRdTgjn///9Feij///////////9Rfzf///////////9PfjZRgDh1o1xOfTb///////+bwYqLtnj///////9PfTa82K////9WhT6YxIL///9QgDdTgzr////////j7uDl7eLq8efi693k7OH///////9UhjuBr2rp9uRUhjr///9YljVKgir///9WiTlYjT3////9/v57vFlbkT5PjC9dlD/5/fhuq09stUTs9uhxuElctCpfnT1huDFloEZloUZmpENmvDZpvDxpvTxqvjxrvT5rvT9rwTxsqktswD5uwkBvuUdxw0NztFBztU9ztVBzwkp0tlJ1xkd2t1R3uVR4w1F4xk54x014yE15uVZ5v1R5xVB6v1R7yFJ8wVh9xVl9yFR9yVd9ylN+xVh+yFd/x1l/yFeAylmEx1+Ny2uY0Hqe04Wj1Ymv3Ze33qLD47TJ5L3O6cPU7Mrq9eb2+/Q4j37OAAAAQHRSTlMAAQIEBAUFBQwPFB4fJCUoKiosQEhJS01RUlZZXmdydXaChYuSlJSWmJmoq6uur8LExcvM19fg5ejt8fX2+Pr7SljgewAAAKpJREFUGBkFwQNCAwAAAMDLtl3LtrG4rWXbtvX77gAgZ6grFwC0bhwNVgKgdPZx8b0dgLi+s7Wn0VoAqpfOI9+BNADZI7fLrz2pSEwGHZuH+78lSK8ZLkLezF3ooyUG3VPXq2USei9WngeyoG195yBYWDF3E/2pAhl1e9Gr8bGT+bfOFCC2fnvh4X7rcqIAQNNu+HT6sxkAjceTL/2ZAIhv+PorBwBJxfkA//dFHSCBy/UTAAAAAElFTkSuQmCC);background-image:url(//en.wikibooks.org/static/1.26wmf4/resources/src/mediawiki.action/images/green-checkmark.png?2015-04-29T19:31:40Z)!ie;background-position:left}.postedit-close{position:absolute;padding:0 .8em;right:0;top:0;font-size:1.25em;font-weight:bold;line-height:2.3em;color:black;text-shadow:0 0.0625em 0 white;text-decoration:none;opacity:0.2;filter:alpha(opacity=20)}.postedit-close:hover{color:black;text-decoration:none;opacity:0.4;filter:alpha(opacity=40)}
+/* cache key: enwikibooks:resourceloader:filter:minify-css:7:c2b197ff9e94a1bc0f80ff3456750a8a */
+.column-break-inside-avoid{-webkit-column-break-inside:avoid;page-break-inside:avoid;break-inside:avoid-column}.mw-ui-icon{position:relative;min-height:1.4em;min-width:1.4em}.mw-ui-icon.mw-ui-icon-element{text-indent:-999px;overflow:hidden;width:3.4em;min-width:3.4em;max-width:3.4em}.mw-ui-icon.mw-ui-icon-element:before{left:0;right:0;position:absolute;margin:0 1em}.mw-ui-icon.mw-ui-icon-after:after,.mw-ui-icon.mw-ui-icon-before:before,.mw-ui-icon.mw-ui-icon-element:before{background-position:50% 50%;float:left;display:block;background-repeat:no-repeat;background-size:100% auto;min-height:1.4em;content:''}.mw-ui-icon.mw-ui-icon-before:before{position:relative;width:1.4em;margin-right:1em}.mw-ui-icon.mw-ui-icon-after:after{position:relative;float:right;width:1.4em;margin-left:1em}.mw-ui-icon-ok.mw-ui-icon:after,.mw-ui-icon-ok.mw-ui-icon:before{background-image:url(//en.wikibooks.org/static/1.26wmf4/resources/src/mediawiki.ui/components/images/ok.png?2015-04-29T19:31:40Z);background-image:-webkit-linear-gradient(transparent,transparent),url(data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2222%22%20height%3D%2222%22%3E%3Cpath%20d%3D%22M18.125%201.813l-10.5%2010.75-3.844-3.75L0%2012.719l7.72%207.452L22%205.625z%22%20fill%3D%22%23f0f0f0%22%2F%3E%3C%2Fsvg%3E%0A);background-image:-webkit-linear-gradient(transparent,transparent),url(//en.wikibooks.org/static/1.26wmf4/resources/src/mediawiki.ui/components/images/ok.svg?2015-04-29T19:31:40Z)!ie;background-image:linear-gradient(transparent,transparent),url(data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2222%22%20height%3D%2222%22%3E%3Cpath%20d%3D%22M18.125%201.813l-10.5%2010.75-3.844-3.75L0%2012.719l7.72%207.452L22%205.625z%22%20fill%3D%22%23f0f0f0%22%2F%3E%3C%2Fsvg%3E%0A);background-image:linear-gradient(transparent,transparent),url(//en.wikibooks.org/static/1.26wmf4/resources/src/mediawiki.ui/components/images/ok.svg?2015-04-29T19:31:40Z)!ie;background-image:-o-linear-gradient(transparent,transparent),url(//en.wikibooks.org/static/1.26wmf4/resources/src/mediawiki.ui/components/images/ok.png?2015-04-29T19:31:40Z)}
+/* cache key: enwikibooks:resourceloader:filter:minify-css:7:2b678119bc6757d0252f102044ef6a58 */</style><style>
+.suggestions a.mw-searchSuggest-link,.suggestions a.mw-searchSuggest-link:hover,.suggestions a.mw-searchSuggest-link:active,.suggestions a.mw-searchSuggest-link:focus{color:black;text-decoration:none}.suggestions-result-current a.mw-searchSuggest-link,.suggestions-result-current a.mw-searchSuggest-link:hover,.suggestions-result-current a.mw-searchSuggest-link:active,.suggestions-result-current a.mw-searchSuggest-link:focus{color:white}.suggestions a.mw-searchSuggest-link .special-query{ overflow:hidden;-o-text-overflow:ellipsis; text-overflow:ellipsis;white-space:nowrap}
+/* cache key: enwikibooks:resourceloader:filter:minify-css:7:ae3fa4570b5ac0c6cf7b3776c8ae4d6f */
+.mw-mmv-overlay{position:fixed;top:0px;left:0px;right:0px;bottom:0px;z-index:1000;background-color:#000000}body.mw-mmv-lightbox-open{overflow-y:auto}body.mw-mmv-lightbox-open #mw-page-base,body.mw-mmv-lightbox-open #mw-head-base,body.mw-mmv-lightbox-open #mw-navigation,body.mw-mmv-lightbox-open #content,body.mw-mmv-lightbox-open #footer,body.mw-mmv-lightbox-open #globalWrapper // monobook{ display:none}body.mw-mmv-lightbox-open > *{ display:none}body.mw-mmv-lightbox-open > .mw-mmv-overlay,body.mw-mmv-lightbox-open > .mw-mmv-wrapper{display:block}.mw-mmv-filepage-buttons{margin-top:5px}.mw-mmv-filepage-buttons .mw-mmv-view-expanded,.mw-mmv-filepage-buttons .mw-mmv-view-config{display:block}.mw-mmv-filepage-buttons .mw-mmv-view-expanded.mw-ui-icon:before{background-image:url(data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0A%3C%21--%20Created%20with%20Inkscape%20%28http%3A%2F%2Fwww.inkscape.org%2F%29%20--%3E%0A%0A%3Csvg%0A%20%20%20xmlns%3Adc%3D%22http%3A%2F%2Fpurl.org%2Fdc%2Felements%2F1.1%2F%22%0A%20%20%20xmlns%3Acc%3D%22http%3A%2F%2Fcreativecommons.org%2Fns%23%22%0A%20%20%20xmlns%3Ardf%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%22%0A%20%20%20xmlns%3Asvg%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%0A%20%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%0A%20%20%20version%3D%221.1%22%0A%20%20%20width%3D%22100%25%22%0A%20%20%20height%3D%22100%25%22%0A%20%20%20viewBox%3D%220%200%201024%20768%22%0A%20%20%20id%3D%22Layer_1%22%0A%20%20%20xml%3Aspace%3D%22preserve%22%3E%3Cmetadata%0A%20%20%20%20%20id%3D%22metadata17%22%3E%3Crdf%3ARDF%3E%3Ccc%3AWork%0A%20%20%20%20%20%20%20%20%20rdf%3Aabout%3D%22%22%3E%3Cdc%3Aformat%3Eimage%2Fsvg%2Bxml%3C%2Fdc%3Aformat%3E%3Cdc%3Atype%0A%20%20%20%20%20%20%20%20%20%20%20rdf%3Aresource%3D%22http%3A%2F%2Fpurl.org%2Fdc%2Fdcmitype%2FStillImage%22%20%2F%3E%3Cdc%3Atitle%3E%3C%2Fdc%3Atitle%3E%3C%2Fcc%3AWork%3E%3C%2Frdf%3ARDF%3E%3C%2Fmetadata%3E%3Cdefs%0A%20%20%20%20%20id%3D%22defs15%22%20%2F%3E%3Cg%0A%20%20%20%20%20id%3D%22g3%22%3E%3Cpolygon%0A%20%20%20%20%20%20%20points%3D%22851.2%2C71.6%20690.7%2C232.1%20650.6%2C191.8%20641%2C356.6%20805.8%2C347.3%20765.5%2C306.9%20926%2C146.4%20984.5%2C204.9%20997.6%2C0%20792.7%2C13.1%20%22%0A%20%20%20%20%20%20%20id%3D%22polygon5%22%0A%20%20%20%20%20%20%20style%3D%22fill%3A%23777777%22%20%2F%3E%3Cpolygon%0A%20%20%20%20%20%20%20points%3D%22769.6%2C89.3%20611.9%2C89.3%20682.8%2C160.1%20690.7%2C167.6%20%22%0A%20%20%20%20%20%20%20id%3D%22polygon7%22%0A%20%20%20%20%20%20%20style%3D%22fill%3A%23777777%22%20%2F%3E%3Cpath%0A%20%20%20%20%20%20%20d%3D%22m%20643.6%2C402.2%20-51.2%2C3%203%2C-51.2%209.4%2C-164.4%205.8%2C-100.3%20H%2026.4%20V%20768%20H%20909.5%20V%20387%20l%20-100.9%2C5.8%20-165%2C9.4%20z%20M%20813.9%2C678%20H%20113.6%20l%20207.2%2C-270.2%2031.5%2C-12.9%20195.7%2C204.9%20105.9%2C-63.2%20159.8%2C140.8%200.2%2C0.6%200%2C0%20z%22%0A%20%20%20%20%20%20%20id%3D%22path9%22%0A%20%20%20%20%20%20%20style%3D%22fill%3A%23777777%22%20%2F%3E%3Cpolygon%0A%20%20%20%20%20%20%20points%3D%22909.5%2C386.1%20909.5%2C228%20830.4%2C306.9%20838.2%2C314.8%20%22%0A%20%20%20%20%20%20%20id%3D%22polygon11%22%0A%20%20%20%20%20%20%20style%3D%22fill%3A%23777777%22%20%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E);background-image:url(//en.wikibooks.org/static/1.26wmf4/extensions/MultimediaViewer/resources/mmv/img/expand.svg?2015-04-29T19:35:00Z)!ie}.mw-mmv-filepage-buttons .mw-mmv-view-config.mw-ui-icon:before{background-image:url(data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0A%3C%21--%20Created%20with%20Inkscape%20%28http%3A%2F%2Fwww.inkscape.org%2F%29%20--%3E%0A%0A%3Csvg%0A%20%20%20xmlns%3Adc%3D%22http%3A%2F%2Fpurl.org%2Fdc%2Felements%2F1.1%2F%22%0A%20%20%20xmlns%3Acc%3D%22http%3A%2F%2Fcreativecommons.org%2Fns%23%22%0A%20%20%20xmlns%3Ardf%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%22%0A%20%20%20xmlns%3Asvg%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%0A%20%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%0A%20%20%20version%3D%221.1%22%0A%20%20%20width%3D%22100%25%22%0A%20%20%20height%3D%22100%25%22%0A%20%20%20viewBox%3D%220%200%201024%20768%22%0A%20%20%20id%3D%22Layer_1%22%0A%20%20%20xml%3Aspace%3D%22preserve%22%3E%3Cmetadata%0A%20%20%20%20%20id%3D%22metadata9%22%3E%3Crdf%3ARDF%3E%3Ccc%3AWork%0A%20%20%20%20%20%20%20%20%20rdf%3Aabout%3D%22%22%3E%3Cdc%3Aformat%3Eimage%2Fsvg%2Bxml%3C%2Fdc%3Aformat%3E%3Cdc%3Atype%0A%20%20%20%20%20%20%20%20%20%20%20rdf%3Aresource%3D%22http%3A%2F%2Fpurl.org%2Fdc%2Fdcmitype%2FStillImage%22%20%2F%3E%3Cdc%3Atitle%3E%3C%2Fdc%3Atitle%3E%3C%2Fcc%3AWork%3E%3C%2Frdf%3ARDF%3E%3C%2Fmetadata%3E%3Cdefs%0A%20%20%20%20%20id%3D%22defs7%22%20%2F%3E%3Cpath%0A%20%20%20%20%20d%3D%22M%20897%2C454.6%20V%20313.4%20L%20810.4%2C299%20c%20-6.4%2C-23.3%20-16%2C-45.7%20-27.3%2C-65.8%20L%20833.6%2C161.8%20734.2%2C61.6%20662.8%2C112.1%20C%20641.9%2C100.9%20620.3%2C91.2%20597%2C84.8%20L%20582.6%2C-1%20H%20441.4%20L%20427%2C85.6%20c%20-23.3%2C6.4%20-45.7%2C16%20-65.8%2C27.3%20L%20289.8%2C62.4%20189.5%2C161.9%20240%2C233.3%20c%20-11.2%2C20.9%20-20.9%2C42.5%20-27.3%2C66.6%20L%20127%2C313.4%20v%20141.2%20l%2085.8%2C14.4%20c%206.4%2C23.3%2016%2C45.7%2027.3%2C66.6%20l%20-50.5%2C71.4%2099.5%2C99.5%2071.4%2C-50.5%20c%2020.9%2C11.2%2042.5%2C20.9%2066.6%2C27.3%20l%2014.4%2C85.8%20h%20141.2%20l%2014.4%2C-86.6%20c%2023.3%2C-6.4%2045.7%2C-16%2065.8%2C-27.3%20l%2071.4%2C50.5%2099.5%2C-99.5%20-50.5%2C-71.4%20c%2011.2%2C-20.9%2020.9%2C-42.5%2027.3%2C-66.6%20L%20897%2C454.6%20z%20m%20-385%2C77%20C%20430.2%2C531.6%20364.4%2C465%20364.4%2C384%20364.4%2C302.2%20431%2C236.4%20512%2C236.4%20c%2081%2C0%20147.6%2C65.8%20147.6%2C147.6%200%2C81.8%20-65.8%2C147.6%20-147.6%2C147.6%20z%22%0A%20%20%20%20%20id%3D%22path3%22%0A%20%20%20%20%20style%3D%22fill%3A%23777777%22%20%2F%3E%3C%2Fsvg%3E);background-image:url(//en.wikibooks.org/static/1.26wmf4/extensions/MultimediaViewer/resources/mmv/img/gear_gray.svg?2015-04-29T19:35:00Z)!ie;opacity:0.75}.mw-mmv-filepage-buttons .mw-mmv-view-config.mw-ui-icon:before:hover{opacity:1}
+/* cache key: enwikibooks:resourceloader:filter:minify-css:7:af45eb8630f1799ce0250159f22d3d05 */</style><meta name="ResourceLoaderDynamicStyles" content="">
+<link rel="stylesheet" href="http://en.wikibooks.org/w/load.php?debug=false&lang=en&modules=site&only=styles&skin=vector&*">
+<style>a:lang(ar),a:lang(kk-arab),a:lang(mzn),a:lang(ps),a:lang(ur){text-decoration:none}
+/* cache key: enwikibooks:resourceloader:filter:minify-css:7:4969bf752d40e7c60e4c1bc8e4153549 */</style>
+<script src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/load.php"></script><style type="text/css"></style><script src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/load(1).php"></script>
+<script>if(window.mw){
+mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"R_Programming/Text_Processing","wgTitle":"R Programming/Text Processing","wgCurRevisionId":2837320,"wgRevisionId":2837320,"wgArticleId":200605,"wgIsArticle":true,"wgIsRedirect":false,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":["R Programming","Section stubs"],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgPageContentModel":"wikitext","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgMonthNamesShort":["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"wgRelevantPageName":"R_Programming/Text_Processing","wgRelevantArticleId":200605,"wgIsProbablyEditable":true,"wgRestrictionEdit":[],"wgRestrictionMove":[],"wgWikiEditorEnabledModules":{"toolbar":true,"dialogs":true,"hidesig":true,"preview":false,"publish":false},"wgMediaViewerOnClick":true,"wgMediaViewerEnabledByDefault":true,"wgVisualEditor":{"pageLanguageCode":"en","pageLanguageDir":"ltr","usePageImages":false,"usePageDescriptions":true},"wgPoweredByHHVM":true,"wgULSAcceptLanguageList":["en-us","en"],"wgULSCurrentAutonym":"English","wgBetaFeaturesFeatures":[],"wgFlaggedRevsParams":{"tags":{"value":{"levels":3,"quality":2,"pristine":3}}},"wgStableRevisionId":2837320,"wgCategoryTreePageCategoryOptions":"{\"mode\":0,\"hideprefix\":20,\"showcount\":true,\"namespaces\":false}","wgNoticeProject":"wikibooks"});
+}</script><script>if(window.mw){
+mw.loader.implement("user.options",function($,jQuery){mw.user.options.set({"variant":"en"});});mw.loader.implement("user.tokens",function($,jQuery){mw.user.tokens.set({"editToken":"+\\","patrolToken":"+\\","watchToken":"+\\"});});
+/* cache key: enwikibooks:resourceloader:filter:minify-js:7:a5c52c063dc436c1ca7c9f456936a5e9 */
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","mediawiki.legacy.ajax","ext.centralauth.centralautologin","mmv.head","ext.imageMetrics.head","ext.visualEditor.viewPageTarget.init","ext.uls.init","ext.uls.interface","ext.centralNotice.bannerController","skins.vector.js"]);
+}</script><script src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/load(2).php"></script>
+<link rel="dns-prefetch" href="http://meta.wikimedia.org/">
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/w/static/1.26wmf4/skins/Vector/csshover.min.htc")}</style><![endif]-->
+<link rel="stylesheet" href="http://en.wikibooks.org/w/index.php?title=MediaWiki:Common.css/R_Programming&action=raw&ctype=text/css"><script src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/index.php" type="text/javascript"></script><script src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/index(1).php" type="text/javascript"></script><script src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/index(2).php" type="text/javascript"></script><script src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/index(3).php" type="text/javascript"></script><script src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/index(4).php" type="text/javascript"></script><script src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/index(5).php" type="text/javascript"></script><script src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/index(6).php" type="text/javascript"></script><script src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/index(7).php" type="text/javascript"></script><script src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/index(8).php" type="text/javascript"></script><script src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/index(9).php" type="text/javascript"></script><script src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/index(10).php" type="text/javascript"></script><script src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/index(11).php" type="text/javascript"></script><script src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/index(12).php" type="text/javascript"></script><link rel="stylesheet" href="http://en.wikibooks.org/w/index.php?title=MediaWiki:Perbook/R_Programming.css&action=raw&ctype=text/css"><script src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/index(13).php" type="text/javascript"></script></head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-R_Programming_Text_Processing skin-vector action-view">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+
+							<div id="siteNotice"><div id="centralNotice"></div><!-- CentralNotice --></div>
+						<div class="mw-indicators">
+</div>
+			<h1 id="firstHeading" class="firstHeading" lang="en">R Programming/Text Processing</h1>
+						<div id="bodyContent" class="mw-body-content">
+									<div id="siteSub">From Wikibooks, open books for an open world</div>
+								<div id="contentSub"><span class="subpages">&lt; <a href="http://en.wikibooks.org/wiki/R_Programming" title="R Programming">R Programming</a></span></div>
+												<div id="jump-to-nav" class="mw-jump">
+					Jump to:					<a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#mw-head">navigation</a>, 					<a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#p-search">search</a>
+				</div>
+				<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><div class="noprint" style="background-color: #fff; border: 1px solid #8b8; padding: 0.5em; font-size: small; text-align: left; float: right; clear: right; width: 22%; margin: 0.5em">
+<div class="floatright"><a href="http://commons.wikimedia.org/wiki/File:R_logo.svg" class="image"><img alt="R logo.svg" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/60px-R_logo.svg.png" width="60" height="46" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/90px-R_logo.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/120px-R_logo.svg.png 2x" data-file-width="725" data-file-height="550"></a></div>
+<p><b><a href="http://en.wikibooks.org/wiki/R_Programming" title="R Programming">R Programming</a></b><br></p>
+<hr>
+<ul>
+<li><b>R Basics</b>
+<ul>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Introduction" title="R Programming/Introduction">Introduction</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="75% developed  as of Sep 11, 2009"><img alt="75% developed  as of Sep 11, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-75_percent.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/62/75_percent.svg/14px-75_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/62/75_percent.svg/18px-75_percent.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Sample_Session" title="R Programming/Sample Session">Sample Session</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="100% developed  as of Jul 16, 2010"><img alt="100% developed  as of Jul 16, 2010" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-100_percents.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/c7/100_percents.svg/14px-100_percents.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/c7/100_percents.svg/18px-100_percents.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Manage_your_workspace" title="R Programming/Manage your workspace">Manage your workspace</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="50% developed  as of July 22 2011"><img alt="50% developed  as of July 22 2011" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-50_percents.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/62/50_percents.svg/14px-50_percents.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/62/50_percents.svg/18px-50_percents.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Settings" title="R Programming/Settings">Settings</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="75% developed  as of May 20, 2011"><img alt="75% developed  as of May 20, 2011" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-75_percent.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/62/75_percent.svg/14px-75_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/62/75_percent.svg/18px-75_percent.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Documentation" title="R Programming/Documentation">Documentation</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="75% developed  as of Sep 11, 2009"><img alt="75% developed  as of Sep 11, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-75_percent.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/62/75_percent.svg/14px-75_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/62/75_percent.svg/18px-75_percent.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Control_Structures" title="R Programming/Control Structures">Control Structures</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="75% developed  as of July 22 2011"><img alt="75% developed  as of July 22 2011" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-75_percent.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/62/75_percent.svg/14px-75_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/62/75_percent.svg/18px-75_percent.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Working_with_functions" title="R Programming/Working with functions">Working with functions</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="50% developed  as of July 22 2011"><img alt="50% developed  as of July 22 2011" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-50_percents.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/62/50_percents.svg/14px-50_percents.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/62/50_percents.svg/18px-50_percents.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Debugging" title="R Programming/Debugging">Debugging</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="50% developed  as of August 19 2011"><img alt="50% developed  as of August 19 2011" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-50_percents.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/62/50_percents.svg/14px-50_percents.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/62/50_percents.svg/18px-50_percents.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Using_C_or_Fortran" title="R Programming/Using C or Fortran">Using C or Fortran</a></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Utilities" title="R Programming/Utilities">Utilities</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="0% developed  as of -"><img alt="0% developed  as of -" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-00%.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/14px-00%25.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/18px-00%25.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Estimation_utilities" title="R Programming/Estimation utilities">Estimation utilities</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="0% developed  as of -"><img alt="0% developed  as of -" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-00%.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/14px-00%25.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/18px-00%25.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Packages" title="R Programming/Packages">Packages</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="75% developed  as of July 22, 2011"><img alt="75% developed  as of July 22, 2011" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-75_percent.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/62/75_percent.svg/14px-75_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/62/75_percent.svg/18px-75_percent.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+</ul>
+</li>
+<li><b>Data Management</b>
+<ul>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Data_types" title="R Programming/Data types">Data types</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="75% developed  as of July 22, 2011"><img alt="75% developed  as of July 22, 2011" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-75_percent.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/62/75_percent.svg/14px-75_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/62/75_percent.svg/18px-75_percent.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Working_with_data_frames" title="R Programming/Working with data frames">Working with data frames</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="25% developed  as of Sep 11, 2009"><img alt="25% developed  as of Sep 11, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-25_percent.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/14px-25_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/18px-25_percent.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Importing_and_exporting_data" title="R Programming/Importing and exporting data">Importing and exporting data</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="25% developed  as of Sep 11, 2009"><img alt="25% developed  as of Sep 11, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-25_percent.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/14px-25_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/18px-25_percent.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><strong class="selflink">Text Processing</strong><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="75% developed  as of April 23, 2010"><img alt="75% developed  as of April 23, 2010" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-75_percent.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/62/75_percent.svg/14px-75_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/62/75_percent.svg/18px-75_percent.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Times_and_Dates" title="R Programming/Times and Dates">Times and Dates</a></li>
+</ul>
+</li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Graphics" title="R Programming/Graphics">Graphics</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="75% developed  as of July 22, 2011"><img alt="75% developed  as of July 22, 2011" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-75_percent.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/62/75_percent.svg/14px-75_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/62/75_percent.svg/18px-75_percent.svg.png 2x" data-file-width="9" data-file-height="9"></a></span>
+<ul>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Grammar_of_graphics" title="R Programming/Grammar of graphics">Grammar of graphics</a></li>
+</ul>
+</li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Publication_quality_ouput" title="R Programming/Publication quality ouput">Publication quality output</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="25% developed  as of Sep 11, 2009"><img alt="25% developed  as of Sep 11, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-25_percent.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/14px-25_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/18px-25_percent.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Descriptive_Statistics" title="R Programming/Descriptive Statistics">Descriptive Statistics</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="75% developed  as of July 22 2011"><img alt="75% developed  as of July 22 2011" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-75_percent.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/62/75_percent.svg/14px-75_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/62/75_percent.svg/18px-75_percent.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Mathematics" title="R Programming/Mathematics">Mathematics</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="25% developed  as of Oct 4, 2009"><img alt="25% developed  as of Oct 4, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-25_percent.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/14px-25_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/18px-25_percent.svg.png 2x" data-file-width="9" data-file-height="9"></a></span>
+<ul>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Optimization" title="R Programming/Optimization">Optimization</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="25% developed  as of Sep 11, 2009"><img alt="25% developed  as of Sep 11, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-25_percent.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/14px-25_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/18px-25_percent.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Probability_Distributions" title="R Programming/Probability Distributions">Probability Distributions</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="75% developed  as of July 22 2011"><img alt="75% developed  as of July 22 2011" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-75_percent.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/62/75_percent.svg/14px-75_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/62/75_percent.svg/18px-75_percent.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Random_Number_Generation" title="R Programming/Random Number Generation">Random Number Generation</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="25% developed  as of Sep 11, 2009"><img alt="25% developed  as of Sep 11, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-25_percent.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/14px-25_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/18px-25_percent.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+</ul>
+</li>
+<li><b>Statistical Core Methods</b>
+<ul>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Maximum_Likelihood" title="R Programming/Maximum Likelihood">Maximum Likelihood</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="25% developed  as of Sep 11, 2009"><img alt="25% developed  as of Sep 11, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-25_percent.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/14px-25_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/18px-25_percent.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Method_of_Moments" title="R Programming/Method of Moments">Method of Moments</a></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Bayesian_Methods" title="R Programming/Bayesian Methods">Bayesian Methods</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="0% developed  as of Sep 11, 2009"><img alt="0% developed  as of Sep 11, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-00%.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/14px-00%25.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/18px-00%25.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Bootstrap" title="R Programming/Bootstrap">Bootstrap</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="0% developed  as of Sep 11, 2009"><img alt="0% developed  as of Sep 11, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-00%.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/14px-00%25.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/18px-00%25.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Multiple_Imputation" title="R Programming/Multiple Imputation">Multiple Imputation</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="0% developed  as of Sep 11, 2009"><img alt="0% developed  as of Sep 11, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-00%.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/14px-00%25.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/18px-00%25.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Nonparametric_Methods" title="R Programming/Nonparametric Methods">Nonparametric Methods</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="50% developed  as of Sep 11, 2009"><img alt="50% developed  as of Sep 11, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-50_percents.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/62/50_percents.svg/14px-50_percents.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/62/50_percents.svg/18px-50_percents.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+</ul>
+</li>
+<li><b>Regression Models</b>
+<ul>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Linear_Models" title="R Programming/Linear Models">Linear Models</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="50% developed  as of Apr 28, 2010"><img alt="50% developed  as of Apr 28, 2010" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-50_percents.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/62/50_percents.svg/14px-50_percents.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/62/50_percents.svg/18px-50_percents.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Quantile_Regression" title="R Programming/Quantile Regression">Quantile Regression</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="0% developed  as of Sep 11, 2009"><img alt="0% developed  as of Sep 11, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-00%.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/14px-00%25.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/18px-00%25.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Binomial_Models" title="R Programming/Binomial Models">Binomial Models</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="0% developed  as of Sep 17, 2009"><img alt="0% developed  as of Sep 17, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-00%.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/14px-00%25.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/18px-00%25.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Multinomial_Models" title="R Programming/Multinomial Models">Multinomial Models</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="0% developed  as of Sep 11, 2009"><img alt="0% developed  as of Sep 11, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-00%.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/14px-00%25.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/18px-00%25.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Tobit_And_Selection_Models" title="R Programming/Tobit And Selection Models">Tobit And Selection Models</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="0% developed  as of Oct 4, 2009"><img alt="0% developed  as of Oct 4, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-00%.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/14px-00%25.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/18px-00%25.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Count_Data_Models" title="R Programming/Count Data Models">Count Data Models</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="0% developed  as of Sep 11, 2009"><img alt="0% developed  as of Sep 11, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-00%.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/14px-00%25.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/18px-00%25.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Duration_Analysis" title="R Programming/Duration Analysis">Duration Analysis</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="0% developed  as of Sep 11, 2009"><img alt="0% developed  as of Sep 11, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-00%.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/14px-00%25.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/18px-00%25.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+</ul>
+</li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Time_Series" title="R Programming/Time Series">Time Series</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="25% developed  as of July 22 2011"><img alt="25% developed  as of July 22 2011" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-25_percent.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/14px-25_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/18px-25_percent.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Factor_Analysis" title="R Programming/Factor Analysis">Factor Analysis</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="25% developed  as of Sep 17, 2009"><img alt="25% developed  as of Sep 17, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-25_percent.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/14px-25_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/18px-25_percent.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><b>Classification</b>
+<ul>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Ordination" title="R Programming/Ordination">Ordination</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="25% developed  as of Sep 11, 2009"><img alt="25% developed  as of Sep 11, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-25_percent.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/14px-25_percent.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/ce/25_percent.svg/18px-25_percent.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Clustering" title="R Programming/Clustering">Clustering</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="0% developed  as of Sep 11, 2009"><img alt="0% developed  as of Sep 11, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-00%.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/14px-00%25.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/18px-00%25.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+</ul>
+</li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Network_Analysis" title="R Programming/Network Analysis">Network Analysis</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="0% developed  as of Sep 11, 2009"><img alt="0% developed  as of Sep 11, 2009" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-00%.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/14px-00%25.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/18px-00%25.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><b>High Performance Computing</b>
+<ul>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Profiling_R_code" title="R Programming/Profiling R code">Profiling R code</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="0% developed  as of Jun 27, 2011"><img alt="0% developed  as of Jun 27, 2011" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-00%.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/14px-00%25.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/18px-00%25.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Parallel_computing_with_R" title="R Programming/Parallel computing with R">Parallel computing with R</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="0% developed  as of Jun 27, 2011"><img alt="0% developed  as of Jun 27, 2011" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-00%.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/14px-00%25.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/18px-00%25.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+</ul>
+</li>
+<li><b>Appendix</b>
+<ul>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Sources" title="R Programming/Sources">Sources</a></li>
+<li><a href="http://en.wikibooks.org/wiki/R_Programming/Index" title="R Programming/Index">Index</a><span class="noprint"><a href="http://en.wikibooks.org/wiki/Help:Development_stages" title="0% developed  as of Oct 25, 2010"><img alt="0% developed  as of Oct 25, 2010" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/9px-00%.svg.png" width="9" height="9" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/14px-00%25.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d6/00%25.svg/18px-00%25.svg.png 2x" data-file-width="9" data-file-height="9"></a></span></li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><small><a class="external text" href="http://en.wikibooks.org/w/index.php?title=Template:R_Programming/Navigation&action=edit">edit this box</a></small></p>
+</div>
+<p>This page includes all the material you need to deal with strings in R. The section on regular expressions may be useful to understand the rest of the page, even if it is not necessary if you only need to perform some simple tasks.</p>
+<p>This page may be useful to&nbsp;:</p>
+<ul>
+<li>perform statistical text analysis.</li>
+<li>collect data from an unformatted text file.</li>
+<li>deal with character variables.</li>
+</ul>
+<p>In this page, we learn how to read a text file and how to use R functions for characters. There are two kind of function for characters, simple functions and regular expressions. Many functions are part of the standard R <b>base</b> package.</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="kw8">help.<span class="me1">search</span></span><span class="br0">(</span>keyword <span class="sy0">=</span> <span class="st0">"character"</span>, package <span class="sy0">=</span> <span class="st0">"base"</span><span class="br0">)</span>
+</pre></div>
+</div>
+<p>However, their name and their syntax is not intuitive to all users. Hadley Wickham has developed the <b>stringr</b> package which defines functions with similar behaviour but their names are easier to retain and their syntax much more systematic<sup id="cite_ref-stringr_1-0" class="reference"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#cite_note-stringr-1">[1]</a></sup>.</p>
+<ul>
+<li>Keywords&nbsp;: <i>text mining</i>, <i>natural language processing</i></li>
+<li>See CRAN Task view on Natural Language Processing<sup id="cite_ref-2" class="reference"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#cite_note-2">[2]</a></sup></li>
+<li>See also the following packages <b>tm</b>, <b>tau</b>, <b>languageR</b>, <b>scrapeR</b>.</li>
+</ul>
+<p><br></p>
+<p></p>
+<div id="toc" class="toc">
+<div id="toctitle">
+<h2>Contents</h2>
+<span class="toctoggle">&nbsp;[<a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#" id="togglelink">hide</a>]&nbsp;</span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Reading_and_writing_text_files"><span class="tocnumber">1</span> <span class="toctext">Reading and writing text files</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Character_encoding"><span class="tocnumber">2</span> <span class="toctext">Character encoding</span></a>
+<ul>
+<li class="toclevel-2 tocsection-3"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Example"><span class="tocnumber">2.1</span> <span class="toctext">Example</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-4"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Regular_Expressions"><span class="tocnumber">3</span> <span class="toctext">Regular Expressions</span></a>
+<ul>
+<li class="toclevel-2 tocsection-5"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Functions_which_use_regular_expressions_in_R"><span class="tocnumber">3.1</span> <span class="toctext">Functions which use regular expressions in R</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Extended_regular_expressions_.28The_default.29"><span class="tocnumber">3.2</span> <span class="toctext">Extended regular expressions (The default)</span></a></li>
+<li class="toclevel-2 tocsection-7"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Perl-like_regular_expressions"><span class="tocnumber">3.3</span> <span class="toctext">Perl-like regular expressions</span></a>
+<ul>
+<li class="toclevel-3 tocsection-8"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Examples"><span class="tocnumber">3.3.1</span> <span class="toctext">Examples</span></a></li>
+<li class="toclevel-3 tocsection-9"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#See_also"><span class="tocnumber">3.3.2</span> <span class="toctext">See also</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-10"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Concatenating_strings"><span class="tocnumber">4</span> <span class="toctext">Concatenating strings</span></a>
+<ul>
+<li class="toclevel-2 tocsection-11"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Examples_2"><span class="tocnumber">4.1</span> <span class="toctext">Examples</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-12"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Splitting_a_string"><span class="tocnumber">5</span> <span class="toctext">Splitting a string</span></a></li>
+<li class="toclevel-1 tocsection-13"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Counting_the_number_of_characters_in_a_string"><span class="tocnumber">6</span> <span class="toctext">Counting the number of characters in a string</span></a></li>
+<li class="toclevel-1 tocsection-14"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Detecting_the_presence_of_a_substring"><span class="tocnumber">7</span> <span class="toctext">Detecting the presence of a substring</span></a>
+<ul>
+<li class="toclevel-2 tocsection-15"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Detecting_a_pattern_in_a_string_.3F"><span class="tocnumber">7.1</span> <span class="toctext">Detecting a pattern in a string&nbsp;?</span></a></li>
+<li class="toclevel-2 tocsection-16"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Counting_the_occurrence_of_each_pattern_in_a_string_.3F"><span class="tocnumber">7.2</span> <span class="toctext">Counting the occurrence of each pattern in a string&nbsp;?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-17"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Extracting_the_position_of_a_substring_or_a_pattern_in_a_string"><span class="tocnumber">8</span> <span class="toctext">Extracting the position of a substring or a pattern in a string</span></a>
+<ul>
+<li class="toclevel-2 tocsection-18"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Extracting_the_position_of_a_substring_.3F"><span class="tocnumber">8.1</span> <span class="toctext">Extracting the position of a substring&nbsp;?</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Extracting_the_position_of_a_pattern_in_a_string_.3F"><span class="tocnumber">8.2</span> <span class="toctext">Extracting the position of a pattern in a string&nbsp;?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-20"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Extracting_a_substring_from_a_string"><span class="tocnumber">9</span> <span class="toctext">Extracting a substring from a string</span></a>
+<ul>
+<li class="toclevel-2 tocsection-21"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Extracting_a_fixed_width_substring_.3F"><span class="tocnumber">9.1</span> <span class="toctext">Extracting a fixed width substring&nbsp;?</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Extracting_the_first_word_in_a_string_.3F"><span class="tocnumber">9.2</span> <span class="toctext">Extracting the first word in a string&nbsp;?</span></a></li>
+<li class="toclevel-2 tocsection-23"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Extracting_a_pattern_in_a_string_.3F"><span class="tocnumber">9.3</span> <span class="toctext">Extracting a pattern in a string&nbsp;?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-24"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Making_some_substitution_inside_a_string"><span class="tocnumber">10</span> <span class="toctext">Making some substitution inside a string</span></a>
+<ul>
+<li class="toclevel-2 tocsection-25"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Substituting_a_pattern_in_a_string"><span class="tocnumber">10.1</span> <span class="toctext">Substituting a pattern in a string</span></a></li>
+<li class="toclevel-2 tocsection-26"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Substituting_characters_in_a_string_.3F"><span class="tocnumber">10.2</span> <span class="toctext">Substituting characters in a string&nbsp;?</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-27"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Converting_letters_to_lower_or_upper-case"><span class="tocnumber">11</span> <span class="toctext">Converting letters to lower or upper-case</span></a></li>
+<li class="toclevel-1 tocsection-28"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Filling_a_string_with_some_character"><span class="tocnumber">12</span> <span class="toctext">Filling a string with some character</span></a></li>
+<li class="toclevel-1 tocsection-29"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Removing_leading_and_trailing_spaces"><span class="tocnumber">13</span> <span class="toctext">Removing leading and trailing spaces</span></a></li>
+<li class="toclevel-1 tocsection-30"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Comparing_two_strings"><span class="tocnumber">14</span> <span class="toctext">Comparing two strings</span></a>
+<ul>
+<li class="toclevel-2 tocsection-31"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Assessing_if_they_are_identical"><span class="tocnumber">14.1</span> <span class="toctext">Assessing if they are identical</span></a></li>
+<li class="toclevel-2 tocsection-32"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Computing_distance_between_strings"><span class="tocnumber">14.2</span> <span class="toctext">Computing distance between strings</span></a>
+<ul>
+<li class="toclevel-3 tocsection-33"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Example_with_utils"><span class="tocnumber">14.2.1</span> <span class="toctext">Example with utils</span></a></li>
+<li class="toclevel-3 tocsection-34"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Example_with_MiscPsycho"><span class="tocnumber">14.2.2</span> <span class="toctext">Example with MiscPsycho</span></a></li>
+<li class="toclevel-3 tocsection-35"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Approximate_matching"><span class="tocnumber">14.2.3</span> <span class="toctext">Approximate matching</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-36"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#Miscellaneous"><span class="tocnumber">15</span> <span class="toctext">Miscellaneous</span></a></li>
+<li class="toclevel-1 tocsection-37"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#References"><span class="tocnumber">16</span> <span class="toctext">References</span></a></li>
+</ul>
+</div>
+<p></p>
+<h2><span class="mw-headline" id="Reading_and_writing_text_files">Reading and writing text files</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=1" title="Edit section: Reading and writing text files">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p><b>R</b> can read any text file using <code>readLines()</code> or <code>scan()</code>. It is possible to specify the encoding of the imported text file with <code>readLines()</code>. The entire contents of the text file can be read into an R object (e.g., a character vector). <code>scan()</code> is more flexible. The kind of data expected can be specified in the second argument (e.g., character(0) for a string).</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="kw4">text</span> <span class="sy0">&lt;-</span> <span class="kw2">readLines</span><span class="br0">(</span><span class="st0">"file.txt"</span>,encoding<span class="sy0">=</span><span class="st0">"UTF-8"</span><span class="br0">)</span>
+<span class="kw2">scan</span><span class="br0">(</span><span class="st0">"file.txt"</span>, <span class="kw2">character</span><span class="br0">(</span><span class="nu0">0</span><span class="br0">)</span><span class="br0">)</span> <span class="co1"># separate each word</span>
+<span class="kw2">scan</span><span class="br0">(</span><span class="st0">"file.txt"</span>, <span class="kw2">character</span><span class="br0">(</span><span class="nu0">0</span><span class="br0">)</span>, <span class="kw2">quote</span> <span class="sy0">=</span> NULL<span class="br0">)</span> <span class="co1"># get rid of quotes</span>
+<span class="kw2">scan</span><span class="br0">(</span><span class="st0">"file.txt"</span>, <span class="kw2">character</span><span class="br0">(</span><span class="nu0">0</span><span class="br0">)</span>, sep <span class="sy0">=</span> <span class="st0">"."</span><span class="br0">)</span> <span class="co1"># separate each sentence</span>
+<span class="kw2">scan</span><span class="br0">(</span><span class="st0">"file.txt"</span>, <span class="kw2">character</span><span class="br0">(</span><span class="nu0">0</span><span class="br0">)</span>, sep <span class="sy0">=</span> <span class="st0">"<span class="es0">\n</span>"</span><span class="br0">)</span> <span class="co1"># separate each line</span>
+</pre></div>
+</div>
+<p>We can write the content of an R object into a text file using <code>cat()</code> or <code>writeLines()</code>. By default <code>cat()</code> concatenates vectors when writing to the text file. You can change it by adding options <code>sep="\n"</code> or <code>fill=TRUE</code>. The default encoding depends on your computer.</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="kw2">cat</span><span class="br0">(</span><span class="kw4">text</span>,<span class="kw2">file</span><span class="sy0">=</span><span class="st0">"file.txt"</span>,sep<span class="sy0">=</span><span class="st0">"<span class="es0">\n</span>"</span><span class="br0">)</span>
+<span class="kw2">writeLines</span><span class="br0">(</span><span class="kw4">text</span>, con <span class="sy0">=</span> <span class="st0">"file.txt"</span>, sep <span class="sy0">=</span> <span class="st0">"<span class="es0">\n</span>"</span>, useBytes <span class="sy0">=</span> FALSE<span class="br0">)</span>
+</pre></div>
+</div>
+<p>Before reading a text file, you can look at its properties. <code>nlines()</code> (<b>parser</b> package) and <code>countLines()</code> (<b>R.utils</b> package) count the number of lines in the file. <code>count.chars()</code> (<b>parser</b> package) counts the number of bytes and characters in each line of a file. You can also display a text file using <code>file.show()</code>.</p>
+<h2><span class="mw-headline" id="Character_encoding">Character encoding</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=2" title="Edit section: Character encoding">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<table class="plainlinks noprint messagebox notice" style="width:250px; float:right; clear:right; margin:0px; margin-left:10px;">
+<tbody><tr style="vertical-align:middle;">
+<td style="padding:0.1em; text-align:center; vertical-align:middle; width:45px; border:none;"><img alt="Wikipedia-logo.png" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/40px-Wikipedia-logo.png" width="40" height="40" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/63/Wikipedia-logo.png/60px-Wikipedia-logo.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/63/Wikipedia-logo.png/80px-Wikipedia-logo.png 2x" data-file-width="200" data-file-height="200"></td>
+<td style="color:black; text-align:left; vertical-align:middle; padding:0.5em; padding-left:0em; border:none;">
+<p><a href="http://en.wikipedia.org/wiki/" class="extiw" title="w:" target="_blank">Wikipedia</a> has related information at <a class="external text" href="http://en.wikipedia.org/wiki/Character_encoding" target="_blank"><i><b>Character encoding</b></i></a></p>
+</td>
+</tr>
+</tbody></table>
+<p>R provides functions to deal with various set of encoding schemes. This is useful if you deal with text file which have been created with another operating system and especially if the language is not English and has many accents and specific characters. For instance, the standard encoding scheme in Linux is "UTF-8" whereas the standard encoding scheme in Windows is "Latin1". The <code>Encoding()</code> functions returns the encoding of a string. <code>iconv()</code> is similar to the unix command <a href="http://en.wikipedia.org/wiki/iconv" class="extiw" title="w:iconv" target="_blank">iconv</a> and converts the encoding.</p>
+<ul>
+<li><code>iconvlist()</code> gives the list of available encoding scheme on your computer.</li>
+<li><code>readLines()</code>, <code>scan()</code> and <code>file.show()</code> have also an encoding option.</li>
+<li><code>is.utf8()</code> (<b>tau</b>) tests if the encoding is "utf8".</li>
+<li><code>is.locale()</code> (<b>tau</b>) tests if encoding is the same as the default encoding on your computer.</li>
+<li><code>translate()</code> (<b>tau</b>) translates the encoding into the current locale.</li>
+<li><code>fromUTF8()</code> (<b>descr</b>) is less general than <code>iconv()</code>.</li>
+<li><code>utf8ToInt()</code> (<b>base</b>)</li>
+</ul>
+<h3><span class="mw-headline" id="Example">Example</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=3" title="Edit section: Example">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>The following example was run under Windows. Thus, the default encoding is "latin1".</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> texte <span class="sy0">&lt;-</span> <span class="st0">"Hé hé"</span>
+<span class="sy0">&gt;</span> <span class="kw2">Encoding</span><span class="br0">(</span>texte<span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"latin1"</span>
+<span class="sy0">&gt;</span> texte2 <span class="sy0">&lt;-</span>  <span class="kw2">iconv</span><span class="br0">(</span>texte,<span class="st0">"latin1"</span>,<span class="st0">"UTF-8"</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="kw2">Encoding</span><span class="br0">(</span>texte2<span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"UTF-8"</span>
+</pre></div>
+</div>
+<h2><span class="mw-headline" id="Regular_Expressions">Regular Expressions</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=4" title="Edit section: Regular Expressions">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<table class="plainlinks noprint messagebox notice" style="width:250px; float:right; clear:right; margin:0px; margin-left:10px;">
+<tbody><tr style="vertical-align:middle;">
+<td style="padding:0.1em; text-align:center; vertical-align:middle; width:45px; border:none;"><img alt="Wikibooks-logo.png" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/40px-Wikibooks-logo.png" width="40" height="40" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Wikibooks-logo.png/60px-Wikibooks-logo.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Wikibooks-logo.png/80px-Wikibooks-logo.png 2x" data-file-width="135" data-file-height="135"></td>
+<td style="color:black; text-align:left; vertical-align:middle; padding:0.5em; padding-left:0em; border:none;">
+<p>Also see the <i><a href="http://en.wikibooks.org/wiki/Regular_expressions" title="Regular expressions" class="mw-redirect">Regular expressions</a></i> book.</p>
+</td>
+</tr>
+</tbody></table>
+<table class="plainlinks noprint messagebox notice" style="width:250px; float:right; clear:right; margin:0px; margin-left:10px;">
+<tbody><tr style="vertical-align:middle;">
+<td style="padding:0.1em; text-align:center; vertical-align:middle; width:45px; border:none;"><img alt="Wikipedia-logo.png" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/40px-Wikipedia-logo.png" width="40" height="40" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/6/63/Wikipedia-logo.png/60px-Wikipedia-logo.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/63/Wikipedia-logo.png/80px-Wikipedia-logo.png 2x" data-file-width="200" data-file-height="200"></td>
+<td style="color:black; text-align:left; vertical-align:middle; padding:0.5em; padding-left:0em; border:none;">
+<p><a href="http://en.wikipedia.org/wiki/" class="extiw" title="w:" target="_blank">Wikipedia</a> has related information at <a class="external text" href="http://en.wikipedia.org/wiki/Regular_expression" target="_blank"><i><b>Regular expression</b></i></a></p>
+</td>
+</tr>
+</tbody></table>
+<p>A regular expression is a specific pattern in a set of strings. For instance, one could have the following pattern&nbsp;: 2 digits, 2 letters and 4 digits. <b>R</b> provides powerful functions to deal with regular expressions. Two types of regular expressions are used in <b>R</b><sup id="cite_ref-3" class="reference"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#cite_note-3">[3]</a></sup></p>
+<ul>
+<li>extended regular expressions, used by <code>‘perl = FALSE’</code> (the default),</li>
+<li>Perl-like regular expressions used by <code>‘perl = TRUE’</code>.</li>
+</ul>
+<p>There is a also an option called <code>‘fixed = TRUE’</code> which can be considered as a literal regular expression. <code>fixed()</code> (<b>stringr</b>) is equivalent to <code>fixed=TRUE</code> in the standard regex functions. These functions are by default case sensitive. This can be changed by specifying the option <code>ignore.case = TRUE</code>.</p>
+<p>If you are not a specialist in regular expression you my find the <code>glob2rx()</code> useful. This function suggests some regular expression for a specific pattern&nbsp;:</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> <span class="kw8">glob2rx</span><span class="br0">(</span><span class="st0">"abc.*"</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"^abc<span class="es0">\\</span>."</span>
+</pre></div>
+</div>
+<h3><span class="mw-headline" id="Functions_which_use_regular_expressions_in_R">Functions which use regular expressions in R</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=5" title="Edit section: Functions which use regular expressions in R">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul>
+<li><code>sub()</code>, <code>gsub()</code>, <code>str_replace()</code> (<b>stringr</b>) make some substitutions in a string.</li>
+<li><code>grep()</code>, <code>str_extract()</code> (<b>stringr</b>) extract some value</li>
+<li><code>grepl()</code>, <code>str_detect()</code> (<b>stringr</b>) detect the presence of a pattern.</li>
+<li>see also <code>splitByPattern()</code> (<b>R.utils</b>)</li>
+<li>See also <code>gsubfn()</code> in the <b>gsubfn</b> package.</li>
+</ul>
+<h3><span class="mw-headline" id="Extended_regular_expressions_.28The_default.29">Extended regular expressions (The default)</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=6" title="Edit section: Extended regular expressions (The default)">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul>
+<li><code>"."</code> stands for any character.</li>
+<li><code>"[ABC]"</code> means A,B or C.</li>
+<li><code>"[A-Z]"</code> means any upper letter between A and Z.</li>
+<li><code>"[0-9]"</code> means any digit between 0 and 9.</li>
+</ul>
+<p>Here is the list of metacharacters <code>‘$ * + .&nbsp;? [ ] ^ { } | ( ) \’</code>. If you need to use one of those characters, precede them with a doubled backslash.</p>
+<p>Here are some classes of regular expressions&nbsp;: For numbers&nbsp;:</p>
+<ul>
+<li><code>‘[:digit:]’</code> Digits: <code>‘0 1 2 3 4 5 6 7 8 9’</code>.</li>
+</ul>
+<p>For letters&nbsp;:</p>
+<ul>
+<li><code>‘[:alpha:]’</code> Alphabetic characters: <code>‘[:lower:]’</code> and <code>‘[:upper:]’</code>.</li>
+<li><code>‘[:upper:]’</code> Upper-case letters.</li>
+<li><code>‘[:lower:]’</code> Lower-case letters.</li>
+</ul>
+<p>Note that the set of alphabetic characters includes accents such as <code>é è ê</code> which are very common is some languages like French. Therefore, it is more general than <code>"[A-Za-z]"</code> which does not include letters with accent.</p>
+<p>For other characters&nbsp;:</p>
+<ul>
+<li><code>‘[:punct:]’</code> Punctuation characters: <code>‘! " # $&nbsp;% &amp; ' ( ) * + , - . /&nbsp;:&nbsp;; &lt; = &gt;&nbsp;? @ [ \ ] ^ _ ` { | } ~’</code>.</li>
+<li><code>‘[:space:]’</code> Space characters: tab, newline, vertical tab, form feed, carriage return, and space.</li>
+<li><code>‘[:blank:]’</code> Blank characters: space and tab.</li>
+<li><code>‘[:cntrl:]’</code> Control characters.</li>
+</ul>
+<p>For combination of other classes&nbsp;:</p>
+<ul>
+<li><code>[:alnum:]</code> Alphanumeric characters: <code>‘[:alpha:]’</code> and <code>‘[:digit:]’</code>.</li>
+<li><code>‘[:graph:]’</code> Graphical characters: <code>‘[:alnum:]’</code> and <code>‘[:punct:]’</code>.</li>
+<li><code>‘[:print:]’</code> Printable characters: <code>‘[:alnum:]’</code>, <code>‘[:punct:]’</code> and space.</li>
+<li><code>‘[:xdigit:]’</code> Hexadecimal digits: <code>‘0 1 2 3 4 5 6 7 8 9 A B C D E F a b c d e f’</code>.</li>
+</ul>
+<p>You can quantify the number of repetition by adding after the regular expression the following characters&nbsp;:</p>
+<ul>
+<li><code>‘?’</code> The preceding item is optional and will be matched at most once.</li>
+<li><code>‘*’</code> The preceding item will be matched zero or more times.</li>
+<li><code>‘+’</code> The preceding item will be matched one or more times.</li>
+<li><code>‘{n}’</code> The preceding item is matched exactly ‘n’ times.</li>
+<li><code>‘{n,}’</code> The preceding item is matched ‘n’ or more times.</li>
+<li><code>‘{n,m}’</code> The preceding item is matched at least ‘n’ times, but not more than ‘m’ times.</li>
+</ul>
+<ul>
+<li><code>^</code> to force the regular expression to be at the beginning of the string</li>
+<li><code>$</code> to force the regular expression to be at the end of the string</li>
+</ul>
+<p>If you want to know more, have a look at the 2 following help files&nbsp;:</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;?</span>regexp <span class="co1"># gives some general explanations</span>
+<span class="sy0">&gt;?</span><span class="kw2">grep</span> <span class="co1"># help file for grep(),regexpr(),sub(),gsub(),etc</span>
+</pre></div>
+</div>
+<h3><span class="mw-headline" id="Perl-like_regular_expressions">Perl-like regular expressions</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=7" title="Edit section: Perl-like regular expressions">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<table class="metadata plainlinks ambox ambox-content" style="">
+<tbody><tr>
+<td class="mbox-image">
+<div style="width: 52px;"><img alt="" src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/40px-Book_important2.svg.png" width="40" height="40" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/9/91/Book_important2.svg/60px-Book_important2.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/9/91/Book_important2.svg/80px-Book_important2.svg.png 2x" data-file-width="128" data-file-height="128"></div>
+</td>
+<td class="mbox-text" style=""><b>This section is a stub.</b><br>
+You can help Wikibooks by <a class="external text" href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit">expanding it</a>.</td>
+</tr>
+</tbody></table>
+<p>It is also possible to use "perl-like" regular expressions. You just need to use the option <code>perl=TRUE</code>.</p>
+<h4><span class="mw-headline" id="Examples">Examples</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=8" title="Edit section: Examples">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<p>If you want to remove space characters in a string, you can use the <code>\\s</code> Perl macro.</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="kw2">sub</span><span class="br0">(</span><span class="st0">'<span class="es0">\\</span>s'</span>, <span class="st0">''</span>,x, perl <span class="sy0">=</span> TRUE<span class="br0">)</span>
+</pre></div>
+</div>
+<h4><span class="mw-headline" id="See_also">See also</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=9" title="Edit section: See also">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<ul>
+<li><a href="http://en.wikibooks.org/wiki/Perl_Programming/Regular_Expressions" title="Perl Programming/Regular Expressions">Perl Programming/Regular Expressions</a></li>
+</ul>
+<h2><span class="mw-headline" id="Concatenating_strings">Concatenating strings</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=10" title="Edit section: Concatenating strings">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul>
+<li><code>paste()</code> concatenates strings.</li>
+<li><code>str_c()</code> (<b>stringr</b>) does a similar job.</li>
+<li><code>cat()</code> prints and concatenates strings.</li>
+</ul>
+<h3><span class="mw-headline" id="Examples_2">Examples</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=11" title="Edit section: Examples">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> <span class="kw2">paste</span><span class="br0">(</span><span class="st0">"toto"</span>,<span class="st0">"tata"</span>,sep<span class="sy0">=</span><span class="st0">' '</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"toto tata"</span>
+<span class="sy0">&gt;</span> <span class="kw2">paste</span><span class="br0">(</span><span class="st0">"toto"</span>,<span class="st0">"tata"</span>,sep<span class="sy0">=</span><span class="st0">","</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"toto,tata"</span>
+<span class="sy0">&gt;</span> str_c<span class="br0">(</span><span class="st0">"toto"</span>,<span class="st0">"tata"</span>,sep<span class="sy0">=</span><span class="st0">","</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"toto,tata"</span>
+<span class="sy0">&gt;</span> x <span class="sy0">&lt;-</span> <span class="kw2">c</span><span class="br0">(</span><span class="st0">"a"</span>,<span class="st0">"b"</span>,<span class="st0">"c"</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="kw2">paste</span><span class="br0">(</span>x,collapse<span class="sy0">=</span><span class="st0">" "</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"a b c"</span>
+<span class="sy0">&gt;</span> str_c<span class="br0">(</span>x, collapse <span class="sy0">=</span> <span class="st0">" "</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"a b c"</span>
+<span class="sy0">&gt;</span> <span class="kw2">cat</span><span class="br0">(</span><span class="kw2">c</span><span class="br0">(</span><span class="st0">"a"</span>,<span class="st0">"b"</span>,<span class="st0">"c"</span><span class="br0">)</span>, sep <span class="sy0">=</span> <span class="st0">"+"</span><span class="br0">)</span>
+a<span class="sy0">+</span>b<span class="sy0">+</span><span class="kw2">c</span>
+</pre></div>
+</div>
+<h2><span class="mw-headline" id="Splitting_a_string">Splitting a string</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=12" title="Edit section: Splitting a string">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul>
+<li><code>strsplit()</code>&nbsp;: Split the elements of a character vector ‘x’ into substrings according to the matches to substring ‘split’ within them.</li>
+<li>See also <code>str_split()</code> (<b>stringr</b>).</li>
+</ul>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> <span class="kw2">unlist</span><span class="br0">(</span><span class="kw2">strsplit</span><span class="br0">(</span><span class="st0">"a.b.c"</span>, <span class="st0">"<span class="es0">\\</span>."</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"a"</span> <span class="st0">"b"</span> <span class="st0">"c"</span>
+</pre></div>
+</div>
+<ul>
+<li><code>tokenize()</code> (<b>tau</b>) split a string into tokens.</li>
+</ul>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> tokenize<span class="br0">(</span><span class="st0">"abc defghk"</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"abc"</span>    <span class="st0">" "</span>      <span class="st0">"defghk"</span>
+</pre></div>
+</div>
+<h2><span class="mw-headline" id="Counting_the_number_of_characters_in_a_string">Counting the number of characters in a string</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=13" title="Edit section: Counting the number of characters in a string">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul>
+<li><code>nchar()</code> gives the length of a string.</li>
+<li>See also <code>str_length()</code> (<b>stringr</b>).</li>
+</ul>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> <span class="kw2">nchar</span><span class="br0">(</span><span class="st0">"abcdef"</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="nu0">6</span>
+<span class="sy0">&gt;</span> str_length<span class="br0">(</span><span class="st0">"abcdef"</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="nu0">6</span>
+<span class="sy0">&gt;</span> <span class="kw2">nchar</span><span class="br0">(</span>NA<span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="nu0">2</span>
+<span class="sy0">&gt;</span> str_length<span class="br0">(</span>NA<span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> NA
+</pre></div>
+</div>
+<h2><span class="mw-headline" id="Detecting_the_presence_of_a_substring">Detecting the presence of a substring</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=14" title="Edit section: Detecting the presence of a substring">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<h3><span class="mw-headline" id="Detecting_a_pattern_in_a_string_.3F">Detecting a pattern in a string&nbsp;?</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=15" title="Edit section: Detecting a pattern in a string ?">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul>
+<li><code>grepl()</code> returns a logical expression (TRUE or FALSE).</li>
+<li><code>str_detect()</code> (<b>stringr</b>) does a similar job.</li>
+</ul>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> string <span class="sy0">&lt;-</span> <span class="st0">"23 mai 2000"</span>
+<span class="sy0">&gt;</span> string2 <span class="sy0">&lt;-</span> <span class="st0">"1 mai 2000"</span>
+<span class="sy0">&gt;</span> regexp <span class="sy0">&lt;-</span> <span class="st0">"([[:digit:]]{2}) ([[:alpha:]]+) ([[:digit:]]{4})"</span>
+<span class="sy0">&gt;</span> <span class="kw2">grepl</span><span class="br0">(</span>pattern <span class="sy0">=</span> regexp, x <span class="sy0">=</span> string<span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> TRUE
+<span class="sy0">&gt;</span> str_detect<span class="br0">(</span>string, regexp<span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> TRUE
+<span class="sy0">&gt;</span> <span class="kw2">grepl</span><span class="br0">(</span>pattern <span class="sy0">=</span> regexp, x <span class="sy0">=</span> string2<span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> FALSE
+</pre></div>
+</div>
+<p>The 1st one is true and the second one is false since there is only one digit in the first number.</p>
+<h3><span class="mw-headline" id="Counting_the_occurrence_of_each_pattern_in_a_string_.3F">Counting the occurrence of each pattern in a string&nbsp;?</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=16" title="Edit section: Counting the occurrence of each pattern in a string ?">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul>
+<li><code>textcnt()</code> (<b>tau</b>) counts the occurrence of each pattern or each term in a text.</li>
+</ul>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> string <span class="sy0">&lt;-</span> <span class="st0">"blabla 23 mai 2000 blabla 18 mai 2004"</span>
+<span class="sy0">&gt;</span> textcnt<span class="br0">(</span>string,n<span class="sy0">=</span>1L,method<span class="sy0">=</span><span class="st0">"string"</span><span class="br0">)</span>
+blabla    mai 
+     <span class="nu0">2</span>      <span class="nu0">2</span> 
+<span class="kw2">attr</span><span class="br0">(</span>,<span class="st0">"class"</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"textcnt"</span>
+</pre></div>
+</div>
+<h2><span class="mw-headline" id="Extracting_the_position_of_a_substring_or_a_pattern_in_a_string">Extracting the position of a substring or a pattern in a string</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=17" title="Edit section: Extracting the position of a substring or a pattern in a string">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<h3><span class="mw-headline" id="Extracting_the_position_of_a_substring_.3F">Extracting the position of a substring&nbsp;?</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=18" title="Edit section: Extracting the position of a substring ?">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul>
+<li><code>cpos()</code> (<b>cwhmisc</b>) returns the position of a substring in a string.</li>
+<li><code>substring.location()</code> (<b>cwhmisc</b>) does the same job but returns the first and the last position.</li>
+</ul>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"> 
+<span class="sy0">&gt;</span> cpos<span class="br0">(</span><span class="st0">"abcdefghijklmnopqrstuvwxyz"</span>,<span class="st0">"p"</span>,<span class="kw7">start</span><span class="sy0">=</span><span class="nu0">1</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="nu0">16</span>
+<span class="sy0">&gt;</span> substring.<span class="me1">location</span><span class="br0">(</span><span class="st0">"abcdefghijklmnopqrstuvwxyz"</span>,<span class="st0">"def"</span><span class="br0">)</span>
+$first
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="nu0">4</span>
+ 
+$last
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="nu0">6</span>
+</pre></div>
+</div>
+<h3><span class="mw-headline" id="Extracting_the_position_of_a_pattern_in_a_string_.3F">Extracting the position of a pattern in a string&nbsp;?</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=19" title="Edit section: Extracting the position of a pattern in a string ?">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul>
+<li><code>regexpr()</code> returns the position of the regular expression. <code>str_locate()</code> (<b>stringr</b>) does the same job. <code>gregexpr()</code> is similar to <code>regexpr()</code> but the starting position of every match is returned. <code>str_locate_all()</code> (<b>stringr</b>) does the same job.</li>
+</ul>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> regexp <span class="sy0">&lt;-</span> <span class="st0">"([[:digit:]]{2}) ([[:alpha:]]+) ([[:digit:]]{4})"</span>
+<span class="sy0">&gt;</span> string <span class="sy0">&lt;-</span> <span class="st0">"blabla 23 mai 2000 blabla 18 mai 2004"</span>
+<span class="sy0">&gt;</span> <span class="kw2">regexpr</span><span class="br0">(</span>pattern <span class="sy0">=</span> regexp, <span class="kw4">text</span> <span class="sy0">=</span> string<span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="nu0">8</span>
+<span class="kw2">attr</span><span class="br0">(</span>,<span class="st0">"match.length"</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="nu0">11</span>
+<span class="sy0">&gt;</span> <span class="kw2">gregexpr</span><span class="br0">(</span>pattern <span class="sy0">=</span> regexp, <span class="kw4">text</span> <span class="sy0">=</span> string<span class="br0">)</span>
+<span class="br0">[</span><span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span><span class="br0">]</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span>  <span class="nu0">8</span> <span class="nu0">27</span>
+<span class="kw2">attr</span><span class="br0">(</span>,<span class="st0">"match.length"</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="nu0">11</span> <span class="nu0">11</span>
+<span class="sy0">&gt;</span> str_locate<span class="br0">(</span>string,regexp<span class="br0">)</span>
+     <span class="kw7">start</span> <span class="kw7">end</span>
+<span class="br0">[</span><span class="nu0">1</span>,<span class="br0">]</span>     <span class="nu0">8</span>  <span class="nu0">18</span>
+<span class="sy0">&gt;</span> str_locate_all<span class="br0">(</span>string,regexp<span class="br0">)</span>
+<span class="br0">[</span><span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span><span class="br0">]</span>
+     <span class="kw7">start</span> <span class="kw7">end</span>
+<span class="br0">[</span><span class="nu0">1</span>,<span class="br0">]</span>     <span class="nu0">8</span>  <span class="nu0">18</span>
+<span class="br0">[</span><span class="nu0">2</span>,<span class="br0">]</span>    <span class="nu0">27</span>  <span class="nu0">37</span>
+</pre></div>
+</div>
+<h2><span class="mw-headline" id="Extracting_a_substring_from_a_string">Extracting a substring from a string</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=20" title="Edit section: Extracting a substring from a string">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<h3><span class="mw-headline" id="Extracting_a_fixed_width_substring_.3F">Extracting a fixed width substring&nbsp;?</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=21" title="Edit section: Extracting a fixed width substring ?">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul>
+<li><code>substr()</code> takes a sub string.</li>
+<li><code>str_sub()</code> (<b>stringr</b>) is similar.</li>
+</ul>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> <span class="kw2">substr</span><span class="br0">(</span><span class="st0">"simple text"</span>,<span class="nu0">1</span>,<span class="nu0">3</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"sim"</span>
+<span class="sy0">&gt;</span> str_sub<span class="br0">(</span><span class="st0">"simple text"</span>,<span class="nu0">1</span>,<span class="nu0">3</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"sim"</span>
+</pre></div>
+</div>
+<h3><span class="mw-headline" id="Extracting_the_first_word_in_a_string_.3F">Extracting the first word in a string&nbsp;?</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=22" title="Edit section: Extracting the first word in a string ?">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul>
+<li><code>first.word()</code> First Word in a String or Expression in the <b>Hmisc</b> package</li>
+</ul>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> first.<span class="me1">word</span><span class="br0">(</span><span class="st0">"abc def ghk"</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"abc"</span>
+</pre></div>
+</div>
+<h3><span class="mw-headline" id="Extracting_a_pattern_in_a_string_.3F">Extracting a pattern in a string&nbsp;?</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=23" title="Edit section: Extracting a pattern in a string ?">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul>
+<li><code>grep()</code> returns the value or the position of the regular expression if <code>value=T</code> and its position if <code>value=F</code>.</li>
+</ul>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> <span class="kw2">grep</span><span class="br0">(</span>pattern <span class="sy0">=</span> regexp, x <span class="sy0">=</span> string , value <span class="sy0">=</span> <span class="kw2">T</span><span class="br0">)</span> 
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"23 mai 2000"</span>
+<span class="sy0">&gt;</span> <span class="kw2">grep</span><span class="br0">(</span>pattern <span class="sy0">=</span> regexp, x <span class="sy0">=</span> string2 , value <span class="sy0">=</span> <span class="kw2">T</span><span class="br0">)</span> 
+<span class="kw2">character</span><span class="br0">(</span><span class="nu0">0</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="kw2">grep</span><span class="br0">(</span>pattern <span class="sy0">=</span> regexp, x <span class="sy0">=</span> string , value <span class="sy0">=</span> <span class="kw2">F</span><span class="br0">)</span> 
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="nu0">1</span>
+<span class="sy0">&gt;</span> <span class="kw2">grep</span><span class="br0">(</span>pattern <span class="sy0">=</span> regexp, x <span class="sy0">=</span> string2 , value <span class="sy0">=</span> <span class="kw2">F</span><span class="br0">)</span> 
+<span class="kw2">integer</span><span class="br0">(</span><span class="nu0">0</span><span class="br0">)</span>
+</pre></div>
+</div>
+<ul>
+<li><code>str_extract()</code>, <code>str_extract_all()</code>, <code>str_match()</code>, <code>str_match_all()</code> (<b>stringr</b>) and <code>m()</code> (<b>caroline</b> package) are similar to <code>grep()</code>. <code>str_extract()</code> and <code>str_extract_all()</code> return a vector. <code>str_match()</code> and <code>str_match_all()</code> return a matrix and <code>m()</code> a dataframe.</li>
+</ul>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> <span class="kw2">library</span><span class="br0">(</span><span class="st0">"stringr"</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> regexp <span class="sy0">&lt;-</span> <span class="st0">"([[:digit:]]{2}) ([[:alpha:]]+) ([[:digit:]]{4})"</span>
+<span class="sy0">&gt;</span> string <span class="sy0">&lt;-</span> <span class="st0">"blabla 23 mai 2000 blabla 18 mai 2004"</span>
+<span class="sy0">&gt;</span> str_extract<span class="br0">(</span>string,regexp<span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"23 mai 2000"</span>
+<span class="sy0">&gt;</span> str_extract_all<span class="br0">(</span>string,regexp<span class="br0">)</span>
+<span class="br0">[</span><span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span><span class="br0">]</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"23 mai 2000"</span> <span class="st0">"18 mai 2004"</span>
+ 
+<span class="sy0">&gt;</span> str_match<span class="br0">(</span>string,regexp<span class="br0">)</span>
+     <span class="br0">[</span>,<span class="nu0">1</span><span class="br0">]</span>          <span class="br0">[</span>,<span class="nu0">2</span><span class="br0">]</span> <span class="br0">[</span>,<span class="nu0">3</span><span class="br0">]</span>  <span class="br0">[</span>,<span class="nu0">4</span><span class="br0">]</span>  
+<span class="br0">[</span><span class="nu0">1</span>,<span class="br0">]</span> <span class="st0">"23 mai 2000"</span> <span class="st0">"23"</span> <span class="st0">"mai"</span> <span class="st0">"2000"</span>
+<span class="sy0">&gt;</span> str_match_all<span class="br0">(</span>string,regexp<span class="br0">)</span>
+<span class="br0">[</span><span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span><span class="br0">]</span>
+     <span class="br0">[</span>,<span class="nu0">1</span><span class="br0">]</span>          <span class="br0">[</span>,<span class="nu0">2</span><span class="br0">]</span> <span class="br0">[</span>,<span class="nu0">3</span><span class="br0">]</span>  <span class="br0">[</span>,<span class="nu0">4</span><span class="br0">]</span>  
+<span class="br0">[</span><span class="nu0">1</span>,<span class="br0">]</span> <span class="st0">"23 mai 2000"</span> <span class="st0">"23"</span> <span class="st0">"mai"</span> <span class="st0">"2000"</span>
+<span class="br0">[</span><span class="nu0">2</span>,<span class="br0">]</span> <span class="st0">"18 mai 2004"</span> <span class="st0">"18"</span> <span class="st0">"mai"</span> <span class="st0">"2004"</span>
+<span class="sy0">&gt;</span> <span class="kw2">library</span><span class="br0">(</span><span class="st0">"caroline"</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> m<span class="br0">(</span>pattern <span class="sy0">=</span> regexp, vect <span class="sy0">=</span> string, <span class="kw2">names</span> <span class="sy0">=</span> <span class="kw2">c</span><span class="br0">(</span><span class="st0">"day"</span>,<span class="st0">"month"</span>,<span class="st0">"year"</span><span class="br0">)</span>, types <span class="sy0">=</span> <span class="kw2">rep</span><span class="br0">(</span><span class="st0">"character"</span>,<span class="nu0">3</span><span class="br0">)</span><span class="br0">)</span>
+  day month year
+<span class="nu0">1</span>  <span class="nu0">18</span>   mai <span class="nu0">2004</span>
+</pre></div>
+</div>
+<h2><span class="mw-headline" id="Making_some_substitution_inside_a_string">Making some substitution inside a string</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=24" title="Edit section: Making some substitution inside a string">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<h3><span class="mw-headline" id="Substituting_a_pattern_in_a_string">Substituting a pattern in a string</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=25" title="Edit section: Substituting a pattern in a string">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul>
+<li><code>sub()</code> makes a substitution.</li>
+<li><code>gsub()</code> is similar to <code>sub()</code> but replace all occurrences of the pattern whereas <code>sub()</code> only replaces the first occurrence.</li>
+<li><code>str_replace()</code> (<b>stringr</b>) is similar.</li>
+</ul>
+<p>In the following example, we have a French date. The regular pattern is the following&nbsp;: 2 digits, a blank, some letters, a blank, 4 digits. We capture the 2 digits with the <code>[[:digit:]]{2}</code> expression, the letters with <code>[[:alpha:]]+</code> and the 4 digits with <code>[[:digit:]]{4}</code>. Each of these three substrings is surrounded with parenthesis. The first substring is stored in <code>"\\1"</code>, the second one in <code>"\\2"</code> and the 3rd one in <code>"\\3"</code>.</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1">string <span class="sy0">&lt;-</span> <span class="st0">"23 mai 2000"</span>
+regexp <span class="sy0">&lt;-</span> <span class="st0">"([[:digit:]]{2}) ([[:alpha:]]+) ([[:digit:]]{4})"</span>
+<span class="kw2">sub</span><span class="br0">(</span>pattern <span class="sy0">=</span> regexp, replacement <span class="sy0">=</span> <span class="st0">"<span class="es0">\\</span>1"</span>, x <span class="sy0">=</span> string<span class="br0">)</span> <span class="co1"># returns the first part of the regular expression</span>
+<span class="kw2">sub</span><span class="br0">(</span>pattern <span class="sy0">=</span> regexp, replacement <span class="sy0">=</span> <span class="st0">"<span class="es0">\\</span>2"</span>, x <span class="sy0">=</span> string<span class="br0">)</span> <span class="co1"># returns the second part</span>
+<span class="kw2">sub</span><span class="br0">(</span>pattern <span class="sy0">=</span> regexp, replacement <span class="sy0">=</span> <span class="st0">"<span class="es0">\\</span>3"</span>, x <span class="sy0">=</span> string<span class="br0">)</span> <span class="co1"># returns the third part</span>
+</pre></div>
+</div>
+<p>In the following example, we compare the outcome of <code>sub()</code> and <code>gsub()</code>. The first one removes the first space whereas the second one removes all spaces in the text.</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> <span class="kw4">text</span> <span class="sy0">&lt;-</span> <span class="st0">"abc def ghk"</span>
+<span class="sy0">&gt;</span> <span class="kw2">sub</span><span class="br0">(</span>pattern <span class="sy0">=</span> <span class="st0">" "</span>, replacement <span class="sy0">=</span> <span class="st0">""</span>,  x <span class="sy0">=</span> <span class="kw4">text</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"abcdef ghk"</span>
+<span class="sy0">&gt;</span> <span class="kw2">gsub</span><span class="br0">(</span>pattern <span class="sy0">=</span> <span class="st0">" "</span>, replacement <span class="sy0">=</span> <span class="st0">""</span>,  x <span class="sy0">=</span> <span class="kw4">text</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"abcdefghk"</span>
+</pre></div>
+</div>
+<h3><span class="mw-headline" id="Substituting_characters_in_a_string_.3F">Substituting characters in a string&nbsp;?</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=26" title="Edit section: Substituting characters in a string ?">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul>
+<li><code>chartr()</code> substitutes characters in an expression. It stands for "character translation".</li>
+<li><code>replacechar()</code> (<b>cwhmisc</b>) does the same job ...</li>
+<li>as well as <code>str_replace_all()</code> (<b>stringr</b>).</li>
+</ul>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> <span class="kw2">chartr</span><span class="br0">(</span>old<span class="sy0">=</span><span class="st0">"a"</span>,<span class="kw6">new</span><span class="sy0">=</span><span class="st0">"o"</span>,x<span class="sy0">=</span><span class="st0">"baba"</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"bobo"</span>
+<span class="sy0">&gt;</span> <span class="kw2">chartr</span><span class="br0">(</span>old<span class="sy0">=</span><span class="st0">"ab"</span>,<span class="kw6">new</span><span class="sy0">=</span><span class="st0">"ot"</span>,x<span class="sy0">=</span><span class="st0">"baba"</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"toto"</span>
+<span class="sy0">&gt;</span> replacechar<span class="br0">(</span><span class="st0">"abc.def.ghi.jkl"</span>,<span class="st0">"."</span>,<span class="st0">"_"</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"abc_def_ghi_jkl"</span>
+<span class="sy0">&gt;</span> str_replace_all<span class="br0">(</span><span class="st0">"abc.def.ghi.jkl"</span>,<span class="st0">"<span class="es0">\\</span>."</span>,<span class="st0">"_"</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"abc_def_ghi_jkl"</span>
+</pre></div>
+</div>
+<h2><span class="mw-headline" id="Converting_letters_to_lower_or_upper-case">Converting letters to lower or upper-case</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=27" title="Edit section: Converting letters to lower or upper-case">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul>
+<li><code>tolower()</code> converts upper-case characters to lower-case.</li>
+<li><code>toupper()</code> converts lower-case characters to upper-case.</li>
+<li><code>capitalize()</code> (<b>Hmisc</b>) capitalize the first letter of a string</li>
+<li>See also <code>cap()</code>, <code>capitalize()</code>, <code>lower()</code>, <code>lowerize()</code> and <code>CapLeading()</code> in the <b>cwhmisc</b> package.</li>
+</ul>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> <span class="kw2">tolower</span><span class="br0">(</span><span class="st0">"ABCdef"</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"abcdef"</span>
+<span class="sy0">&gt;</span> <span class="kw2">toupper</span><span class="br0">(</span><span class="st0">"ABCdef"</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"ABCDEF"</span>
+<span class="sy0">&gt;</span> capitalize<span class="br0">(</span><span class="st0">"abcdef"</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"Abcdef"</span>
+</pre></div>
+</div>
+<h2><span class="mw-headline" id="Filling_a_string_with_some_character">Filling a string with some character</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=28" title="Edit section: Filling a string with some character">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul>
+<li><code>padding()</code> (<b>cwhmisc</b>) fills a string with some characters to fit a given length. See also <code>str_pad()</code> (<b>stringr</b>).</li>
+</ul>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> <span class="kw2">library</span><span class="br0">(</span><span class="st0">"cwhmisc"</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> padding<span class="br0">(</span><span class="st0">"abc"</span>,<span class="nu0">10</span>,<span class="st0">" "</span>,<span class="st0">"center"</span><span class="br0">)</span> <span class="co1"># adds blanks such that the length of the string is 10.</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"   abc    "</span>
+<span class="sy0">&gt;</span> str_pad<span class="br0">(</span><span class="st0">"abc"</span>,width<span class="sy0">=</span><span class="nu0">10</span>,side<span class="sy0">=</span><span class="st0">"center"</span>, pad <span class="sy0">=</span> <span class="st0">"+"</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"+++abc++++"</span>
+<span class="sy0">&gt;</span> str_pad<span class="br0">(</span><span class="kw2">c</span><span class="br0">(</span><span class="st0">"1"</span>,<span class="st0">"11"</span>,<span class="st0">"111"</span>,<span class="st0">"1111"</span><span class="br0">)</span>,<span class="nu0">3</span>,side<span class="sy0">=</span><span class="st0">"left"</span>,pad<span class="sy0">=</span><span class="st0">"0"</span><span class="br0">)</span> 
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"001"</span>  <span class="st0">"011"</span>  <span class="st0">"111"</span>  <span class="st0">"1111"</span>
+</pre></div>
+</div>
+<p>Note that <code>str_pad()</code> is very slow. For instance for a vector of length 10,000, we have a very long computing time. <code>padding()</code>does not seem to handle character vectors but the best solution may be to use the <code>sapply()</code> and <code>padding()</code> functions together.</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span>library<span class="br0">(</span><span class="st0">"stringr"</span><span class="br0">)</span>
+<span class="sy0">&gt;</span>library<span class="br0">(</span><span class="st0">"cwhmisc"</span><span class="br0">)</span>
+<span class="sy0">&gt;</span>a <span class="sy0">&lt;-</span> <span class="kw2">rep</span><span class="br0">(</span><span class="nu0">1</span>,<span class="nu0">10</span><span class="sy0">^</span><span class="nu0">4</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> <span class="kw2">system.<span class="me1">time</span></span><span class="br0">(</span>b <span class="sy0">&lt;-</span> str_pad<span class="br0">(</span>a,<span class="nu0">3</span>,side<span class="sy0">=</span><span class="st0">"left"</span>,pad<span class="sy0">=</span><span class="st0">"0"</span><span class="br0">)</span><span class="br0">)</span>
+utilisateur     système      écoulé 
+     <span class="nu0">50.968</span>       <span class="nu0">0.208</span>      <span class="nu0">73.322</span> 
+<span class="sy0">&gt;</span> <span class="kw2">system.<span class="me1">time</span></span><span class="br0">(</span><span class="kw2">c</span> <span class="sy0">&lt;-</span> <span class="kw2">sapply</span><span class="br0">(</span>a, padding, space <span class="sy0">=</span> <span class="nu0">3</span>, <span class="kw2">with</span> <span class="sy0">=</span> <span class="st0">"0"</span>, to <span class="sy0">=</span> <span class="st0">"left"</span><span class="br0">)</span><span class="br0">)</span>
+utilisateur     système      écoulé 
+      <span class="nu0">7.700</span>       <span class="nu0">0.020</span>      <span class="nu0">12.206</span>
+</pre></div>
+</div>
+<h2><span class="mw-headline" id="Removing_leading_and_trailing_spaces">Removing leading and trailing spaces</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=29" title="Edit section: Removing leading and trailing spaces">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul>
+<li><code>trimws()</code> (<b>memisc</b> package) trim leading and trailing white spaces.</li>
+<li><code>trim()</code> (<b>gdata</b> package) does the same job.</li>
+<li>See also <code>str_trim()</code> (<b>stringr</b>)</li>
+</ul>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> <span class="kw2">library</span><span class="br0">(</span><span class="st0">"memisc"</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> trimws<span class="br0">(</span><span class="st0">"  abc def   "</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"abc def"</span> 
+<span class="sy0">&gt;</span> <span class="kw2">library</span><span class="br0">(</span><span class="st0">"gdata"</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> trim<span class="br0">(</span><span class="st0">" abc def "</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"abc def"</span>
+<span class="sy0">&gt;</span> str_trim<span class="br0">(</span><span class="st0">"  abd def  "</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"abd def"</span>
+</pre></div>
+</div>
+<h2><span class="mw-headline" id="Comparing_two_strings">Comparing two strings</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=30" title="Edit section: Comparing two strings">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<h3><span class="mw-headline" id="Assessing_if_they_are_identical">Assessing if they are identical</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=31" title="Edit section: Assessing if they are identical">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<ul>
+<li><code>==</code> returns TRUE if both strings are the same and false otherwise.</li>
+</ul>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> <span class="st0">"abc"</span><span class="sy0">==</span><span class="st0">"abc"</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> TRUE
+<span class="sy0">&gt;</span> <span class="st0">"abc"</span><span class="sy0">==</span><span class="st0">"abd"</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> FALSE
+</pre></div>
+</div>
+<h3><span class="mw-headline" id="Computing_distance_between_strings">Computing distance between strings</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=32" title="Edit section: Computing distance between strings">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>Few packages implement the <a href="http://en.wikipedia.org/wiki/Levenshtein_distance" class="extiw" title="w:Levenshtein distance" target="_blank">Levenshtein distance</a> between two strings:</p>
+<ul>
+<li><code>adist()</code> in base package <b>utils</b></li>
+<li><code>stringMatch()</code> in <b>MiscPsycho</b></li>
+<li><code>stringdist()</code> in <b>stringdist</b></li>
+<li><code>levenshteinDist()</code> in <b>RecordLinkage</b></li>
+</ul>
+<p>A benchmark comparing the speed of <code>levenshteinDist()</code> and <code>stringdist()</code> is available here: <a rel="nofollow" class="external autonumber" href="http://www.markvanderloo.eu/yaRb/2013/09/07/a-bit-of-benchmarking-with-string-distances/" target="_blank">[1]</a>.</p>
+<h4><span class="mw-headline" id="Example_with_utils">Example with utils</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=33" title="Edit section: Example with utils">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> adist<span class="br0">(</span><span class="st0">"test"</span>,<span class="st0">"tester"</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="nu0">2</span>
+</pre></div>
+</div>
+<h4><span class="mw-headline" id="Example_with_MiscPsycho">Example with MiscPsycho</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=34" title="Edit section: Example with MiscPsycho">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<p><code>stringMatch()</code> (<b>MiscPsycho</b>) computes If <code>normalize="YES"</code> the levenshtein distance is divided by the maximum length of each string.</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> <span class="kw2">library</span><span class="br0">(</span><span class="st0">"MiscPsycho"</span><span class="br0">)</span>
+<span class="sy0">&gt;</span> stringMatch<span class="br0">(</span><span class="st0">"test"</span>,<span class="st0">"tester"</span>,normalize<span class="sy0">=</span><span class="st0">"NO"</span>,penalty<span class="sy0">=</span><span class="nu0">1</span>,case.<span class="me1">sensitive</span> <span class="sy0">=</span> TRUE<span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="nu0">2</span>
+</pre></div>
+</div>
+<h4><span class="mw-headline" id="Approximate_matching">Approximate matching</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=35" title="Edit section: Approximate matching">edit</a><span class="mw-editsection-bracket">]</span></span></h4>
+<p><code>agrep()</code> search for approximate matches using the <a href="http://en.wikipedia.org/wiki/Levenshtein_distance" class="extiw" title="w:Levenshtein distance" target="_blank">Levenshtein distance</a>.</p>
+<ul>
+<li>If 'value = TRUE', this returns the value of the string</li>
+<li>If 'value = FALSE' this returns the position of the string</li>
+<li><i>max</i> returns the maximal levenshtein distance.</li>
+</ul>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span>  <span class="kw2">agrep</span><span class="br0">(</span>pattern <span class="sy0">=</span> <span class="st0">"laysy"</span>, x <span class="sy0">=</span> <span class="kw2">c</span><span class="br0">(</span><span class="st0">"1 lazy"</span>, <span class="st0">"1"</span>, <span class="st0">"1 LAZY"</span><span class="br0">)</span>, <span class="kw2">max</span> <span class="sy0">=</span> <span class="nu0">2</span>, value <span class="sy0">=</span> TRUE<span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"1 lazy"</span>
+<span class="sy0">&gt;</span>  <span class="kw2">agrep</span><span class="br0">(</span><span class="st0">"laysy"</span>, <span class="kw2">c</span><span class="br0">(</span><span class="st0">"1 lazy"</span>, <span class="st0">"1"</span>, <span class="st0">"1 LAZY"</span><span class="br0">)</span>, <span class="kw2">max</span> <span class="sy0">=</span> <span class="nu0">3</span>, value <span class="sy0">=</span> TRUE<span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"1 lazy"</span>
+</pre></div>
+</div>
+<h2><span class="mw-headline" id="Miscellaneous">Miscellaneous</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=36" title="Edit section: Miscellaneous">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul>
+<li><code>deparse()</code>&nbsp;: Turn unevaluated expressions into character strings.</li>
+<li><code>char.expand()</code> (<b>base</b>) expands a string with respect to a target.</li>
+<li><code>pmatch()</code> (<b>base</b>) and <code>charmatch()</code> (<b>base</b>) seek matches for the elements of their first argument among those of their second.</li>
+</ul>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> <span class="kw2">pmatch</span><span class="br0">(</span><span class="kw2">c</span><span class="br0">(</span><span class="st0">"a"</span>,<span class="st0">"b"</span>,<span class="st0">"c"</span>,<span class="st0">"d"</span><span class="br0">)</span>,<span class="kw2">table</span> <span class="sy0">=</span> <span class="kw2">c</span><span class="br0">(</span><span class="st0">"b"</span>,<span class="st0">"c"</span><span class="br0">)</span>, nomatch <span class="sy0">=</span> <span class="nu0">0</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="nu0">0</span> <span class="nu0">1</span> <span class="nu0">2</span> <span class="nu0">0</span>
+</pre></div>
+</div>
+<ul>
+<li><code>make.unique()</code> makes a character string unique. This is useful if you want to use a string as an identifier in your data.</li>
+</ul>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr">
+<div class="rsplus source-rsplus">
+<pre class="de1"><span class="sy0">&gt;</span> <span class="kw2">make.<span class="me1">unique</span></span><span class="br0">(</span><span class="kw2">c</span><span class="br0">(</span><span class="st0">"a"</span>, <span class="st0">"a"</span>, <span class="st0">"a"</span><span class="br0">)</span><span class="br0">)</span>
+<span class="br0">[</span><span class="nu0">1</span><span class="br0">]</span> <span class="st0">"a"</span>   <span class="st0">"a.1"</span> <span class="st0">"a.2"</span>
+</pre></div>
+</div>
+<h2><span class="mw-headline" id="References">References</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit&section=37" title="Edit section: References">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div class="reflist references references-column-count references-column-count-2" style="column-count: 2; -moz-column-count: 2; -webkit-column-count: 2;">
+<ol class="references">
+<li id="cite_note-stringr-1"><span class="mw-cite-backlink"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#cite_ref-stringr_1-0"><span class="cite-accessibility-label">Jump up </span>↑</a></span> <span class="reference-text">Hadley Wickham "stringr: modern, consistent string processing" The R Journal, December 2010, Vol 2/2, <a rel="nofollow" class="external free" href="http://journal.r-project.org/archive/2010-2/RJournal_2010-2_Wickham.pdf" target="_blank">http://journal.r-project.org/archive/2010-2/RJournal_2010-2_Wickham.pdf</a></span></li>
+<li id="cite_note-2"><span class="mw-cite-backlink"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#cite_ref-2"><span class="cite-accessibility-label">Jump up </span>↑</a></span> <span class="reference-text"><a rel="nofollow" class="external free" href="http://cran.r-project.org/web/views/NaturalLanguageProcessing.html" target="_blank">http://cran.r-project.org/web/views/NaturalLanguageProcessing.html</a></span></li>
+<li id="cite_note-3"><span class="mw-cite-backlink"><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#cite_ref-3"><span class="cite-accessibility-label">Jump up </span>↑</a></span> <span class="reference-text">In former versions (&lt; 2.10) we had also basic regular expressions in <b>R</b>&nbsp;:</span>
+<ul>
+<li><span class="reference-text">extended regular expressions, used by <code>extended = TRUE</code> (the default),</span></li>
+<li><span class="reference-text">basic regular expressions, as used by <code>extended = FALSE</code> (obsolete in <b>R 2.10</b>).</span></li>
+</ul>
+<span class="reference-text">Since basic regular expressions (<code>‘extended = FALSE’</code>) are now obsolete, the <code>extended</code> option is obsolete in version 2.11.</span></li>
+</ol>
+</div>
+
+
+<!-- 
+NewPP limit report
+Parsed by mw1074
+CPU time usage: 0.774 seconds
+Real time usage: 0.850 seconds
+Preprocessor visited node count: 2066/1000000
+Preprocessor generated node count: 0/1500000
+Post‐expand include size: 22062/2097152 bytes
+Template argument size: 2412/2097152 bytes
+Highest expansion depth: 10/40
+Expensive parser function count: 0/500
+-->
+
+<!-- 
+Transclusion expansion time report (%,ms,calls,template)
+100.00%  658.506      1 - -total
+  7.00%   46.125      1 - Template:R_Programming/Navigation
+  3.52%   23.173      2 - Template:Wikipedia
+  3.18%   20.965      3 - Template:Mbox-side
+  3.14%   20.692     42 - Template:Stage_short
+  2.32%   15.252      1 - Template:...
+  2.19%   14.444      2 - Template:Sec_link_auto
+  1.52%   10.024      1 - Template:Ambox
+  1.48%    9.724      1 - Template:Reflist
+  1.45%    9.541      1 - Template:Wikibooks
+-->
+
+<!-- Saved in parser cache with key enwikibooks:pcache:idhash:200605-0!*!0!!en!4!* and timestamp 20150507143216 and revision id 2837320
+ -->
+<noscript>&lt;img src="//en.wikibooks.org/wiki/Special:CentralAutoLogin/start?type=1x1" alt="" title="" width="1" height="1" style="border: none; position: absolute;" /&gt;</noscript></div>									<div class="printfooter">
+						Retrieved from "<a dir="ltr" href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&oldid=2837320">http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&amp;oldid=2837320</a>"					</div>
+													<div id="catlinks" class="catlinks"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="http://en.wikibooks.org/wiki/Special:Categories" title="Special:Categories">Categories</a>: <ul><li><a href="http://en.wikibooks.org/wiki/Category:R_Programming" title="Category:R Programming">R Programming</a></li><li><a href="http://en.wikibooks.org/wiki/Category:Section_stubs" title="Category:Section stubs">Section stubs</a></li></ul></div></div>												<div class="visualClear"></div>
+							</div>
+		</div>
+		<div id="mw-navigation">
+			<h2>Navigation menu</h2>
+
+			<div id="mw-head">
+									<div id="p-personal" role="navigation" class="" aria-labelledby="p-personal-label">
+						<h3 id="p-personal-label">Personal tools</h3>
+						<ul>
+							<li id="pt-createaccount"><a href="http://en.wikibooks.org/w/index.php?title=Special:UserLogin&returnto=R+Programming%2FText+Processing&type=signup" title="You are encouraged to create an account and log in; however, it is not mandatory">Create account</a></li><li id="pt-login"><a href="http://en.wikibooks.org/w/index.php?title=Special:UserLogin&returnto=R+Programming%2FText+Processing" title="You are encouraged to log in; however, it is not mandatory [ctrl-option-o]" accesskey="o">Log in</a></li>						</ul>
+					</div>
+									<div id="left-navigation">
+										<div id="p-namespaces" role="navigation" class="vectorTabs" aria-labelledby="p-namespaces-label">
+						<h3 id="p-namespaces-label">Namespaces</h3>
+						<ul>
+															<li id="ca-nstab-main" class="selected"><span><a href="./R Programming_Text Processing - Wikibooks, open books for an open world_files/R Programming_Text Processing - Wikibooks, open books for an open world.html" title="View the content page [ctrl-option-c]" accesskey="c">Book</a></span></li>
+															<li id="ca-talk"><span><a href="http://en.wikibooks.org/wiki/Talk:R_Programming/Text_Processing" title="Discussion about the content page [ctrl-option-t]" accesskey="t">Discussion</a></span></li>
+													</ul>
+					</div>
+										<div id="p-variants" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-variants-label">
+												<h3 id="p-variants-label" tabindex="0"><span>Variants</span><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#" tabindex="-1"></a></h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+									</div>
+				<div id="right-navigation">
+										<div id="p-views" role="navigation" class="vectorTabs" aria-labelledby="p-views-label">
+						<h3 id="p-views-label">Views</h3>
+						<ul>
+															<li id="ca-view" class="selected"><span><a href="./R Programming_Text Processing - Wikibooks, open books for an open world_files/R Programming_Text Processing - Wikibooks, open books for an open world.html">Read</a></span></li>
+															<li id="ca-edit"><span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=edit" title="You can edit this page. Please use the preview button before saving [ctrl-option-e]" accesskey="e">Edit</a></span></li>
+															<li id="ca-history" class="collapsible"><span><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=history" title="Past revisions of this page [ctrl-option-h]" accesskey="h">View history</a></span></li>
+													</ul>
+					</div>
+										<div id="p-cactions" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-cactions-label">
+						<h3 id="p-cactions-label" tabindex="0"><span>More</span><a href="http://en.wikibooks.org/wiki/R_Programming/Text_Processing#" tabindex="-1"></a></h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+										<div id="p-search" role="search">
+						<h3>
+							<label for="searchInput">Search</label>
+						</h3>
+
+						<form action="http://en.wikibooks.org/w/index.php" id="searchform">
+														<div id="simpleSearch">
+															<input type="search" name="search" placeholder="Search" title="Search Wikibooks [ctrl-option-f]" accesskey="f" id="searchInput" tabindex="1" autocomplete="off"><input type="hidden" value="Special:Search" name="title"><input type="submit" name="go" value="Go" title="Go to a page with this exact name if exists" id="searchButton" class="searchButton">								</div>
+						</form>
+					</div>
+									</div>
+			</div>
+			<div id="mw-panel">
+				<div id="p-logo" role="banner"><a class="mw-wiki-logo" href="http://en.wikibooks.org/wiki/Main_Page" title="Visit the main page"></a></div>
+						<div class="portal" role="navigation" id="p-Navigation" aria-labelledby="p-Navigation-label">
+			<h3 id="p-Navigation-label">Navigation</h3>
+
+			<div class="body">
+									<ul>
+													<li id="n-mainpage"><a href="http://en.wikibooks.org/wiki/Main_Page" title="Visit the main page [ctrl-option-z]" accesskey="z">Main Page</a></li>
+													<li id="n-help"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/Help:Contents" title="Find help on how to use and edit Wikibooks">Help</a></li>
+													<li id="n-Browse"><a href="http://en.wikibooks.org/wiki/Wikibooks:Card_Catalog_Office" title="Check out what Wikibooks has to offer">Browse wiki</a></li>
+													<li id="n-Cookbook"><a href="http://en.wikibooks.org/wiki/Cookbook:Table_of_Contents" title="Learn recipes from around the world">Cookbook</a></li>
+													<li id="n-Wikijunior"><a href="http://en.wikibooks.org/wiki/Wikijunior" title="Books for children">Wikijunior</a></li>
+													<li id="n-Featured-books"><a href="http://en.wikibooks.org/wiki/Wikibooks:Featured_books" title="The best of Wikibooks">Featured books</a></li>
+													<li id="n-recentchanges"><a href="http://en.wikibooks.org/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [ctrl-option-r]" accesskey="r">Recent changes</a></li>
+													<li id="n-sitesupport"><a href="http://donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&utm_medium=sidebar&utm_campaign=C13_en.wikibooks.org&uselang=en" title="Support Wikibooks">Donations</a></li>
+													<li id="n-randomrootpage"><a href="http://en.wikibooks.org/wiki/Special:RandomRootpage">Random book</a></li>
+													<li id="n-Using-Wikibooks"><a href="http://en.wikibooks.org/wiki/Using_Wikibooks">Using Wikibooks</a></li>
+											</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id="p-Community" aria-labelledby="p-Community-label">
+			<h3 id="p-Community-label">Community</h3>
+
+			<div class="body">
+									<ul>
+													<li id="n-Reading-room"><a href="http://en.wikibooks.org/wiki/Wikibooks:Reading_room" title="Discuss Wikibooks-related questions and concerns with others">Reading room</a></li>
+													<li id="n-portal"><a href="http://en.wikibooks.org/wiki/Wikibooks:Community_Portal" title="Find your way around the Wikibooks community">Community portal</a></li>
+													<li id="n-currentevents"><a href="http://en.wikibooks.org/wiki/Wikibooks:Reading_room/Bulletin_Board" title="Important community news">Bulletin Board</a></li>
+													<li id="n-maintenance"><a href="http://en.wikibooks.org/wiki/Wikibooks:Maintenance" title="Frequent tasks that you can help with">Help out!</a></li>
+													<li id="n-Policies-and-guidelines"><a href="http://en.wikibooks.org/wiki/Wikibooks:Policies_and_guidelines" title="Pages detailing important rules and procedures">Policies and guidelines</a></li>
+													<li id="n-contact"><a href="http://en.wikibooks.org/wiki/Wikibooks:Contact_us" title="Alternative methods of communication">Contact us</a></li>
+											</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id="p-tb" aria-labelledby="p-tb-label">
+			<h3 id="p-tb-label">Tools</h3>
+
+			<div class="body">
+									<ul>
+													<li id="t-whatlinkshere"><a href="http://en.wikibooks.org/wiki/Special:WhatLinksHere/R_Programming/Text_Processing" title="A list of all wiki pages that link here [ctrl-option-j]" accesskey="j">What links here</a></li>
+													<li id="t-recentchangeslinked"><a href="http://en.wikibooks.org/wiki/Special:RecentChangesLinked/R_Programming/Text_Processing" title="Recent changes in pages linked from this page [ctrl-option-k]" accesskey="k">Related changes</a></li>
+													<li id="t-upload"><a href="http://commons.wikimedia.org/wiki/Special:UploadWizard" title="Upload files [ctrl-option-u]" accesskey="u">Upload file</a></li>
+													<li id="t-specialpages"><a href="http://en.wikibooks.org/wiki/Special:SpecialPages" title="A list of all special pages [ctrl-option-q]" accesskey="q">Special pages</a></li>
+													<li id="t-permalink"><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&oldid=2837320" title="Permanent link to this revision of the page">Permanent link</a></li>
+													<li id="t-info"><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&action=info" title="More information about this page">Page information</a></li>
+						<li id="t-cite"><a href="http://en.wikibooks.org/w/index.php?title=Special:CiteThisPage&page=R_Programming%2FText_Processing&id=2837320" title="Information on how to cite this page">Cite this page</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id="p-lang" aria-labelledby="p-lang-label"><span class="uls-settings-trigger" tabindex="0" role="button" aria-haspopup="true" original-title="Language settings"></span>
+			<h3 id="p-lang-label">Languages</h3>
+
+			<div class="body">
+									<ul>
+													
+											</ul>
+				<div class="after-portlet after-portlet-lang"><span class="wb-langlinks-add wb-langlinks-link"><a href="http://www.wikidata.org/wiki/Special:NewItem?site=enwikibooks&page=R+Programming%2FText+Processing" title="Add interlanguage links" class="wbc-editpage">Add links</a></span></div>			</div>
+		</div>
+			<div class="portal" role="navigation" id="p-Sister_projects" aria-labelledby="p-Sister_projects-label">
+			<h3 id="p-Sister_projects-label">Sister projects</h3>
+
+			<div class="body">
+									<ul>
+													<li id="n-Wikipedia"><a href="http://en.wikipedia.org/wiki/Main_Page">Wikipedia</a></li>
+													<li id="n-Wikiversity"><a href="http://en.wikiversity.org/wiki/Wikiversity:Main_Page">Wikiversity</a></li>
+													<li id="n-Wiktionary"><a href="http://en.wiktionary.org/wiki/Wiktionary:Main_Page">Wiktionary</a></li>
+													<li id="n-Wikiquote"><a href="http://en.wikiquote.org/wiki/Main_Page">Wikiquote</a></li>
+													<li id="n-Wikisource"><a href="http://en.wikisource.org/wiki/Main_Page">Wikisource</a></li>
+													<li id="n-Wikinews"><a href="http://en.wikinews.org/wiki/Main_Page">Wikinews</a></li>
+													<li id="n-Wikivoyage"><a href="http://en.wikivoyage.org/wiki/Main_Page">Wikivoyage</a></li>
+													<li id="n-Commons"><a href="http://commons.wikimedia.org/wiki/Main_Page">Commons</a></li>
+													<li id="n-Wikidata"><a href="http://www.wikidata.org/wiki/Wikidata:Main_Page">Wikidata</a></li>
+											</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id="p-coll-print_export" aria-labelledby="p-coll-print_export-label">
+			<h3 id="p-coll-print_export-label">Print/export</h3>
+
+			<div class="body">
+									<ul>
+													<li id="coll-create_a_book"><a href="http://en.wikibooks.org/w/index.php?title=Special:Book&bookcmd=book_creator&referer=R+Programming%2FText+Processing">Create a collection</a></li>
+													<li id="coll-download-as-rdf2latex"><a href="http://en.wikibooks.org/w/index.php?title=Special:Book&bookcmd=render_article&arttitle=R+Programming%2FText+Processing&oldid=2837320&writer=rdf2latex">Download as PDF</a></li>
+													<li id="t-print"><a href="http://en.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&printable=yes" title="Printable version of this page [ctrl-option-p]" accesskey="p">Printable version</a></li>
+											</ul>
+							</div>
+		</div>
+				</div>
+		</div>
+		<div id="footer" role="contentinfo">
+							<ul id="footer-info">
+											<li id="footer-info-lastmod"> This page was last modified on 3 April 2015, at 05:25.</li>
+											<li id="footer-info-copyright">Text is available under the <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike License.</a>; additional terms may apply.  By using this site, you agree to the <a href="http://wikimediafoundation.org/wiki/Terms_of_Use">Terms of Use</a> and <a href="http://wikimediafoundation.org/wiki/Privacy_policy">Privacy Policy.</a></li>
+									</ul>
+							<ul id="footer-places">
+											<li id="footer-places-privacy"><a href="http://wikimediafoundation.org/wiki/Privacy_policy" title="wikimedia:Privacy policy">Privacy policy</a></li>
+											<li id="footer-places-about"><a href="http://en.wikibooks.org/wiki/Wikibooks:Welcome" title="Wikibooks:Welcome">About Wikibooks</a></li>
+											<li id="footer-places-disclaimer"><a href="http://en.wikibooks.org/wiki/Wikibooks:General_disclaimer" title="Wikibooks:General disclaimer">Disclaimers</a></li>
+											<li id="footer-places-developers"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute">Developers</a></li>
+											<li id="footer-places-mobileview"><a href="http://en.m.wikibooks.org/w/index.php?title=R_Programming/Text_Processing&mobileaction=toggle_view_mobile" class="noprint stopMobileRedirectToggle">Mobile view</a></li>
+									</ul>
+										<ul id="footer-icons" class="noprint">
+											<li id="footer-copyrightico">
+															<a href="http://wikimediafoundation.org/"><img src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/wikimedia-button.png" srcset="/static/images/wikimedia-button-1.5x.png 1.5x, /static/images/wikimedia-button-2x.png 2x" width="88" height="31" alt="Wikimedia Foundation"></a>
+													</li>
+											<li id="footer-poweredbyico">
+															<a href="http://www.mediawiki.org/"><img src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="//en.wikibooks.org/static/1.26wmf4/resources/assets/poweredby_mediawiki_132x47.png 1.5x, //en.wikibooks.org/static/1.26wmf4/resources/assets/poweredby_mediawiki_176x62.png 2x" width="88" height="31"></a>
+													</li>
+									</ul>
+						<div style="clear:both"></div>
+		</div>
+		<script>if(window.jQuery)jQuery.ready();</script><script>if(window.mw){
+mw.loader.state({"ext.globalCssJs.site":"ready","ext.globalCssJs.user":"ready","site":"loading","user":"ready","user.groups":"ready"});
+}</script>
+<script>if(window.mw){
+mw.loader.load(["ext.cite","mediawiki.toc","mediawiki.action.view.postEdit","mediawiki.user","mediawiki.hidpi","mediawiki.page.ready","mediawiki.searchSuggest","ext.gadget.extlinks","ext.cirrusSearch.loggingSchema","mmv.bootstrap.autostart","ext.imageMetrics.loader","ext.visualEditor.targetLoader","ext.eventLogging.subscriber","ext.wikimediaEvents.statsd","ext.navigationTiming","schema.UniversalLanguageSelector","ext.uls.eventlogger","ext.uls.interlanguage","ext.flaggedRevs.advanced"],null,true);
+}</script>
+<script src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/index(14).php"></script>
+<script src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/index(15).php"></script>
+<script>if(window.mw){
+document.write("\u003Cscript src=\"//en.wikibooks.org/w/load.php?debug=false\u0026amp;lang=en\u0026amp;modules=site\u0026amp;only=scripts\u0026amp;skin=vector\u0026amp;*\"\u003E\u003C/script\u003E");
+}</script><script src="./R Programming_Text Processing - Wikibooks, open books for an open world_files/load(3).php"></script>
+<script>if(window.mw){
+mw.config.set({"wgBackendResponseTime":117,"wgHostname":"mw1211"});
+}</script><div class="suggestions" style="display: none; font-size: 13px;"><div class="suggestions-results"></div><div class="suggestions-special"></div></div>
+	
+
+<embed id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd" type="application/thunder_download_plugin" height="0" width="0"></body></html>
