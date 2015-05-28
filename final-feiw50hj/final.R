@@ -401,10 +401,10 @@ NumJackpot <- function(k, B){
 # Plot a histogram of the output from NumJackpot (i.e. four histograms)
 
 par(mfrow = c(2,2))
-hist(NumJackpot(100, 1000))
-hist(NumJackpot(500, 1000))
-hist(NumJackpot(1000, 1000))
-hist(NumJackpot(500, 1000))
+hist(NumJackpot(100, 50))
+hist(NumJackpot(500, 50))
+hist(NumJackpot(1000, 50))
+hist(NumJackpot(500, 50))
 
 
 #################################################################
